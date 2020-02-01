@@ -4,9 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Firm;
 use Illuminate\Http\Request;
+use App\Http\Requests\FirmRequest;
+use Auth;
 
 class FirmController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,8 @@ class FirmController extends Controller
      */
     public function index()
     {
-        //
+      $firms = Firm::latest()->paginate(10);
+      return view('firms.index', compact('firms') );
     }
 
     /**
@@ -24,7 +31,8 @@ class FirmController extends Controller
      */
     public function create()
     {
-        //
+      $firm = new Firm();
+      return view('firms.create', compact('firm'));
     }
 
     /**
@@ -33,9 +41,15 @@ class FirmController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FirmRequest $request)
     {
-        //
+        $user = Auth::user();
+        $firm = $user->firms()->create($request->except('_token'));
+
+        isset($id) ? $msg="Firm Updated Successfully!" : $msg="Firm Saved Successfully!";
+        flash($msg, 'success');
+
+        return redirect()->route('firms.index');
     }
 
     /**

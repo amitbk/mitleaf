@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                   <div class="">
-                    Create Firm
+                    Your Firm/Business
                     <a href="{{ route('firms.index')}}" class="btn btn-info btn-sm">Back</a>
                   </div>
                 </div>

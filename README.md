@@ -39,6 +39,13 @@ After installing, to create auth
 
 ```php artisan make:model Image -a ```
 
+## Composer Dump-Autolod : required after changing config/composer.json/.env
+
+```php artisan config:cache```
+
+```composer dump-autoload```
+
+
 ## Create Policy
 
 ```php artisan make:policy FirmPolicy --model=Firm```
