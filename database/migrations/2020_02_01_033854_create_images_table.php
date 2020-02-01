@@ -19,6 +19,9 @@ class CreateImagesTable extends Migration
             $table->string('url');
             $table->timestamps();
         });
+        Schema::table('users', function (Blueprint $table) {
+          $table->foreign('avatar_id')->references('id')->on('images')->onDelete('set null');
+        });
     }
 
     /**
@@ -29,5 +32,8 @@ class CreateImagesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('images');
+        Schema::table('users', function (Blueprint $table) {
+          $table->dropForeign(['avatar_id']);
+        });
     }
 }

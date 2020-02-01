@@ -18,6 +18,7 @@ class CreateFirmsTable extends Migration
             $table->string('name');
             $table->string('about');
             $table->integer('logo_id')->nullable();
+            $table->foreign('logo_id')->references('id')->on('images')->onDelete('set null');
             $table->string('desc')->nullable();
 
             // if plan is purchased to post on social media, then firm will have expiry date for that service
