@@ -1,4 +1,4 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
+<p align="center"><img src="https://1.bp.blogspot.com/-imkvHT3dkPk/XjDmCzxemxI/AAAAAAAALF8/EsNQFm1x1dY2mK8KgT-W99F-k3FZU6rTACLcBGAsYHQ/s320/logo2.png" width="400"></p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -6,6 +6,56 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
+
+
+## GIT
+
+```eval $(ssh-agent -s)```
+
+```ssh-add ~/.ssh/amitkadam```
+
+
+## Init
+
+After installing, to create auth
+
+```composer require laravel/ui```
+
+```php artisan ui vue --auth```
+
+```npm install```
+
+```npm run dev```
+
+## Laravel Generators
+
+```composer require laracasts/generators --dev```
+
+## Create Model, Migration and Controller with one command
+
+```php artisan make:model Image -a ```
+
+## Create Policy
+
+```php artisan make:policy FirmPolicy --model=Firm```
+
+## Migration Commands
+
+```php artisan migrate```
+
+```php artisan migrate:fresh```
+
+```php artisan make:migration create_firms_table --create=firms```
+
+This will help to create pivot table migrations
+
+```php artisan make:migration:pivot firms users```
+
+
+## Laravel Image Intervention
+
+```composer require intervention/image```
+
 
 ## About Laravel
 
@@ -72,7 +122,3 @@ In order to ensure that the Laravel community is welcoming to all, please review
 ## Security Vulnerabilities
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
