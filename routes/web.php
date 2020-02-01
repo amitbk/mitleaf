@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/firms', 'FirmController');
+Route::resource('/tags', 'TagController');

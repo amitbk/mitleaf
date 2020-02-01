@@ -24,6 +24,9 @@ class CreateTagsTable extends Migration
             $table->integer('tag_id')->nullable()->default(null);
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
 
+            $table->integer('image_id');
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
+            
             // to create image or facebook pack
             $table->integer('tag_type_id')->nullable();
             $table->foreign('tag_type_id')->references('id')->on('tag_types')->onDelete('cascade');

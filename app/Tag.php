@@ -23,4 +23,14 @@ class Tag extends Model
     {
         return $this->hasMany(Rule::class);
     }
+
+    public function tag()
+    {
+        return $this->belongsTo(Tag::class);
+    }
+
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 }

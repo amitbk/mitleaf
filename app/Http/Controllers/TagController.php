@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::where('tag_type_id','1')
+                    ->whereNull('tag_id')
+                    ->latest()->get();
+        return view('tags.index', compact('tags') );
     }
 
     /**
