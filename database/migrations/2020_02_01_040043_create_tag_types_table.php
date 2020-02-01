@@ -18,6 +18,10 @@ class CreateTagTypesTable extends Migration
             $table->string('name');
             $table->string('desc')->nullable();
         });
+
+        DB::table('tag_types')->insert(['id'=>1,'name' => 'Item', 'desc' => 'Frame: This can be used to create a frames']);
+        DB::table('tag_types')->insert(['id'=>2,'name' => 'Service', 'desc' => 'Might be social posting service']);
+
     }
 
     /**
