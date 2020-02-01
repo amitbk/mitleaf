@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SocialNetwork extends Model
 {
-    //
+    public function social_network_type()
+    {
+        return $this->belongsTo(SocialNetworkType::class);
+    }
 }
