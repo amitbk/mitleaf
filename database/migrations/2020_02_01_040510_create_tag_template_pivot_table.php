@@ -13,11 +13,12 @@ class CreateTagTemplatePivotTable extends Migration
     public function up()
     {
         Schema::create('tag_template', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->integer('tag_id')->unsigned()->index();
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
             $table->integer('template_id')->unsigned()->index();
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
-            $table->primary(['tag_id', 'template_id']);
+            // $table->primary(['tag_id', 'template_id']);
         });
     }
 

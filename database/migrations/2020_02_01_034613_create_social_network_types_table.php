@@ -18,6 +18,10 @@ class CreateSocialNetworkTypesTable extends Migration
             $table->string('name');
             $table->string('desc')->nullable();
         });
+
+        DB::table('social_network_types')->insert(['id'=>1,'name' => 'Facebook']);
+        DB::table('social_network_types')->insert(['id'=>2, 'name' => 'Twitter']);
+        DB::table('social_network_types')->insert(['id'=>3, 'name' => 'LinkedIn']);
     }
 
     /**

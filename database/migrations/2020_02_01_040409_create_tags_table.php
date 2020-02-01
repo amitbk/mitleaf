@@ -17,8 +17,8 @@ class CreateTagsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('desc')->nullable();
-            $table->double('rate');
-            $table->double('year_discount');
+            $table->double('rate')->default(0);
+            $table->double('year_discount')->default(0);
 
             // parent tag id
             $table->integer('tag_id')->nullable();

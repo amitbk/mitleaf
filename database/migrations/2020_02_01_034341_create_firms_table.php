@@ -16,10 +16,20 @@ class CreateFirmsTable extends Migration
         Schema::create('firms', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('about');
+            $table->string('tagline')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('email')->nullable();
+            $table->string('about')->nullable();
+            $table->string('business_type');
+
+            $table->string('address')->nullable();
+            $table->string('taluka')->nullable();
+            $table->string('district')->nullable();
+            $table->string('state')->nullable();
+            $table->string('pin')->nullable();
+            $table->string('gstin')->nullable();
             $table->integer('logo_id')->nullable();
             $table->foreign('logo_id')->references('id')->on('images')->onDelete('set null');
-            $table->string('desc')->nullable();
 
             // if plan is purchased to post on social media, then firm will have expiry date for that service
             $table->timestamp('social_posting_expiry')->nullable();

@@ -18,6 +18,13 @@ class CreateAssetTypesTable extends Migration
             $table->string('name');
             $table->string('desc')->nullable();
         });
+
+        DB::table('asset_types')->insert(['id'=>1,'name' => 'PNG Logo']);
+        DB::table('asset_types')->insert(['id'=>2,'name' => 'PNG Logo with Tagline']);
+        DB::table('asset_types')->insert(['id'=>3,'name' => 'Watermark']);
+        DB::table('asset_types')->insert(['id'=>4,'name' => 'Bottom Strip']);
+        DB::table('asset_types')->insert(['id'=>5,'name' => 'Business Details Image']);
+
     }
 
     /**

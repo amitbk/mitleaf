@@ -23,7 +23,7 @@ class CreateAssetsTable extends Migration
 
             $table->integer('image_id')->unsigned();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->nullable();
 
             $table->timestamps();
         });

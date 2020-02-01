@@ -28,8 +28,8 @@ class CreateTemplatesTable extends Migration
             $table->integer('asset_type_id');
             $table->foreign('asset_type_id')->references('id')->on('asset_types')->onDelete('set null');
 
-            $table->bigInteger('used_count');
-            $table->boolean('can_add_watermark');
+            $table->bigInteger('used_count')->default(0);
+            $table->boolean('can_add_watermark')->default(false);
 
             $table->timestamps();
         });

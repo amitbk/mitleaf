@@ -18,6 +18,13 @@ class CreateStylesTable extends Migration
             $table->string('name');
             $table->string('desc')->nullable();
         });
+
+        DB::table('styles')->insert(['id'=>1,'name' => 'Language']);
+        DB::table('styles')->insert(['id'=>2,'name' => 'Color']);
+        DB::table('styles')->insert(['id'=>3,'name' => 'Font']);
+        DB::table('styles')->insert(['id'=>4,'name' => 'Shape']);
+        DB::table('styles')->insert(['id'=>5,'name' => 'Type']);
+
     }
 
     /**
