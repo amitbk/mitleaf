@@ -11356,3 +11356,11 @@ a.text-dark:focus {
   }
 }
 
+.logo {
+  height: 35px;
+}
+
+.navbar-brand {
+  margin: -5px 0px;
+}
+
