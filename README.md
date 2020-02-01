@@ -27,6 +27,10 @@ After installing, to create auth
 
 ```npm run dev```
 
+## Laravel Serve
+
+```php artisan serve```
+
 ## Laravel Generators
 
 ```composer require laracasts/generators --dev```
