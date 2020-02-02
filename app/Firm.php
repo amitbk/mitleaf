@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Firm extends Model
 {
+    protected $fillable = [
+        'name', 'desc', 'address',
+    ];
     public function users()
     {
       return $this->belongsToMany(User::class);

@@ -20,7 +20,6 @@ class CreateFirmsTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
             $table->string('about')->nullable();
-            $table->string('business_type');
 
             $table->string('address')->nullable();
             $table->string('taluka')->nullable();
