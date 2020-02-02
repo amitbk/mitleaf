@@ -16,7 +16,7 @@ class CreateAssetTypesTable extends Migration
         Schema::create('asset_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('desc')->nullable();
+            $table->text('desc')->nullable();
         });
         DB::table('asset_types')->insert(['id'=>1,'name' => 'PNG Logo']);
         DB::table('asset_types')->insert(['id'=>2,'name' => 'PNG Logo with Tagline']);

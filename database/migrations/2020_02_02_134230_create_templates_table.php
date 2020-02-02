@@ -20,7 +20,7 @@ class CreateTemplatesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('name');
-            $table->string('desc')->nullable();
+            $table->text('desc')->nullable();
 
             $table->integer('image_id');
             $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');

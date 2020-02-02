@@ -19,9 +19,12 @@ class CreateFirmUserPivotTable extends Migration
             $table->integer('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // $table->primary(['firm_id', 'user_id']);
-            $table->integer('role')->nullable();
+            $table->integer('role')->nullable()->default(1);
             $table->timestamps();
         });
+
+        DB::table('firm_user')->insert(['id'=>1,'firm_id' => 1, 'user_id'=> 1, 'role' => 1]);
+
     }
 
     /**

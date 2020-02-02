@@ -19,9 +19,9 @@ class CreateFirmsTable extends Migration
             $table->string('tagline')->nullable();
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
-            $table->string('about')->nullable();
+            $table->text('about')->nullable();
 
-            $table->string('address')->nullable();
+            $table->text('address')->nullable();
             $table->string('taluka')->nullable();
             $table->string('district')->nullable();
             $table->string('state')->nullable();
@@ -30,11 +30,11 @@ class CreateFirmsTable extends Migration
             $table->integer('logo_id')->nullable();
             $table->foreign('logo_id')->references('id')->on('images')->onDelete('set null');
 
-            $table->integer('firm_id')->nullable();
-            $table->foreign('firm_id')->references('id')->on('firms')->onDelete('set null');
-
             $table->timestamps();
         });
+
+        DB::table('firms')->insert(['id'=>1,'name' => 'MitLeaf', 'tagline'=> 'A Social Media Bot', 'address' => 'Pune']);
+
     }
 
     /**
