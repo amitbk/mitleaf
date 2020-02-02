@@ -1,26 +1,29 @@
 @extends('layouts.app')
 
 @section('content')
-<select-tag :tags="{{$tags}}" inline-template>
+<create-rule :tags="{{$tags}}" :rules="{{$rules}}" inline-template>
     <div class="container">
-        <div class="row justify-content-center">
+
+        <div v-if="!rulesAdded" class="row justify-content-center mb-3">
+            @include('rules._no_rules_added')
+        </div>
+
+        <div v-else class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                      <div class="">
-                        Let's Create a Plan
+                <div class="card1">
+                    <div class="card-header1">
+                      <div class="text-center">
+                        <h2>Let's Create a Plan</h2>
                         <!-- <a href="{{ route('tags.create')}}" class="btn btn-success btn-sm">Add New</a> -->
                       </div>
                     </div>
 
-                    <div class="card-body">
+                    <div class="card-body1  ">
                         @include('helpers._flash')
 
+
                         <div class="" v-for="tag in parentTags">
-                            @{{tag.name}}
-                            <div class="cursor_pointer" v-for="childTag in childTags(tag.id)" @click="onTagClick(childTag)">
-                                - @{{childTag.name}} @{{childTag.rate}}/img
-                            </div>
+                            @include('rules._tag_item_display', ['tag' => `@{{tag}}`])
                         </div>
 
                         <hr>
@@ -33,5 +36,5 @@
             </div>
         </div>
     </div>
-</select-tag>
+</create-rule>
 @endsection

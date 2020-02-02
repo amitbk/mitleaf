@@ -17,9 +17,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::where('tag_type_id','1')
-                    ->whereNull('tag_id')
-                    ->latest()->get();
+        $tags = Tag::where('tag_type_id','1')->latest()->get();
         return view('tags.index', compact('tags') );
     }
 

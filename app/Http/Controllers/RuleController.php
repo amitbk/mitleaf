@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Rule;
+use App\Tag;
 use Illuminate\Http\Request;
-
+use Auth;
 class RuleController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +28,10 @@ class RuleController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $rules = $user->firms()->first()->rules;
+        $tags = Tag::where('tag_type_id','1')->latest()->get();
+        return view('rules.create', compact('tags'), compact('rules') );
     }
 
     /**
