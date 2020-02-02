@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
+use App\FirmType;
 use Illuminate\Http\Request;
 
 class PlanController extends Controller
@@ -15,7 +16,8 @@ class PlanController extends Controller
     public function index()
     {
         $plans = Plan::where('is_frame_plan',1)->get();
-        return view('plans.index', compact('plans') );
+        $firm_types = FirmType::where('is_active',1)->get();
+        return view('plans.index', compact('plans'), compact('firm_types') );
     }
 
     /**

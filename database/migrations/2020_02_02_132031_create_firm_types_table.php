@@ -21,6 +21,10 @@ class CreateFirmTypesTable extends Migration
             $table->double('rate')->default(0);
             $table->timestamps();
         });
+        DB::table('firm_types')->insert(['id'=>1,'name' => 'Hospital', 'rate'=> '1500']);
+        DB::table('firm_types')->insert(['id'=>2,'name' => 'Hotel', 'rate'=> '1200']);
+        DB::table('firm_types')->insert(['id'=>3,'name' => 'Garment Shop', 'rate'=> '1200']);
+        DB::table('firm_types')->insert(['id'=>4,'name' => 'Not mentioned', 'rate'=> '0']);
     }
 
     /**

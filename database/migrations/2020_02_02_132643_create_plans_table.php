@@ -25,7 +25,7 @@ class CreatePlansTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('plans')->insert(['id'=>1,'name' => 'Social Media Sharing', 'desc'=> '', 'rate' => '199']);
+        DB::table('plans')->insert(['id'=>1,'name' => 'Social Media Sharing', 'is_frame_plan'=> false, 'rate' => '199']);
         DB::table('plans')->insert(['id'=>2,'name' => 'Daily Thoughts', 'desc'=> 'We will create Inspirational images, Daily thougths images for you with your business name', 'rate' => '640']);
         DB::table('plans')->insert(['id'=>3,'name' => 'Indian Events', 'desc'=> 'We will create special images for you on each event or festival of India.
                                                         Like Republican day, Diwali, Independence day, Workers Day or birthday of some well known person.', 'rate' => '640']);
