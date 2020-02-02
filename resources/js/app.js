@@ -23,6 +23,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 // Vue.component('select-tag', require('./components/Tags/SelectTag.vue').default);
 Vue.component('create-rule', require('./components/Rules/CreateRule.vue').default);
+Vue.component('plans-list', require('./components/Plans/PlansList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

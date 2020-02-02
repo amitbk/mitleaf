@@ -14,7 +14,8 @@ class PlanController extends Controller
      */
     public function index()
     {
-        //
+        $plans = Plan::where('is_frame_plan',1)->get();
+        return view('plans.index', compact('plans') );
     }
 
     /**
