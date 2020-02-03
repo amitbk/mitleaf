@@ -11,11 +11,11 @@ export default {
   data() {
     return {
       selectedTags: [],
-      firm_type_id: 1,
       slab_selected: [],
       localPlans: this.plans.map(el => {
                     // if event type,slab=1 else 2
                     el.id == 3 ? el.slab = 1 : el.slab = 2;
+                    if(el.id == 4) el.firm_type_id = 1;
                       return el;
                   })
       // rulesAdded: !!this.rules.length ||  true
@@ -23,29 +23,27 @@ export default {
   },
   computed: {
       getFirmTypeRate: function() {
-          console.log(this.localPlans.find(el => el.id == 4));
-          return this.firm_types.find(el => el.id == this.firm_type_id).rate/this.localPlans.find(el => el.id == 4).slab;
+          let thisPlan = this.localPlans.find(el => el.id == 4);
+          return this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate/this.localPlans.find(el => el.id == 4).slab;
       }
   },
   methods: {
     onSlabChange(event, plan) {
         if(!!event)
         {
-            console.log(event.target.value, plan.id);
             let index = this.localPlans.findIndex(el => el.id == plan.id);
             this.localPlans[index].slab = event.target.value;
         }
 
-    }
-      // childTags(tagId) {
-      //     return this.tags.filter(el => el.tag_id == tagId);
-      // },
-      // onTagClick(tag) {
-      //       let index = this.selectedTags.findIndex(el => el.id == tag.id);
-      //       if(index < 0)
-      //           this.selectedTags.push(tag);
-      // }
-  }
+    },
+    onFirmChange(event, plan) {
+        if(!!event)
+        {
+            let index = this.localPlans.findIndex(el => el.id == plan.id);
+            this.localPlans[index].firm_type_id = event.target.value;
+        }
+    },
+}, // methods
 };
 </script>
 

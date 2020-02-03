@@ -1953,11 +1953,11 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       selectedTags: [],
-      firm_type_id: 1,
       slab_selected: [],
       localPlans: this.plans.map(function (el) {
         // if event type,slab=1 else 2
         el.id == 3 ? el.slab = 1 : el.slab = 2;
+        if (el.id == 4) el.firm_type_id = 1;
         return el;
       }) // rulesAdded: !!this.rules.length ||  true
 
@@ -1965,13 +1965,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     getFirmTypeRate: function getFirmTypeRate() {
-      var _this = this;
-
-      console.log(this.localPlans.find(function (el) {
+      var thisPlan = this.localPlans.find(function (el) {
         return el.id == 4;
-      }));
+      });
       return this.firm_types.find(function (el) {
-        return el.id == _this.firm_type_id;
+        return el.id == thisPlan.firm_type_id;
       }).rate / this.localPlans.find(function (el) {
         return el.id == 4;
       }).slab;
@@ -1980,22 +1978,22 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     onSlabChange: function onSlabChange(event, plan) {
       if (!!event) {
-        console.log(event.target.value, plan.id);
         var index = this.localPlans.findIndex(function (el) {
           return el.id == plan.id;
         });
         this.localPlans[index].slab = event.target.value;
       }
-    } // childTags(tagId) {
-    //     return this.tags.filter(el => el.tag_id == tagId);
-    // },
-    // onTagClick(tag) {
-    //       let index = this.selectedTags.findIndex(el => el.id == tag.id);
-    //       if(index < 0)
-    //           this.selectedTags.push(tag);
-    // }
+    },
+    onFirmChange: function onFirmChange(event, plan) {
+      if (!!event) {
+        var index = this.localPlans.findIndex(function (el) {
+          return el.id == plan.id;
+        });
+        this.localPlans[index].firm_type_id = event.target.value;
+      }
+    }
+  } // methods
 
-  }
 });
 
 /***/ }),

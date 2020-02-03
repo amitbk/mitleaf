@@ -35,7 +35,7 @@
                     <div class="col-md-6 mt-auto">
                         <div class="form-group">
                           <label for="sel1">Select Business:</label>
-                          <select v-model="firm_type_id" class="form-control" id="sel1">
+                          <select v-model="localPlan.firm_type_id" @change="onFirmChange($event, localPlan)" class="form-control" id="sel1">
                               <option v-for="firm_type in firm_types" :value="firm_type.id">@{{firm_type.name}}</option>
                           </select>
                         </div>
