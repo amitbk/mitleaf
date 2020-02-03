@@ -10,6 +10,10 @@
             </div>
         </div>
         @include('plans._plan_list')
+
+        <div class="fixed-bottom bg-primary p-1 text-white text-center">
+            Total: @{{totalPlanAmount}}
+        </div>
     </div>
 </plans-list>
 @endsection

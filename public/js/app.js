@@ -1978,6 +1978,13 @@ __webpack_require__.r(__webpack_exports__);
       thisPlan.rate = firmRate;
       var rate = firmRate / slab;
       return rate;
+    },
+    totalPlanAmount: function totalPlanAmount() {
+      var total = 0;
+      this.localPlans.forEach(function (el) {
+        if (el.is_selected == true) total += el.rate / el.slab;
+      });
+      return total;
     }
   },
   methods: {

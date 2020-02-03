@@ -30,6 +30,13 @@ export default {
           thisPlan.rate = firmRate;
           let rate = firmRate/slab;
           return rate;
+      },
+      totalPlanAmount: function() {
+          let total = 0;
+          this.localPlans.forEach(el => {
+              if(el.is_selected == true) total += el.rate/el.slab
+          });
+          return total;
       }
   },
   methods: {
