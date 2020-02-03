@@ -43,6 +43,10 @@
                 </div>
 
 
+                <div class="btn_selected">
+                    <button @click="selectPlan(localPlan, false)" v-if="!!localPlan.is_selected" type="button" class="btn btn-success border border-secondary btn-block">Selected</button>
+                    <button @click="selectPlan(localPlan, true)" v-else type="button" class="btn btn-default border border-secondary btn-block">Select this plan</button>
+                </div>
             </div>
         </div>
     </div>

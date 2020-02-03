@@ -13,6 +13,7 @@ export default {
       selectedTags: [],
       slab_selected: [],
       localPlans: this.plans.map(el => {
+                    el.is_selected = false;
                     // if event type,slab=1 else 2
                     el.id == 3 ? el.slab = 1 : el.slab = 2;
                     if(el.id == 4) el.firm_type_id = 1;
@@ -24,7 +25,11 @@ export default {
   computed: {
       getFirmTypeRate: function() {
           let thisPlan = this.localPlans.find(el => el.id == 4);
-          return this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate/this.localPlans.find(el => el.id == 4).slab;
+          let firmRate = this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate;
+          let slab = this.localPlans.find(el => el.id == 4).slab;
+          thisPlan.rate = firmRate;
+          let rate = firmRate/slab;
+          return rate;
       }
   },
   methods: {
@@ -42,6 +47,12 @@ export default {
             let index = this.localPlans.findIndex(el => el.id == plan.id);
             this.localPlans[index].firm_type_id = event.target.value;
         }
+    },
+
+    selectPlan(plan, value) {
+        console.log("as");
+        let index = this.localPlans.findIndex(el => el.id == plan.id);
+        this.localPlans[index].is_selected = value;
     },
 }, // methods
 };

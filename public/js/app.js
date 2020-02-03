@@ -1955,7 +1955,8 @@ __webpack_require__.r(__webpack_exports__);
       selectedTags: [],
       slab_selected: [],
       localPlans: this.plans.map(function (el) {
-        // if event type,slab=1 else 2
+        el.is_selected = false; // if event type,slab=1 else 2
+
         el.id == 3 ? el.slab = 1 : el.slab = 2;
         if (el.id == 4) el.firm_type_id = 1;
         return el;
@@ -1968,11 +1969,15 @@ __webpack_require__.r(__webpack_exports__);
       var thisPlan = this.localPlans.find(function (el) {
         return el.id == 4;
       });
-      return this.firm_types.find(function (el) {
+      var firmRate = this.firm_types.find(function (el) {
         return el.id == thisPlan.firm_type_id;
-      }).rate / this.localPlans.find(function (el) {
+      }).rate;
+      var slab = this.localPlans.find(function (el) {
         return el.id == 4;
       }).slab;
+      thisPlan.rate = firmRate;
+      var rate = firmRate / slab;
+      return rate;
     }
   },
   methods: {
@@ -1991,6 +1996,13 @@ __webpack_require__.r(__webpack_exports__);
         });
         this.localPlans[index].firm_type_id = event.target.value;
       }
+    },
+    selectPlan: function selectPlan(plan, value) {
+      console.log("as");
+      var index = this.localPlans.findIndex(function (el) {
+        return el.id == plan.id;
+      });
+      this.localPlans[index].is_selected = value;
     }
   } // methods
 
