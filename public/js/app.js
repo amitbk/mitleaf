@@ -1954,12 +1954,17 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selectedTags: [],
       slab_selected: [],
-      localPlans: this.plans.map(function (el) {
-        el.is_selected = false; // if event type,slab=1 else 2
+      localPlans: this.plans.filter(function (el) {
+        if (!!el.is_frame_plan) {
+          el.is_selected = false; // if event type,slab=1 else 2
 
-        el.id == 3 ? el.slab = 1 : el.slab = 2;
-        if (el.id == 4) el.firm_type_id = 1;
-        return el;
+          el.id == 3 ? el.slab = 1 : el.slab = 2;
+          if (el.id == 4) el.firm_type_id = 1;
+          return el;
+        }
+      }),
+      services: this.plans.map(function (el) {
+        if (!!el.is_frame_plan == false) return el;
       }) // rulesAdded: !!this.rules.length ||  true
 
     };

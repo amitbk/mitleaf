@@ -12,13 +12,17 @@ export default {
     return {
       selectedTags: [],
       slab_selected: [],
-      localPlans: this.plans.map(el => {
-                    el.is_selected = false;
-                    // if event type,slab=1 else 2
-                    el.id == 3 ? el.slab = 1 : el.slab = 2;
-                    if(el.id == 4) el.firm_type_id = 1;
-                      return el;
-                  })
+      localPlans: this.plans.filter(el => {
+                    if(!!el.is_frame_plan)
+                    {
+                        el.is_selected = false;
+                        // if event type,slab=1 else 2
+                        el.id == 3 ? el.slab = 1 : el.slab = 2;
+                        if(el.id == 4) el.firm_type_id = 1;
+                          return el;
+                      }
+                  }),
+        services: this.plans.map(el => {if(!!el.is_frame_plan == false) return el;})
       // rulesAdded: !!this.rules.length ||  true
     };
   },

@@ -15,7 +15,7 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans = Plan::where('is_frame_plan',1)->get();
+        $plans = Plan::where('is_active',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
         return view('plans.index', compact('plans'), compact('firm_types') );
     }
