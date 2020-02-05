@@ -9,10 +9,24 @@
                 <h3>Select best plans to continue</h3>
             </div>
         </div>
-        @include('plans._plan_list')
+        <div v-if="formStep == 1" class="plans1_container">
+            @include('plans._plans_list')
+        </div>
+        <div v-if="formStep == 2" class="plans2_container">
+            @include('plans._plans2_list')
+        </div>
 
-        <div class="fixed-bottom bg-primary p-1 text-white text-center">
-            Total: @{{totalPlanAmount}}
+        <div class="row fixed-bottom bg-primary p-1 text-white text-center">
+            <div class="col final_amount">
+                Total <span class="font-weight-bold">₹@{{totalPlanAmount}}</span>
+            </div>
+            <div class="col next_plan_changer ">
+                <button v-if="formStep<2" @click="formStep++" type="button" class="btn btn-default bg-light btn-sm">Continue</button>
+                <span v-if="formStep == 2">
+                    <button @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
+                    <button @click="submitForm()" type="button" class="btn btn-default bg-light btn-sm">Done</button>
+                </span>
+            </div>
         </div>
     </div>
 </plans-list>

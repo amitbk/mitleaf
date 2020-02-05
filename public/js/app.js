@@ -1952,20 +1952,16 @@ __webpack_require__.r(__webpack_exports__);
   props: ["plans", "firm_types"],
   data: function data() {
     return {
+      formStep: 1,
       selectedTags: [],
       slab_selected: [],
       localPlans: this.plans.filter(function (el) {
-        if (!!el.is_frame_plan) {
-          el.is_selected = false; // if event type,slab=1 else 2
-
-          el.id == 3 ? el.slab = 1 : el.slab = 2;
-          if (el.id == 4) el.firm_type_id = 1;
-          return el;
-        }
-      }),
-      services: this.plans.map(function (el) {
-        if (!!el.is_frame_plan == false) return el;
-      }) // rulesAdded: !!this.rules.length ||  true
+        el.is_selected = false;
+        el.slab_selected = el.is_slab_in_months;
+        if (el.id == 4) el.firm_type_id = 1;
+        return el;
+      }) // services: this.plans.filter(el => !!el.is_frame_plan == false)
+      // rulesAdded: !!this.rules.length ||  true
 
     };
   },
@@ -1979,7 +1975,7 @@ __webpack_require__.r(__webpack_exports__);
       }).rate;
       var slab = this.localPlans.find(function (el) {
         return el.id == 4;
-      }).slab;
+      }).slab_selected;
       thisPlan.rate = firmRate;
       var rate = firmRate / slab;
       return rate;
@@ -1987,20 +1983,12 @@ __webpack_require__.r(__webpack_exports__);
     totalPlanAmount: function totalPlanAmount() {
       var total = 0;
       this.localPlans.forEach(function (el) {
-        if (el.is_selected == true) total += el.rate / el.slab;
+        if (el.is_selected == true) total += el.rate / el.slab_selected;
       });
       return total;
     }
   },
   methods: {
-    onSlabChange: function onSlabChange(event, plan) {
-      if (!!event) {
-        var index = this.localPlans.findIndex(function (el) {
-          return el.id == plan.id;
-        });
-        this.localPlans[index].slab = event.target.value;
-      }
-    },
     onFirmChange: function onFirmChange(event, plan) {
       if (!!event) {
         var index = this.localPlans.findIndex(function (el) {
@@ -2015,6 +2003,9 @@ __webpack_require__.r(__webpack_exports__);
         return el.id == plan.id;
       });
       this.localPlans[index].is_selected = value;
+    },
+    submitForm: function submitForm() {
+      console.log("Submit Form", localPlans);
     }
   } // methods
 

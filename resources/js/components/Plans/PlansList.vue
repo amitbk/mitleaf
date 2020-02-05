@@ -10,19 +10,16 @@ export default {
   props: ["plans", "firm_types"],
   data() {
     return {
+      formStep: 1,
       selectedTags: [],
       slab_selected: [],
       localPlans: this.plans.filter(el => {
-                    if(!!el.is_frame_plan)
-                    {
                         el.is_selected = false;
-                        // if event type,slab=1 else 2
-                        el.id == 3 ? el.slab = 1 : el.slab = 2;
+                        el.slab_selected = el.is_slab_in_months;
                         if(el.id == 4) el.firm_type_id = 1;
                           return el;
-                      }
                   }),
-        services: this.plans.map(el => {if(!!el.is_frame_plan == false) return el;})
+        // services: this.plans.filter(el => !!el.is_frame_plan == false)
       // rulesAdded: !!this.rules.length ||  true
     };
   },
@@ -30,7 +27,7 @@ export default {
       getFirmTypeRate: function() {
           let thisPlan = this.localPlans.find(el => el.id == 4);
           let firmRate = this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate;
-          let slab = this.localPlans.find(el => el.id == 4).slab;
+          let slab = this.localPlans.find(el => el.id == 4).slab_selected;
           thisPlan.rate = firmRate;
           let rate = firmRate/slab;
           return rate;
@@ -38,20 +35,13 @@ export default {
       totalPlanAmount: function() {
           let total = 0;
           this.localPlans.forEach(el => {
-              if(el.is_selected == true) total += el.rate/el.slab
+              if(el.is_selected == true) total += el.rate/el.slab_selected
           });
           return total;
       }
   },
   methods: {
-    onSlabChange(event, plan) {
-        if(!!event)
-        {
-            let index = this.localPlans.findIndex(el => el.id == plan.id);
-            this.localPlans[index].slab = event.target.value;
-        }
-
-    },
+    
     onFirmChange(event, plan) {
         if(!!event)
         {
@@ -65,6 +55,10 @@ export default {
         let index = this.localPlans.findIndex(el => el.id == plan.id);
         this.localPlans[index].is_selected = value;
     },
+
+    submitForm() {
+        console.log("Submit Form", localPlans);
+    }
 }, // methods
 };
 </script>
