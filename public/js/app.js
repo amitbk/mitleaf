@@ -1941,12 +1941,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "PlansList",
   props: ["plans", "firm_types"],
@@ -2005,7 +2008,10 @@ __webpack_require__.r(__webpack_exports__);
       this.localPlans[index].is_selected = value;
     },
     submitForm: function submitForm() {
-      console.log("Submit Form", localPlans);
+      console.log("Submit Form", this.localPlans);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/plans', this.localPlans).then(function (response) {
+        console.log("Submited: ", response);
+      });
     }
   } // methods
 

@@ -23,8 +23,12 @@
             <div class="col next_plan_changer ">
                 <button v-if="formStep<2" @click="formStep++" type="button" class="btn btn-default bg-light btn-sm">Continue</button>
                 <span v-if="formStep == 2">
-                    <button @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
-                    <button @click="submitForm()" type="button" class="btn btn-default bg-light btn-sm">Done</button>
+                    <form class="" action="{{url('plans')}}" method="post">
+                        {{csrf_field()}}
+                        <input type="hidden" name="localPlans" :value="JSON.stringify(localPlans.filter(el => el.is_selected))">
+                        <button @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
+                        <button @click="submitForm()" type="submit" class="btn btn-default bg-light btn-sm">Done</button>
+                    </form>
                 </span>
             </div>
         </div>

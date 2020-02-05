@@ -27,7 +27,8 @@ class PlanController extends Controller
      */
     public function create()
     {
-        //
+        // test
+        return redirect()->route('firms.index');
     }
 
     /**
@@ -38,7 +39,8 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request->localPlans; die();
+        return redirect()->route('firms.index');
     }
 
     /**

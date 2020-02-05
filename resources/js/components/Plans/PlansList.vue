@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "PlansList",
   props: ["plans", "firm_types"],
@@ -41,7 +42,7 @@ export default {
       }
   },
   methods: {
-    
+
     onFirmChange(event, plan) {
         if(!!event)
         {
@@ -57,7 +58,10 @@ export default {
     },
 
     submitForm() {
-        console.log("Submit Form", localPlans);
+        console.log("Submit Form", this.localPlans);
+        axios.post('/plans', this.localPlans).then(response => {
+            console.log("Submited: ",response);
+        })
     }
 }, // methods
 };
