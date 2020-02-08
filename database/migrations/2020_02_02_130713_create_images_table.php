@@ -33,6 +33,7 @@ class CreateImagesTable extends Migration
         DB::table('images')->insert(['id'=>8,'name' => 't8', 'url'=> 'images/templates/t8.jpg' ]);
         DB::table('images')->insert(['id'=>9,'name' => 't9', 'url'=> 'images/templates/t9.jpg' ]);
         DB::table('images')->insert(['id'=>10,'name' => 't10', 'url'=> 'images/templates/t10.jpg' ]);
+        DB::table('images')->insert(['id'=>11,'name' => 'a10', 'url'=> 'images/assets/icode.png' ]);
 
     }
 

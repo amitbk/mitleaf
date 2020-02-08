@@ -26,6 +26,11 @@ class CreateAssetsTable extends Migration
             $table->string('name')->nullable();
             $table->timestamps();
         });
+        DB::table('assets')->insert(['id'=>1,'firm_id' => 1, 'asset_type_id'=> 3, 'image_id'=>11 ]);
+        DB::table('assets')->insert(['id'=>2,'firm_id' => 2, 'asset_type_id'=> 3, 'image_id'=>11 ]);
+        DB::table('assets')->insert(['id'=>3,'firm_id' => 1, 'asset_type_id'=> 4, 'image_id'=>11 ]);
+        DB::table('assets')->insert(['id'=>4,'firm_id' => 2, 'asset_type_id'=> 4, 'image_id'=>11 ]);
+
     }
 
     /**

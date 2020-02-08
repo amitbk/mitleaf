@@ -20,8 +20,8 @@ class CreateAssetTypesTable extends Migration
         });
         DB::table('asset_types')->insert(['id'=>1,'name' => 'PNG Logo']);
         DB::table('asset_types')->insert(['id'=>2,'name' => 'PNG Logo with Tagline']);
-        DB::table('asset_types')->insert(['id'=>3,'name' => 'Watermark']);
-        DB::table('asset_types')->insert(['id'=>4,'name' => 'Bottom Strip']);
+        DB::table('asset_types')->insert(['id'=>3,'name' => 'Bottom Strip 1']);
+        DB::table('asset_types')->insert(['id'=>4,'name' => 'Bottom Strip 2']);
         DB::table('asset_types')->insert(['id'=>5,'name' => 'Business Details Image']);
     }
 

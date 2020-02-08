@@ -14,4 +14,8 @@ class Asset extends Model
     {
         return $this->belongsTo(AssetType::class);
     }
+    public function image()
+    {
+        return $this->belongsTo(Image::class);
+    }
 }
