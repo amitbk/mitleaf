@@ -25,3 +25,4 @@ Route::get('/myplans', 'PlanController@myplans')->name('myplans');
 Route::resource('/tags', 'TagController');
 
 Route::get('/create_frames', 'CronController@create_frames')->name('create_frames');
+Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
