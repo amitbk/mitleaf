@@ -6,6 +6,9 @@
     <div class="row justify-content-center mb-3">
         <div class="col-md-8 text-center">
 
+            @if($plans->count() == 0)
+                <h2>You dont have any active plan.</h2>
+            @else
             <table class="table table-bordered">
                 <thead>
                   <tr>
@@ -32,7 +35,7 @@
                     @endforeach
                 </tbody>
               </table>
-
+              @endif
         </div>
     </div>
 

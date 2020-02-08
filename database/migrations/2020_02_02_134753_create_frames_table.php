@@ -24,7 +24,7 @@ class CreateFramesTable extends Migration
             $table->timestamp('schedule_on')->nullable();
             $table->timestamp('is_posted_on_social_media')->nullable();
 
-            $table->integer('template_id');
+            $table->integer('template_id')->nullable();
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
 
             $table->timestamps();

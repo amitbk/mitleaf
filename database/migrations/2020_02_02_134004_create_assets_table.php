@@ -18,10 +18,10 @@ class CreateAssetsTable extends Migration
             $table->integer('firm_id')->unsigned();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
 
-            $table->integer('asset_type_id')->unsigned();
+            $table->integer('asset_type_id')->unsigned()->nullable();
             $table->foreign('asset_type_id')->references('id')->on('asset_types')->onDelete('cascade');
 
-            $table->integer('image_id')->unsigned();
+            $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->string('name')->nullable();
             $table->timestamps();

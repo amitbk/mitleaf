@@ -32,6 +32,11 @@ class PlanController extends Controller
     {
         $user = Auth::user();
         $firm = $user->firms()->first();
+        if($firm == null)
+        {
+            flash("You don't have firm added yet, please add a firm.", 'danger');
+            return redirect()->route('firms.index');
+        }
         $plans = $firm->plans;
 
         return view('plans.myplans', compact('plans') );
@@ -108,6 +113,8 @@ class PlanController extends Controller
 
 
         // return redirect()->route('firms.index');
+        return redirect('myplans');
+
     }
 
     /**
