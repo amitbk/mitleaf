@@ -21,6 +21,10 @@ class CreateFirmPlansTable extends Migration
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
             $table->integer('qty_per_month')->default(0);
+
+            $table->integer('firm_type_id')->nullable();
+            $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
+
             $table->timestamp('date_last_created')->nullable();
             $table->timestamp('date_scheduled')->nullable();
             $table->timestamp('date_expiry')->nullable();

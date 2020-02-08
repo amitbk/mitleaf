@@ -30,6 +30,9 @@ class CreateFirmsTable extends Migration
             $table->integer('logo_id')->nullable();
             $table->foreign('logo_id')->references('id')->on('images')->onDelete('set null');
 
+            $table->integer('firm_type_id')->nullable();
+            $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
+
             $table->timestamps();
         });
 

@@ -11,7 +11,7 @@
 
             <div class="card-body d-flex flex-column">
                 <div class="text-center">
-                    <h3 v-if="localPlan.id != 4">₹@{{ localPlan.rate/localPlan.slab_selected}}/month</h3>
+                    <h3 v-if="localPlan.id != 4">₹@{{ localPlan.rate*localPlan.slab_selected}}/month</h3>
                     <h3 v-else>₹@{{ getFirmTypeRate }}/month</h3>
                 </div>
                 <div class="mb-3">
@@ -19,7 +19,7 @@
                 </div>
 
 
-                <div v-if="localPlan.id != 4 && localPlan.is_slab_in_months == 2" class="mt-auto">
+                <div v-if="localPlan.id != 4 && localPlan.is_slab_in_months == 1" class="mt-auto">
                         @include('plans._select_slab')
                 </div>
 

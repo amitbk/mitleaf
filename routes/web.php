@@ -20,5 +20,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/firms', 'FirmController');
 Route::resource('/plans', 'PlanController');
+Route::get('/myplans', 'PlanController@myplans')->name('myplans');
 
 Route::resource('/tags', 'TagController');

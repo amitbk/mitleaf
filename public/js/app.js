@@ -1958,9 +1958,10 @@ __webpack_require__.r(__webpack_exports__);
       formStep: 1,
       selectedTags: [],
       slab_selected: [],
+      duration_selected: 1,
       localPlans: this.plans.filter(function (el) {
         el.is_selected = false;
-        el.slab_selected = el.is_slab_in_months;
+        el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
         if (el.id == 4) el.firm_type_id = 1;
         return el;
       }) // services: this.plans.filter(el => !!el.is_frame_plan == false)
@@ -1980,13 +1981,13 @@ __webpack_require__.r(__webpack_exports__);
         return el.id == 4;
       }).slab_selected;
       thisPlan.rate = firmRate;
-      var rate = firmRate / slab;
+      var rate = firmRate * slab;
       return rate;
     },
     totalPlanAmount: function totalPlanAmount() {
       var total = 0;
       this.localPlans.forEach(function (el) {
-        if (el.is_selected == true) total += el.rate / el.slab_selected;
+        if (el.is_selected == true) total += el.rate * el.slab_selected;
       });
       return total;
     }

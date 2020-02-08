@@ -25,7 +25,8 @@
                 <span v-if="formStep == 2">
                     <form class="" action="{{url('plans')}}" method="post">
                         {{csrf_field()}}
-                        <input type="hidden" name="localPlans" :value="JSON.stringify(localPlans.filter(el => el.is_selected))">
+                        <input type="hidden" name="plans" :value="JSON.stringify(localPlans.filter(el => el.is_selected))">
+                        <input type="hidden" name="duration_selected" :value="duration_selected">
                         <button @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
                         <button @click="submitForm()" type="submit" class="btn btn-default bg-light btn-sm">Done</button>
                     </form>

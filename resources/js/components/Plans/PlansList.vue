@@ -14,9 +14,10 @@ export default {
       formStep: 1,
       selectedTags: [],
       slab_selected: [],
+      duration_selected: 1,
       localPlans: this.plans.filter(el => {
                         el.is_selected = false;
-                        el.slab_selected = el.is_slab_in_months;
+                        el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
                         if(el.id == 4) el.firm_type_id = 1;
                           return el;
                   }),
@@ -30,13 +31,13 @@ export default {
           let firmRate = this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate;
           let slab = this.localPlans.find(el => el.id == 4).slab_selected;
           thisPlan.rate = firmRate;
-          let rate = firmRate/slab;
+          let rate = firmRate*slab;
           return rate;
       },
       totalPlanAmount: function() {
           let total = 0;
           this.localPlans.forEach(el => {
-              if(el.is_selected == true) total += el.rate/el.slab_selected
+              if(el.is_selected == true) total += el.rate*el.slab_selected
           });
           return total;
       }

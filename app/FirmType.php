@@ -14,4 +14,8 @@ class FirmType extends Model
     {
         return $this->hasMany(Template::class);
     }
+    public function firm_plans()
+    {
+        return $this->hasMany(FirmPlan::class);
+    }
 }
