@@ -54,20 +54,28 @@ class CronController extends Controller
 
 
       $images=array(
-              array('img_url'=>$asset->image->url, 'opacity' => '100',
-              'location' => 'bottom', 'ratio' => '100',
-              'border'=>'0','border_color'=>'000000',
-              'x_right'=>'0','y_right'=>'30','rotate'=>'-5',
-              'circle_radius'=>'0'),
 
-              // array('img_url'=>$amit2, 'opacity' => '20',
-              // 'location' => 'top', 'ratio' => '60',
-              // 'width'=>'310','height'=>'140',
-              // 'border'=>'0','border_color'=>'000000',
-              // 'x_right'=>'0','y_right'=>'60','rotate'=>'-5',
-              // 'circle_radius'=>'0'),
+            // // bottom strip
+            //   array('img_url'=>$asset->image->url, 'opacity' => '100',
+            //   'location' => 'bottom', 'ratio' => '100',
+            //   'border'=>'0','border_color'=>'000000',
+            //   'x_right'=>'0','y_right'=>'0','rotate'=>'-5',
+            //   'circle_radius'=>'0'),
+            //
+            //   // center logo
+            //     array('img_url'=>$asset->image->url, 'opacity' => '100',
+            //     'location' => 'bottom', 'ratio' => '30',
+            //     'border'=>'0','border_color'=>'000000',
+            //     'x_right'=>'0','y_right'=>'30','rotate'=>'-5',
+            //     'circle_radius'=>'0'),
 
-              // array('images/no1.png', '310','310','00','000000','300','180','-5','0'),
+                // center logo
+                  array('img_url'=>$asset->image->url, 'opacity' => '100',
+                  'location' => 'bottom-left', 'ratio' => '30',
+                  'border'=>'0','border_color'=>'000000',
+                  'x_right'=>'10','y_right'=>'10','rotate'=>'-5',
+                  'circle_radius'=>'0'),
+
               );
 
 
