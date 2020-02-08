@@ -29,6 +29,15 @@ class CreateFirmPlansTable extends Migration
             $table->timestamp('date_scheduled')->nullable();
             $table->timestamp('date_expiry')->nullable();
             $table->boolean('is_frame_plan')->default(true);
+
+            // settings for frame
+            $table->string('st_language')->nullable();
+            $table->string('st_shape')->nullable();
+            $table->string('st_color')->nullable();
+            $table->string('st_logo')->nullable();
+            $table->string('st_strip')->nullable();
+            $table->string('st_watermark')->nullable();
+
             $table->timestamps();
         });
     }

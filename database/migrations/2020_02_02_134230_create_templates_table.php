@@ -38,6 +38,15 @@ class CreateTemplatesTable extends Migration
 
             $table->bigInteger('used_count')->default(0);
             $table->boolean('can_add_watermark')->default(true);
+
+            // styles
+            $table->string('language')->nullable();
+            $table->string('shape')->nullable();
+            $table->string('color')->nullable();
+            $table->string('logo_support')->nullable();
+            $table->string('strip_support')->nullable();
+            $table->string('watermark_support')->nullable();
+
             $table->timestamps();
         });
 
