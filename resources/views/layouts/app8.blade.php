@@ -39,7 +39,7 @@
                           <a class="nav-link" href="{{ route('firms.index') }}">{{ __('Firms') }}</a>
                       </li>
                       <li class="nav-item">
-                          <a class="nav-link" href="{{ route('plans.index') }}">{{ __('Templates') }}</a>
+                          <a class="nav-link" href="{{ route('templates.index') }}">{{ __('Templates') }}</a>
                       </li>
                     </ul>
 

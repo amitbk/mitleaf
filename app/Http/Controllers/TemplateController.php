@@ -14,7 +14,8 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        //
+        $templates = Template::latest()->paginate(10);
+        return view('templates.index', compact('templates') );
     }
 
     /**
@@ -24,7 +25,8 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        //
+        $template = new Template();
+        return view('templates.create', compact('template'));
     }
 
     /**

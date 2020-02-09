@@ -39,12 +39,37 @@ class CreateTemplatesTable extends Migration
             $table->bigInteger('used_count')->default(0);
             $table->boolean('can_add_watermark')->default(true);
 
-            // styles
+            // STYLES ::
+
+            // language=> 0=No language,m=Marathi,e=English,h=Hindi
             $table->string('language')->nullable();
+            // shape=> 1=Square, 2=Portrate, 3=Landscape
             $table->string('shape')->nullable();
+            $table->string('style')->nullable();
+            // style=> 6=Both, 7=Dark, 8=Light,
+
+            // color=> use color picker
             $table->string('color')->nullable();
+
             $table->string('logo_support')->nullable();
+            // logo support=>
+                // 11 => bottom-center
+                // 12 => bottom-left
+                // 13 => bottom-right
+                //
+                // 14 => top-center
+                // 15 => top-left
+                // 16 => top-right
+                //
+                // 17 => center
+                // 18 => center-left
+                // 19 => center-right
+
             $table->string('strip_support')->nullable();
+            // strip support
+                // 21 => bottom
+                // 22 => bottom-with-padding
+
             $table->string('watermark_support')->nullable();
 
             $table->timestamps();
