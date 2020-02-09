@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Template;
+use App\FirmType;
+use App\Event;
+use App\Plan;
 use Illuminate\Http\Request;
 
 class TemplateController extends Controller
@@ -26,7 +29,11 @@ class TemplateController extends Controller
     public function create()
     {
         $template = new Template();
-        return view('templates.create', compact('template'));
+
+        $plans = Plan::where('is_active',1)->where('is_frame_plan',1)->get();
+        $firm_types = FirmType::where('is_active',1)->get();
+        $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
+        return view('templates.create', compact('template'), compact('plans'), compact('firm_types') )->with('events', $events);
     }
 
     /**

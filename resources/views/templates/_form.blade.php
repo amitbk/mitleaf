@@ -41,11 +41,10 @@
                 <!-- Plan Name -->
                 <div class="form-group">
                   <label for="plan">Select Plan:</label>
-                  <select name="plan_id" value="{{ old('plan_id', $template->plan_id) }}" class="form-control {{ $errors->has('plan_id') ? 'is-invalid' : '' }}" id="plan">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+                  <select name="plan_id" v-model="planSelected" value="{{ old('plan_id', $template->plan_id) }}" class="form-control {{ $errors->has('plan_id') ? 'is-invalid' : '' }}" id="plan">
+                     @foreach($plans as $plan)
+                        <option value="{{$plan->id}}">{{$plan->name}}</option>
+                    @endforeach
                   </select>
                   @if ($errors->has('plan_id'))
                       <div class="invalid-feedback">
@@ -54,6 +53,7 @@
                   @endif
                 </div>
 
+                @include('templates._form_plan_options')
                 <hr>
                 <!-- Language -->
                 <div class="form-group">

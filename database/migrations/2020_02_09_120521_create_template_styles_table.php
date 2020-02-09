@@ -19,7 +19,6 @@ class CreateTemplateStylesTable extends Migration
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
             $table->string('key')->nullable();
             $table->string('value')->nullable();
-            $table->timestamps();
         });
     }
 
