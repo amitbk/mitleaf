@@ -6,21 +6,21 @@
       <!-- 1 -->
       <div class="form-check-inline ">
         <label class="form-check-label" for="bottom">
-          <input v-model="stripSupport.bottomTouched" type="checkbox" class="form-check-input" id="bottom" name="strip_support[]" value="21">Bottom Touched
+          <input v-model="stripSupport.bottomTouched" type="checkbox" class="form-check-input" id="bottom" name="style_supports[]" value="21">Bottom Touched
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="bottom-padding">
-          <input v-model="stripSupport.bottomWithPadding" type="checkbox" class="form-check-input" id="bottom-padding" name="strip_support[]" value="22">Bottom With Padding
+          <input v-model="stripSupport.bottomWithPadding" type="checkbox" class="form-check-input" id="bottom-padding" name="style_supports[]" value="22">Bottom With Padding
         </label>
       </div>
   </div>
 
 
-  @if ($errors->has('strip_support'))
+  @if ($errors->has('style_supports'))
       <div class="invalid-feedback">
-          <strong>{{ $errors->first('strip_support') }}</strong>
+          <strong>{{ $errors->first('style_supports') }}</strong>
       </div>
   @endif
 </div>

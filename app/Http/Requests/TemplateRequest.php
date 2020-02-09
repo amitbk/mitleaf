@@ -29,7 +29,7 @@ class TemplateRequest extends FormRequest
             'language' => 'required',
             'shape' => 'required',
             'style' => 'required',
-            'image' => 'required',
+            // 'image' => 'required',
         ];
     }
 }

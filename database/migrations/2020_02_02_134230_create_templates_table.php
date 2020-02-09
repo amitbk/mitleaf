@@ -22,7 +22,7 @@ class CreateTemplatesTable extends Migration
             $table->string('name')->nullable();
             $table->text('desc')->nullable();
 
-            $table->integer('image_id');
+            $table->integer('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
 
             $table->integer('plan_id');
@@ -31,13 +31,7 @@ class CreateTemplatesTable extends Migration
             $table->integer('event_id')->nullable();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('set null');
 
-            $table->integer('firm_type_id')->nullable();
-            $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
-
-            $table->text('data')->nullable();
-
             $table->bigInteger('used_count')->default(0);
-            $table->boolean('can_add_watermark')->default(true);
 
             // STYLES ::
 
@@ -47,13 +41,13 @@ class CreateTemplatesTable extends Migration
             $table->string('shape')->nullable();
             // shape=> 1=Square, 2=Portrate, 3=Landscape
 
-            $table->string('style')->nullable();
+            // $table->string('style')->nullable();
             // style=> 6=Both, 7=Light, 8=Dark
 
             // color=> use color picker
             $table->string('color')->nullable();
 
-            $table->string('logo_support')->nullable();
+            // $table->string('logo_support')->nullable();
             // logo support=>
                 // 11 => bottom-center
                 // 12 => bottom-left
@@ -67,26 +61,26 @@ class CreateTemplatesTable extends Migration
                 // 18 => center-left
                 // 19 => center-right
 
-            $table->string('strip_support')->nullable();
+            // $table->string('strip_support')->nullable();
             // strip support
                 // 21 => bottom
                 // 22 => bottom-with-padding
 
-            $table->string('watermark_support')->nullable();
+            // $table->string('watermark_support')->nullable();
 
             $table->timestamps();
         });
 
-        DB::table('templates')->insert(['id'=>1,'image_id' => '1', 'plan_id'=> '2' ]);
-        DB::table('templates')->insert(['id'=>2,'image_id' => '2', 'plan_id'=> '2' ]);
-        DB::table('templates')->insert(['id'=>3,'image_id' => '3', 'plan_id'=> '2' ]);
-        DB::table('templates')->insert(['id'=>4,'image_id' => '4', 'plan_id'=> '3', 'event_id' => 1 ]);
-        DB::table('templates')->insert(['id'=>5,'image_id' => '5', 'plan_id'=> '3', 'event_id' => 2 ]);
-        DB::table('templates')->insert(['id'=>6,'image_id' => '6', 'plan_id'=> '3', 'event_id' => 1 ]);
-        DB::table('templates')->insert(['id'=>7,'image_id' => '7', 'plan_id'=> '4', 'firm_type_id' => 1 ]);
-        DB::table('templates')->insert(['id'=>8,'image_id' => '8', 'plan_id'=> '4', 'firm_type_id' => 2 ]);
-        DB::table('templates')->insert(['id'=>9,'image_id' => '9', 'plan_id'=> '4', 'firm_type_id' => 1 ]);
-        DB::table('templates')->insert(['id'=>10,'image_id' => '10', 'plan_id'=> '2' ]);
+        // DB::table('templates')->insert(['id'=>1,'image_id' => '1', 'plan_id'=> '2' ]);
+        // DB::table('templates')->insert(['id'=>2,'image_id' => '2', 'plan_id'=> '2' ]);
+        // DB::table('templates')->insert(['id'=>3,'image_id' => '3', 'plan_id'=> '2' ]);
+        // DB::table('templates')->insert(['id'=>4,'image_id' => '4', 'plan_id'=> '3', 'event_id' => 1 ]);
+        // DB::table('templates')->insert(['id'=>5,'image_id' => '5', 'plan_id'=> '3', 'event_id' => 2 ]);
+        // DB::table('templates')->insert(['id'=>6,'image_id' => '6', 'plan_id'=> '3', 'event_id' => 1 ]);
+        // DB::table('templates')->insert(['id'=>7,'image_id' => '7', 'plan_id'=> '4', 'firm_type_id' => 1 ]);
+        // DB::table('templates')->insert(['id'=>8,'image_id' => '8', 'plan_id'=> '4', 'firm_type_id' => 2 ]);
+        // DB::table('templates')->insert(['id'=>9,'image_id' => '9', 'plan_id'=> '4', 'firm_type_id' => 1 ]);
+        // DB::table('templates')->insert(['id'=>10,'image_id' => '10', 'plan_id'=> '2' ]);
 
     }
 

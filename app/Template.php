@@ -32,7 +32,7 @@ class Template extends Model
 
     public function template_firm_types()
     {
-        return $this->hasMany(TemplatesFirmType::class);
+        return $this->hasMany(TemplateFirmType::class);
     }
     public function firm_types()
     {

@@ -17,8 +17,9 @@ class CreateTemplateStylesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('template_id')->unsigned()->nullable();
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
-            $table->string('key')->nullable();
-            $table->string('value')->nullable();
+
+            $table->integer('style_id')->unsigned()->nullable();
+            $table->foreign('style_id')->references('id')->on('styles')->onDelete('cascade');
         });
     }
 
