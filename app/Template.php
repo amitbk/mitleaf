@@ -34,4 +34,9 @@ class Template extends Model
     {
         return $this->belongsTo(FirmType::class);
     }
+
+    public function styles()
+    {
+        return $this->hasMany(TemplateStyle::class);
+    }
 }
