@@ -7,6 +7,7 @@ use App\FirmType;
 use App\Event;
 use App\Plan;
 use Illuminate\Http\Request;
+use App\Http\Requests\TemplateRequest;
 
 class TemplateController extends Controller
 {
@@ -42,7 +43,7 @@ class TemplateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TemplateRequest $request)
     {
         return $request;
     }
