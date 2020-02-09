@@ -12,7 +12,7 @@ class FirmType extends Model
     }
     public function templates()
     {
-        return $this->hasMany(Template::class);
+        return $this->hasManyThrough('App\Template', 'App\TemplateFirmType');
     }
     public function firm_plans()
     {

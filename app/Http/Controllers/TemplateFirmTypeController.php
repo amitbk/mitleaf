@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Template;
-use App\FirmType;
-use App\Event;
-use App\Plan;
+use App\TemplateFirmType;
 use Illuminate\Http\Request;
 
-class TemplateController extends Controller
+class TemplateFirmTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +14,7 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        $templates = Template::latest()->paginate(10);
-        return view('templates.index', compact('templates') );
+        //
     }
 
     /**
@@ -28,12 +24,7 @@ class TemplateController extends Controller
      */
     public function create()
     {
-        $template = new Template();
-
-        $plans = Plan::where('is_active',1)->where('is_frame_plan',1)->get();
-        $firm_types = FirmType::where('is_active',1)->get();
-        $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
-        return view('templates.create', compact('template'), compact('plans') )->with('events', $events)->with('firm_types', $firm_types);
+        //
     }
 
     /**
@@ -44,16 +35,16 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Template  $template
+     * @param  \App\TemplateFirmType  $templateFirmType
      * @return \Illuminate\Http\Response
      */
-    public function show(Template $template)
+    public function show(TemplateFirmType $templateFirmType)
     {
         //
     }
@@ -61,10 +52,10 @@ class TemplateController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Template  $template
+     * @param  \App\TemplateFirmType  $templateFirmType
      * @return \Illuminate\Http\Response
      */
-    public function edit(Template $template)
+    public function edit(TemplateFirmType $templateFirmType)
     {
         //
     }
@@ -73,10 +64,10 @@ class TemplateController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Template  $template
+     * @param  \App\TemplateFirmType  $templateFirmType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Template $template)
+    public function update(Request $request, TemplateFirmType $templateFirmType)
     {
         //
     }
@@ -84,10 +75,10 @@ class TemplateController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Template  $template
+     * @param  \App\TemplateFirmType  $templateFirmType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Template $template)
+    public function destroy(TemplateFirmType $templateFirmType)
     {
         //
     }

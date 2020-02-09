@@ -1,9 +1,36 @@
 <div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+              <div class="">
+                Template Image
+                <a href="{{ route('templates.index')}}" class="btn btn-info btn-sm">Back</a>
+              </div>
+            </div>
+
+            <div class="card-body">
+
+                <input ref="image" type="file" id="file" name="image" id="image" @change="displaySelectedImage()">
+                <br>
+                @if ($errors->has('image'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('image') }}</strong>
+                </span>
+                @endif
+                <br>
+                <div class="text-center" id="image_preview"  >
+                    <img id="image_preview" class="img-responsive" style="max-height: 800px; max-width: 500px; margin: 0 auto 0;" :src="templateImage" alt="Ad image">
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">
               <div class="">
-                Create Template
+                Template Options
                 <a href="{{ route('templates.index')}}" class="btn btn-info btn-sm">Back</a>
                 <button type="submit" class="btn btn-success btn-sm">{{ $buttonText }}</button>
 
@@ -111,31 +138,5 @@
         </div>
     </div>
 
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header">
-              <div class="">
-                Template Image
-                <a href="{{ route('templates.index')}}" class="btn btn-info btn-sm">Back</a>
-              </div>
-            </div>
-
-            <div class="card-body">
-
-                <input ref="image" type="file" id="file" name="image" id="image" @change="displaySelectedImage()">
-				<br>
-				@if ($errors->has('image'))
-				<span class="help-block">
-					<strong>{{ $errors->first('image') }}</strong>
-				</span>
-				@endif
-				<br>
-                <div class="text-center" id="image_preview"  >
-                    <img id="image_preview" class="img-responsive" style="max-height: 800px; max-width: 500px; margin: 0 auto 0;" :src="templateImage" alt="Ad image">
-                </div>
-
-            </div>
-        </div>
-    </div>
 
 </div>

@@ -30,9 +30,13 @@ class Template extends Model
         return $this->belongsTo(Plan::class);
     }
 
-    public function firm_type()
+    public function template_firm_types()
     {
-        return $this->belongsTo(FirmType::class);
+        return $this->hasMany(TemplatesFirmType::class);
+    }
+    public function firm_types()
+    {
+        return $this->hasManyThrough('App\Firm', 'App\TemplateFirmType');
     }
 
     public function styles()

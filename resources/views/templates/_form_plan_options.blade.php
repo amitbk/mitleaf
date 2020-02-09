@@ -16,5 +16,15 @@
       @endif
     </div>
 
+    <div v-if="planSelected == 4" class="form-group">
+        Select Firm Types:
+        @foreach($firm_types as $firm_type)
+            <div class="form-check ">
+              <label class="form-check-label" for="firm-type-{{$firm_type->id}}">
+                <input type="checkbox" class="form-check-input" id="firm-type-{{$firm_type->id}}" name="firm_types[]" value="{{$firm_type->id}}">{{$firm_type->name}}
+              </label>
+            </div>
+        @endforeach
+    </div>
 
 </div>

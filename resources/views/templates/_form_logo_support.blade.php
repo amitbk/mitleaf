@@ -7,19 +7,19 @@
       <!-- 1 -->
       <div class="form-check-inline ">
         <label class="form-check-label" for="bottom-center">
-          <input v-model="logoSupport.bottomCenter" type="checkbox" class="form-check-input" id="bottom-center" name="bottom_center" value="11">Center
+          <input v-model="logoSupport.bottomCenter" type="checkbox" class="form-check-input" id="bottom-center" name="logo_support[]" value="11">Center
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="bottom-left">
-          <input v-model="logoSupport.bottomLeft" type="checkbox" class="form-check-input" id="bottom-left" name="bottom_left" value="12">Left
+          <input v-model="logoSupport.bottomLeft" type="checkbox" class="form-check-input" id="bottom-left" name="logo_support[]" value="12">Left
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="bottom-right">
-          <input v-model="logoSupport.bottomRight" type="checkbox" class="form-check-input" id="bottom-right" name="bottom_right" value="13">Right
+          <input v-model="logoSupport.bottomRight" type="checkbox" class="form-check-input" id="bottom-right" name="logo_support[]" value="13">Right
         </label>
       </div>
   </div>
@@ -29,19 +29,19 @@
       <!-- 2 -->
       <div class="form-check-inline mt-2">
         <label class="form-check-label" for="top-center">
-          <input v-model="logoSupport.topCenter" type="checkbox" class="form-check-input" id="top-center" name="top_center" value="14">Center
+          <input v-model="logoSupport.topCenter" type="checkbox" class="form-check-input" id="top-center" name="logo_support[]" value="14">Center
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="top-left">
-          <input v-model="logoSupport.topLeft" type="checkbox" class="form-check-input" id="top-left" name="top_left" value="15">Left
+          <input v-model="logoSupport.topLeft" type="checkbox" class="form-check-input" id="top-left" name="logo_support[]" value="15">Left
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="top-right">
-          <input v-model="logoSupport.topRight" type="checkbox" class="form-check-input" id="top-right" name="top_right" value="16">Right
+          <input v-model="logoSupport.topRight" type="checkbox" class="form-check-input" id="top-right" name="logo_support[]" value="16">Right
         </label>
       </div>
   </div>
@@ -51,19 +51,19 @@
       <!-- 3 -->
       <div class="form-check-inline mt-2">
         <label class="form-check-label" for="center-center">
-          <input v-model="logoSupport.centerCenter" type="checkbox" class="form-check-input" id="center-center" name="center_center" value="17">Center
+          <input v-model="logoSupport.centerCenter" type="checkbox" class="form-check-input" id="center-center" name="logo_support[]" value="17">Center
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="center-left">
-          <input v-model="logoSupport.centerLeft" type="checkbox" class="form-check-input" id="center-left" name="center_left" value="18">Left
+          <input v-model="logoSupport.centerLeft" type="checkbox" class="form-check-input" id="center-left" name="logo_support[]" value="18">Left
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="center-right">
-          <input v-model="logoSupport.centerRight" type="checkbox" class="form-check-input" id="center-right" name="center_right" value="19">Right
+          <input v-model="logoSupport.centerRight" type="checkbox" class="form-check-input" id="center-right" name="logo_support[]" value="19">Right
         </label>
       </div>
   </div>
