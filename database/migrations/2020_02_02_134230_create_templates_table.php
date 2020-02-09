@@ -41,12 +41,14 @@ class CreateTemplatesTable extends Migration
 
             // STYLES ::
 
-            // language=> 0=No language,m=Marathi,e=English,h=Hindi
             $table->string('language')->nullable();
-            // shape=> 1=Square, 2=Portrate, 3=Landscape
+            // language=> 0=No language,m=Marathi,e=English,h=Hindi
+
             $table->string('shape')->nullable();
+            // shape=> 1=Square, 2=Portrate, 3=Landscape
+
             $table->string('style')->nullable();
-            // style=> 6=Both, 7=Dark, 8=Light,
+            // style=> 6=Both, 7=Light, 8=Dark
 
             // color=> use color picker
             $table->string('color')->nullable();

@@ -75,9 +75,9 @@
                 <div class="form-group">
                   <label for="shape">Shape:</label>
                   <select name="shape" value="{{ old('shape', $template->shape) }}" class="form-control {{ $errors->has('shape') ? 'is-invalid' : '' }}" id="shape">
-                    <option value="m" selected>Square</option>
-                    <option value="h">Portrait</option>
-                    <option value="e">Landscape</option>
+                    <option value="1" selected>Square</option>
+                    <option value="2">Portrait</option>
+                    <option value="3">Landscape</option>
                   </select>
                   @if ($errors->has('shape'))
                       <div class="invalid-feedback">
@@ -90,8 +90,9 @@
                 <div class="form-group">
                   <label for="style">Style:</label>
                   <select name="style" value="{{ old('style', $template->style) }}" class="form-control {{ $errors->has('style') ? 'is-invalid' : '' }}" id="style">
-                    <option value="m" selected>Light</option>
-                    <option value="h">Dark</option>
+                    <option value="6">Both</option>
+                    <option value="7" selected>Light</option>
+                    <option value="8">Dark</option>
                   </select>
                   @if ($errors->has('style'))
                       <div class="invalid-feedback">
@@ -101,52 +102,10 @@
                 </div>
                 <hr>
 
-                <!-- Logo Support -->
-                <div class="form-group">
-                  <label for="logo_support-label">Logo Support:</label>
+                @include('templates._form_logo_support')
+                @include('templates._form_strip_support')
 
 
-                  <div class="form-check">
-                    <label class="form-check-label" for="check1">
-                      <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>Option 1
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label" for="check2">
-                      <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Option 2
-                    </label>
-                  </div>
-
-                  @if ($errors->has('style'))
-                      <div class="invalid-feedback">
-                          <strong>{{ $errors->first('logo_support') }}</strong>
-                      </div>
-                  @endif
-                </div>
-
-
-                <!-- Strip Support -->
-                <div class="form-group">
-                  <label for="logo_support-label">Strip Support:</label>
-
-
-                  <div class="form-check">
-                    <label class="form-check-label" for="check1">
-                      <input type="checkbox" class="form-check-input" id="check1" name="option1" value="something" checked>Option 1
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label" for="check2">
-                      <input type="checkbox" class="form-check-input" id="check2" name="option2" value="something">Option 2
-                    </label>
-                  </div>
-
-                  @if ($errors->has('style'))
-                      <div class="invalid-feedback">
-                          <strong>{{ $errors->first('logo_support') }}</strong>
-                      </div>
-                  @endif
-                </div>
 
             </div>
         </div>
@@ -156,13 +115,24 @@
         <div class="card">
             <div class="card-header">
               <div class="">
-                Template
+                Template Image
                 <a href="{{ route('templates.index')}}" class="btn btn-info btn-sm">Back</a>
               </div>
             </div>
 
             <div class="card-body">
 
+                <input ref="image" type="file" id="file" name="image" id="image" @change="displaySelectedImage()">
+				<br>
+				@if ($errors->has('image'))
+				<span class="help-block">
+					<strong>{{ $errors->first('image') }}</strong>
+				</span>
+				@endif
+				<br>
+                <div class="text-center" id="image_preview"  >
+                    <img id="image_preview" class="img-responsive" style="max-height: 800px; max-width: 500px; margin: 0 auto 0;" :src="templateImage" alt="Ad image">
+                </div>
 
             </div>
         </div>
