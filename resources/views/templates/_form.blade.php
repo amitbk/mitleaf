@@ -8,19 +8,40 @@
               </div>
             </div>
 
-            <div class="card-body">
+            <div class="card-body text-center">
+                <!-- try vue image resize component
+                and bind value by ref of vue try once -->
+                <image-uploader
+                    :debug="1"
+                    :max-width="600"
+                    :quality="0.7"
+                    :auto-rotate=true
+                    output-format="verbose"
+                    :preview=true
+                    :class-name="['fileinput', { 'fileinput--loaded' : hasImage }]"
+                    :capture="false"
+                    accept="video/*,image/*"
+                    doNot-resize="['gif', 'svg']"
+                    @input="setImage"
+                    @on-upload="startImageResize"
+                    @on-complete="endImageResize"
+                  >
+                  <span class="clearfix"></span>
+                  <label for="fileInput" slot="upload-label">
+                    <div class="upload-caption">@{{ hasImage ? 'Replace File' : 'Select a file' }}</div>
+                  </label>
 
-                <input ref="image" type="file" id="file" name="image" id="image" @change="displaySelectedImage()">
+                </image-uploader>
+
+                <input type="hidden" id="file" name="image" id="image" v-model="image.dataUrl">
+                <!-- <input ref="image" type="file" id="file" name="image" id="image" @change="displaySelectedImage()"> -->
                 <br>
                 @if ($errors->has('image'))
                 <span class="help-block">
                     <strong>{{ $errors->first('image') }}</strong>
                 </span>
                 @endif
-                <br>
-                <div class="text-center" id="image_preview"  >
-                    <img id="image_preview" class="img-responsive" style="max-height: 800px; max-width: 500px; margin: 0 auto 0;" :src="templateImage" alt="Ad image">
-                </div>
+
 
             </div>
         </div>

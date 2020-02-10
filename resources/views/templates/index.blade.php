@@ -16,6 +16,8 @@
                     @include('helpers._flash')
                     @foreach($templates as $template)
                       <h2>{{$template->name}}</h2>
+                      <img src="{{$template->image->url}}" class="img-thumbnail">
+                      <hr>
                     @endforeach
                 </div>
             </div>

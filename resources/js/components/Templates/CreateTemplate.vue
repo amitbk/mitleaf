@@ -5,12 +5,20 @@
 </template>
 
 <script>
+import ImageUploader from 'vue-image-upload-resize'
 import axios from 'axios';
 export default {
   name: "CreateTemplate",
   props: ["plans"],
+  components: {
+      ImageUploader
+  },
   data() {
     return {
+        msg: "Vue Image Upload and Resize Demo",
+        hasImage: false,
+        image: {dataUrl: ''},
+
         templateImage: '/images/no_image.png',
         planSelected: 2,
         logoSupport: {
@@ -58,10 +66,39 @@ export default {
         console.log("Error", e);
       }
     },
+
+    setImage(data) {
+        console.log("71", data);
+        this.hasImage = true;
+        this.image = data;
+    },
+    startImageResize(data) {
+        console.log("74", data);
+    },
+    endImageResize(data) {
+        console.log("77", data);
+    }
   }, // methods
 };
 </script>
 
 <style lang="css" scoped>
-
+    .upload-caption {
+        padding: 10px;
+        background: #6cb2eb;
+        display: table;
+        color: #ffffff;
+        border: 1px solid #fff;
+        border-radius: 4px;
+        margin: 10px;
+     }
+</style>
+<style media="screen">
+.fileinput {
+    display: none;
+}
+.img-preview {
+    display: flex;
+    margin: 0 auto;
+}
 </style>

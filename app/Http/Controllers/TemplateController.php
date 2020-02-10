@@ -7,10 +7,11 @@ use App\TemplateStyle;
 use App\FirmType;
 use App\Event;
 use App\Plan;
-
+use App\Image as Img;
 use Illuminate\Http\Request;
 use App\Http\Requests\TemplateRequest;
 use Auth;
+use Image;
 
 class TemplateController extends Controller
 {
@@ -48,31 +49,50 @@ class TemplateController extends Controller
      */
     public function store(TemplateRequest $request)
     {
-        // return $request;
-
         // upload image
+        $img = explode(',', $request->image);
+        $ini =substr($img[0], 11);
+        $type = explode(';', $ini);
+        $image = str_replace(' ', '+', $img[1]);
+        $path = "images/templates/";
+        $imageName = Auth::id()."_".date('yymd_his').".". $type[0];
+        // return $imageName;
+        file_put_contents($path.$imageName, base64_decode($image));
+
+        $image = new Img;
+        $image->url = $path.$imageName;
+        $image->save();
+
         // save template
         $template = new Template;
         $template->user_id = Auth::id();
         $template->name = $request->name;
         $template->plan_id = $request->plan_id;
         $template->event_id = $request->event_id;
-        $template->image_id = 1;
+        $template->image_id = $image->id;
         $template->language = $request->language;
         $template->shape = $request->shape;
         $template->color = $request->color;
         $template->save();
 
         // save template styles
-        foreach ($request->style_supports as $style) {
-            $comment = $template->styles()->create(['style_id' => $style]);
+        if($request->style_supports)
+        {
+            foreach ($request->style_supports as $style)
+            {
+                $comment = $template->styles()->create(['style_id' => $style]);
+            }
         }
 
         // save template firm_types if any
-        foreach ($request->firm_types as $firm_type) {
-            $comment = $template->template_firm_types()->create([
+        if($request->firm_types)
+        {
+            foreach ($request->firm_types as $firm_type)
+            {
+                $comment = $template->template_firm_types()->create([
                     'firm_type_id' => $firm_type,
                 ]);
+            }
         }
 
         return redirect('templates');
