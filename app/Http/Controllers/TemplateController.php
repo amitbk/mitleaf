@@ -50,18 +50,8 @@ class TemplateController extends Controller
     public function store(TemplateRequest $request)
     {
         // upload image
-        $img = explode(',', $request->image);
-        $ini =substr($img[0], 11);
-        $type = explode(';', $ini);
-        $image = str_replace(' ', '+', $img[1]);
-        $path = "images/templates/";
-        $imageName = Auth::id()."_".date('yymd_his').".". $type[0];
-        // return $imageName;
-        file_put_contents($path.$imageName, base64_decode($image));
-
         $image = new Img;
-        $image->url = $path.$imageName;
-        $image->save();
+        $image->create_from_base64($request->image, "images/templates/");
 
         // save template
         $template = new Template;
@@ -117,7 +107,7 @@ class TemplateController extends Controller
      */
     public function edit(Template $template)
     {
-        //
+        return $template;
     }
 
     /**
