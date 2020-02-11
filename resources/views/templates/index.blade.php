@@ -4,23 +4,32 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                  <div class="">
-                    Templates
-                    <a href="{{ route('templates.create')}}" class="btn btn-success btn-sm">Add New</a>
-                  </div>
-                </div>
+            @include('helpers._flash')
+            <h3>All Templates</h3>
+            <div class="row equal">
+                @foreach($templates as $template)
+                <div class="col-sm-4 d-flex pb-3">
+                     <div class="card">
+                        <img class="card-img-top" src="{{$template->image->url}}" alt="Card image" style="width:100%; height: 200px;">
+                        <div class="card-body">
+                          <h4 class="card-title">{{$template->name}}</h4>
+                          <p class="card-text">{{$template->desc}}</p>
 
-                <div class="card-body">
-                    @include('helpers._flash')
-                    @foreach($templates as $template)
-                      <h2>{{$template->name}}</h2>
-                      <img src="{{$template->image->url}}" class="img-thumbnail">
-                      <hr>
-                    @endforeach
+                              <div class="row no-gutters" style="grid-gap: 5px;">
+                                <a href="{{ route('templates.edit', $template->id) }}" class="btn btn-primary btn-sm stretched-link col m-1">Edit</a>
+                                <form class="form-delete col m-1" method="post" action="{{ route('templates.destroy', $template->id) }}">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm btn-outline-danger col" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                             </div>
+                        </div>
+                      </div>
                 </div>
+                @endforeach
             </div>
+
+            {{$templates->links()}}
         </div>
     </div>
 </div>
