@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Firm;
+use App\FirmType;
 use Illuminate\Http\Request;
 use App\Http\Requests\FirmRequest;
 use Auth;
@@ -30,7 +31,8 @@ class FirmController extends Controller
     public function create()
     {
         $firm = new Firm();
-        return view('firms.create', compact('firm'));
+        $firm_types = FirmType::where('is_active',1)->get();
+        return view('firms.create', compact('firm'), compact('firm_types'));
     }
 
     /**
@@ -42,7 +44,12 @@ class FirmController extends Controller
     public function store(FirmRequest $request)
     {
         $user = Auth::user();
-        $firm = $user->firms()->create($request->except('_token'));
+        // $firm = $user->firms()->create($request->except('_token'));
+        $firm = new Firm;
+        $firm->name = $request->name;
+        $firm->firm_type_id = $request->firm_type_id;
+        $firm->save();
+        $user->firms()->attach($firm);
 
         isset($id) ? $msg="Firm Updated Successfully!" : $msg="Firm Saved Successfully!";
         flash($msg, 'success');
@@ -70,6 +77,39 @@ class FirmController extends Controller
     public function edit(Firm $firm)
     {
         //
+    }
+
+    public function edit_details($firm_id)
+    {
+        $firm = Firm::find($firm_id);
+        return view('firms.edit_details', compact('firm'));
+    }
+    public function edit_details2($firm_id)
+    {
+        $firm = Firm::find($firm_id);
+        return "as";
+        // return view('firms.edit_details', compact('firm'));
+    }
+
+    public function update_details(FirmRequest $request)
+    {
+        return $request;
+        $firm = Firm::find($request->firm_id);
+        // save assets
+        // upload image
+        $image = new Img;
+        $image->create_from_base64($request->image, "images/assets/");
+
+        $asset = Asset::firstOrNew(
+                ['firm_id' => $request->firm_id, 'asset_type_id' => 1]
+            );
+        $asset->firm_id = $request->firm_id;
+        $asset->asset_type_id = 1;
+        $asset->image_id = $image->id;
+        $asset->save();
+
+        flash("Logo Uploaded Successfully", 'success');
+        return redirect('firms');
     }
 
     /**

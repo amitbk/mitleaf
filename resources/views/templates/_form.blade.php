@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <div class="card">
+        <div class="card  mb-2">
             <div class="card-header">
               <div class="">
                 Template Image
@@ -9,8 +9,7 @@
             </div>
 
             <div class="card-body text-center">
-                <!-- try vue image resize component
-                and bind value by ref of vue try once -->
+
                 <image-uploader
                     :debug="1"
                     :max-width="600"

@@ -25,6 +25,10 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('plans-list', require('./components/Plans/PlansList.vue').default);
 Vue.component('create-template', require('./components/Templates/CreateTemplate.vue').default);
 
+
+Vue.component('firm-create', require('./components/Firms/FirmCreate.vue').default);
+Vue.component('firm-edit-details', require('./components/Firms/FirmEditDetails.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
