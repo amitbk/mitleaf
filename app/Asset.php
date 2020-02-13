@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Asset extends Model
 {
+    protected $fillable = [
+        'firm_id', 'asset_type_id'
+    ];
     public function firm()
     {
         return $this->belongsTo(Firm::class);

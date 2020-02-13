@@ -17,9 +17,9 @@
                         @endif
 
                         <form action="{{ route('firms.update_details', $firm->id) }}" method="post">
-
+                            @csrf
                             <image-uploader
-                                :debug="1"
+                                :debug="0"
                                 :max-width="600"
                                 :quality="0.7"
                                 :auto-rotate=true
