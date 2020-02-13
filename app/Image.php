@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 class Image extends Model
 {
+    /**
+     * Create image from base64 data, store at specified path and delete old image if any.
+     *
+     * @param  string  $data = base64 data
+     * @param  string  $path = where to store?
+     * @param[]  int  $old_image_id = delete old image if any.
+     * @return true
+     */
     public function create_from_base64($data, $path, $old_image_id)
     {
         // upload image
@@ -30,5 +38,7 @@ class Image extends Model
                 $old_image->delete();
             }
         }
+
+        return true;
     }
 }
