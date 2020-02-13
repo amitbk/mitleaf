@@ -89,8 +89,7 @@ class FirmController extends Controller
     public function edit_details2($firm_id)
     {
         $firm = Firm::find($firm_id);
-        return "as";
-        // return view('firms.edit_details', compact('firm'));
+        return view('firms.edit_details2', compact('firm'));
     }
 
     public function update_details(Request $request, $id)
@@ -110,6 +109,27 @@ class FirmController extends Controller
         $asset->save();
 
         flash("Logo Uploaded Successfully", 'success');
+        return redirect()->route('firms.edit_details2', $id);
+    }
+
+    public function update_details2(Request $request, $id)
+    {
+        $firm = Firm::find($id);
+
+        $asset = Asset::firstOrNew(
+                ['firm_id' => $id, 'asset_type_id' => 3]
+            );
+        $asset->firm_id = $id;
+        $asset->asset_type_id = 3;
+
+        // upload image
+        $image = new Img;
+        $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
+
+        $asset->image_id = $image->id;
+        $asset->save();
+
+        flash("Strip Uploaded Successfully", 'success');
         return redirect('firms');
     }
 
