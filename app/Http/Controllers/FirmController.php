@@ -96,15 +96,17 @@ class FirmController extends Controller
     {
         $firm = Firm::find($id);
         // save assets
-        // upload image
-        $image = new Img;
-        $image->create_from_base64($request->image, "images/assets/");
 
         $asset = Asset::firstOrNew(
                 ['firm_id' => $id, 'asset_type_id' => 1]
             );
         $asset->firm_id = $id;
         $asset->asset_type_id = 1;
+
+        // upload image
+        $image = new Img;
+        $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
+
         $asset->image_id = $image->id;
         $asset->save();
 
