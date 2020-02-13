@@ -5,16 +5,12 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-5">
+                @include('helpers._flash')
                 <h3 class="text-center">Upload a logo of {{$firm->name}}.</h3>
                 <div class="card">
 
 
                     <div class="card-body text-center">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
 
                         <form action="{{ route('firms.update_details', $firm->id) }}" method="post">
                             @csrf
