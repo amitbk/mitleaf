@@ -4,23 +4,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                  <div class="">
-                    Firms
-                    <a href="{{ route('firms.create')}}" class="btn btn-success btn-sm">Add New</a>
-                  </div>
-                </div>
+            @include('helpers._flash')
+            <h2>Firms
+                <a href="{{ route('firms.create')}}" class="btn btn-success btn-sm">Add New</a>
+            </h2>
 
-                <div class="card-body">
-                    @include('helpers._flash')
-                    {{$firms}}
-                    @foreach($firms as $firm)
-                      <h2>{{$firm->name}}</h2>
-                      Created: {{$firm->users()->first()->name}}
-                    @endforeach
-                </div>
+            @foreach($firms as $firm)
+            <div class="card mb-2">
+              <div class="card-body">
+                  <h4>{{$firm->name}}</h4>
+              </div>
             </div>
+            @endforeach
+
+            
         </div>
     </div>
 </div>
