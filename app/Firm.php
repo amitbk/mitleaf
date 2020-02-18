@@ -24,8 +24,15 @@ class Firm extends Model
     }
     public function logo()
     {
-      return $this->belongsTo(Image::class, 'logo_id');
+        $asset = $this->assets->where('asset_type_id',1)->first();
+        return $asset ? $asset->image->url : null ;
     }
+    public function strip()
+    {
+        $asset = $this->assets->where('asset_type_id',2)->first();
+        return $asset ? $asset->image->url : null ;
+    }
+
     public function firm_type()
     {
       return $this->belongsTo(FirmType::class, 'logo_id');

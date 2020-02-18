@@ -67,7 +67,10 @@ class FirmController extends Controller
      */
     public function show(Firm $firm)
     {
-        //
+        // $firm->increment('views');
+        // $logo = $firm->assets->where('asset_type_id',1)->first();
+        // return $firm->logo();
+        return view('firms.show', compact('firm'));
     }
 
     /**
@@ -111,7 +114,7 @@ class FirmController extends Controller
         $asset->save();
 
         flash("Logo Uploaded Successfully", 'success');
-        return redirect()->route('firms.edit_details2', $id);
+        return redirect()->route('firms.show', $id);
     }
 
     public function update_details2(Request $request, $id)
@@ -132,7 +135,7 @@ class FirmController extends Controller
         $asset->save();
 
         flash("Strip Uploaded Successfully", 'success');
-        return redirect('firms');
+        return redirect()->route('firms.show', $id);
     }
 
     /**
