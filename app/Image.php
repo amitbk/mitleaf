@@ -34,7 +34,8 @@ class Image extends Model
             $old_image = Image::find($old_image_id);
             if($old_image)
             {
-                unlink($old_image->url);
+                if(file_exists($old_image->url))
+                    unlink($old_image->url);
                 $old_image->delete();
             }
         }
