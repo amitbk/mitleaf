@@ -19,3 +19,11 @@
     margin: 0 auto;
     max-width: 100%;
 }
+
+
+.border-f {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.border-b {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
