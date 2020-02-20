@@ -21,9 +21,17 @@
 }
 
 
-.border-f {
+.border_f {
     border: 1px solid rgba(0, 0, 0, 0.125);
 }
-.border-b {
+.border_b {
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.fl_tag {
+    font-size: 12px;
+    border: 1px solid #accdbb;
+    background-color: #defee3;
+    border-radius: 3px;
+    padding: 0px 3px;
 }
