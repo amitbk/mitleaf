@@ -14,4 +14,8 @@ class OrderPlan extends Model
     {
         return $this->belongsTo(Plan::class);
     }
+    public function firm_plan()
+    {
+        return $this->hasOne(FirmPlan::class);
+    }
 }

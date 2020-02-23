@@ -24,4 +24,8 @@ class FirmPlan extends Model
     {
         return $this->belongsTo(FirmType::class);
     }
+    public function order_plan()
+    {
+        return $this->belongsTo(OrderPlan::class);
+    }
 }

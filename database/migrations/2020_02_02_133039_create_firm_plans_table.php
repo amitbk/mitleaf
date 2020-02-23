@@ -20,6 +20,9 @@ class CreateFirmPlansTable extends Migration
             $table->integer('plan_id')->unsigned()->index();
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
+            $table->integer('order_plan_id')->unsigned()->index();
+            $table->foreign('order_plan_id')->references('id')->on('order_plans')->onDelete('cascade');
+
             $table->integer('qty_per_month')->default(0);
 
             $table->integer('firm_type_id')->nullable();
