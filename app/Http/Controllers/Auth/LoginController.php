@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use App\User;
+use App\Firm;
 
 class LoginController extends Controller
 {
@@ -26,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -36,5 +38,28 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function redirectTo()
+    {
+        return $this->beforeRedirectLogic();
+    }
+
+    public static function beforeRedirectLogic()
+    {
+        // if no firm after new registration, create a simple firm
+        // var_dump(auth()->id());die();
+        if(auth()->user()->firms->count() == 0)
+        {
+            $firm = new Firm;
+            $firm->name = auth()->user()->name."'s Business";
+            $firm->save();
+            $firm->users()->attach(auth()->user());
+        }
+        // if(auth()->user()->firms)
+        if (auth()->user()->role_id == 1) {
+            return '/admin';
+        }
+        return '/home';
     }
 }
