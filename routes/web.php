@@ -28,7 +28,7 @@ Route::get('/firms/{id}/edit_details2', 'FirmController@edit_details2')->name('f
 Route::post('/firms/{id}/update_details2', 'FirmController@update_details2')->name('firms.update_details2');
 
 Route::resource('/plans', 'PlanController');
-Route::resource('/orders', 'OrderPlanController');
+Route::resource('/orders', 'OrderController');
 Route::resource('/order_plans', 'OrderPlanController');
 Route::get('/myplans', 'PlanController@myplans')->name('myplans');
 

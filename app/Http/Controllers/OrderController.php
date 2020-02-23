@@ -7,6 +7,7 @@ use Auth;
 use App\Order;
 use App\OrderPlan;
 use App\FirmPlan;
+use App\Frame;
 use Carbon\Carbon;
 
 class OrderController extends Controller
@@ -24,7 +25,44 @@ class OrderController extends Controller
     public function create_frames($id)
     {
         $order = Order::find($id);
-        $order->create_frames_of_plans();
+
+        $firm_plans = $order->firm_plans;
+        foreach ($firm_plans as $firm_plan) {
+            
+            if($firm_plan->plan_id != 2)
+            {
+
+                // find $frames having ->scheduled_on < $firm_plan->date_start_from
+                $is_frames_created = false;
+                if(!$is_frames_created)
+                {
+                    // var_dump("<pre>",$firm_plan);die();
+                    $days_interval = 30/$firm_plan->qty_per_month;
+                    $start_day = $firm_plan->date_start_from;
+                    $next_day = $firm_plan->date_start_from;
+
+                    if($firm_plan->date_scheduled_upto != null)
+                    {
+                        // if some frames already created upto 'date_scheduled_upto' date
+                        $next_day = $firm_plan->date_scheduled_upto;
+                        $next_day->addDays($days_interval);
+                    }
+
+                    // create frame if $next_day < $firm_plan->date_expiry
+                    while($next_day <= $firm_plan->date_expiry)
+                    {
+                        $frame = new Frame;
+                        $frame->schedule_on = $next_day;
+                        $frame->firm_plan_id = $firm_plan->id;
+                        $frame->save();
+                        $firm_plan->date_scheduled_upto = $next_day;
+                        $next_day->addDays($days_interval);
+                    }
+                }// if
+                
+                $firm_plan->save();
+            }
+        }
     }
     /**
      * Show the form for creating a new resource.
@@ -77,7 +115,9 @@ class OrderController extends Controller
             if(property_exists($plan, 'firm_type_id'))
                 $firm_plan->firm_type_id = $plan->firm_type_id;
 
-            $firm_plan->date_scheduled = Carbon::now()->addDays(1);
+            // when to start plan
+            $firm_plan->date_start_from = Carbon::now()->addDays(1);
+            // $firm_plan->date_scheduled_upto = $firm_plan->date_start_from;
             $firm_plan->date_expiry = Carbon::now()->addMonths($request->duration_selected)->addDays(1);
             $firm_plan->save();
         }
@@ -95,7 +135,7 @@ class OrderController extends Controller
         */
 
         // TODO: Create a FirmPlan for order
-        $order->createFramesOfPlans();
+        // $order->createFramesOfPlans();
 
         return redirect('myplans');
     }

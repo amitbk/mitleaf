@@ -9,10 +9,11 @@
             @if($plans->count() == 0)
                 <h2>You dont have any active plan.</h2>
             @else
+            <h2>My Plans</h2>
             <table class="table table-bordered">
                 <thead>
                   <tr>
-``                  <th>#</th>
+                    <th>#</th>
                     <th class="text-left">Name</th>
                     <th>Qty/Month</th>
                     <th>Scheduled On</th>
@@ -29,7 +30,7 @@
                             {{$plan->firm_type->name ??''}}
                         </td>
                         <td>{{$plan->qty_per_month}}</td>
-                        <td>{{$plan->date_scheduled->format('d M,Y')}}</td>
+                        <td>{{$plan->date_start_from->format('d M,Y')}}</td>
                         <td>{{$plan->date_expiry->format('d M,Y')}}</td>
                       </tr>
                     @endforeach
