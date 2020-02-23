@@ -15,14 +15,16 @@ class CreateFramesTable extends Migration
     {
         Schema::create('frames', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->timestamp('schedule_on')->nullable();
+            $table->timestamp('is_posted_on_social_media')->nullable();
+            $table->boolean('is_finalized')->default(false)->nullable();
+            $table->text('content')->nullable();
+            
             $table->integer('firm_plans_id');
             $table->foreign('firm_plans_id')->references('id')->on('firm_planss')->onDelete('set null');
 
             $table->integer('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
-
-            $table->timestamp('schedule_on')->nullable();
-            $table->timestamp('is_posted_on_social_media')->nullable();
 
             $table->integer('template_id')->nullable();
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');

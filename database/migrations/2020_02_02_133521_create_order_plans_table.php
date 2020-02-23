@@ -27,6 +27,9 @@ class CreateOrderPlansTable extends Migration
             // qty in months
             $table->double('qty');
             $table->double('rate');
+
+            // is this plan available to redeem or not
+            $table->boolean('is_available')->default(false)->nullable();
             
             $table->timestamps();
         });
