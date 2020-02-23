@@ -9,6 +9,7 @@ use App\Image as Img;
 use Illuminate\Http\Request;
 use App\Http\Requests\FirmRequest;
 use Auth;
+use DB;
 class FirmController extends Controller
 {
     public function __construct() {
@@ -75,7 +76,11 @@ class FirmController extends Controller
         // $firm->increment('views');
         // $logo = $firm->assets->where('asset_type_id',1)->first();
         // return $firm->logo();
-        return view('firms.show', compact('firm'));
+        $frames = $firm->frames()->with('firm_plan')->with('firm_plan.plan')->orderBy('schedule_on', 'asc')->paginate(10);
+        
+        // return DB::enableQueryLog();
+        return $frames;
+        return view('firms.show', compact('firm'))->withFrames($frames);
     }
 
     /**
