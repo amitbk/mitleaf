@@ -24,6 +24,11 @@ class FirmController extends Controller
         $firms = Firm::latest()->paginate(10);
         return view('firms.index', compact('firms') );
     }
+    public function myfirms()
+    {
+        $firms = auth()->user()->firms()->latest()->paginate(10);
+        return view('firms.index', compact('firms') )->withPageTitle('My Businesses');
+    }
 
     /**
      * Show the form for creating a new resource.

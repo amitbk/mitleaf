@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             @include('helpers._flash')
-            <h2>Firms
+            <h2>{{ $pageTitle ?? 'Firms' }}
                 <a href="{{ route('firms.create')}}" class="btn btn-success btn-sm">Add New</a>
             </h2>
 
