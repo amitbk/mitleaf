@@ -79,8 +79,9 @@ class FirmController extends Controller
         $frames = $firm->frames()->with('firm_plan')->with('firm_plan.plan')->orderBy('schedule_on', 'asc')->paginate(10);
         
         // return DB::enableQueryLog();
-        return $frames;
+        // return $frames;
         return view('firms.show', compact('firm'))->withFrames($frames);
+        // return route('home');
     }
 
     /**
