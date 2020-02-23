@@ -67,6 +67,12 @@ This will help to create pivot table migrations
 
 ```composer require intervention/image```
 
+## Laravel Debugger
+
+```composer require barryvdh/laravel-debugbar --dev```
+
+- [Laravel Debugger - Link](https://github.com/barryvdh/laravel-debugbar).
+
 
 ## About Laravel
 
