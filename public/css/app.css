@@ -10884,6 +10884,24 @@ a.text-dark:focus {
   }
 }
 
+.fl_bg1 {
+  color: #000;
+  border: 0px;
+  background: #ed2f59;
+  background: linear-gradient(to bottom, #fff, #d2f6e3);
+}
+
+.fl_bg2 {
+  color: #8fe6bd;
+  border: 0px;
+  background: #ed2f59;
+  background: linear-gradient(to bottom, #1d9956, #1c2060);
+}
+
+.bg_sky1 {
+  background-color: #defee3;
+}
+
 .logo {
   height: 35px;
 }
@@ -10913,5 +10931,24 @@ a.text-dark:focus {
   display: flex;
   margin: 0 auto;
   max-width: 100%;
+}
+
+.border_f {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.border_b {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.fl_tag {
+  font-size: 12px;
+  border: 1px solid #accdbb;
+  border-radius: 3px;
+  padding: 0px 3px;
+}
+
+.no_decoration {
+  text-decoration: none;
 }
 
