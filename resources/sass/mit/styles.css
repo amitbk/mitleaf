@@ -31,7 +31,10 @@
 .fl_tag {
     font-size: 12px;
     border: 1px solid #accdbb;
-    background-color: #defee3;
     border-radius: 3px;
     padding: 0px 3px;
+}
+
+.no_decoration {
+    text-decoration: none;
 }

@@ -2,18 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-12 fl_bg1">
-            <div class="row text-center">
-                    <div class="col-md-3 mt-5 mx-auto">
-                        <img class="img-fluid p-2" src="{{asset( $firm->logo() )}}" alt="">
-                    </div>
-                    <div class="col-md-12 my-4 font-weight-bold">
-                        <h3>{{$firm->name}}</h3>
-                    </div>
-            </div>
-        </div>
-    </div>
+    @include('helpers.title_strip1', ['name' => $firm->name, 'logo' => $firm->logo() ] )
+
     <div class="row justify-content-center">
         <div class="col-md-9 col-xs-12 mt-3">
             @include('helpers._flash')
@@ -23,7 +13,6 @@
 
 
                     <div class="card my-2">
-
                         <!-- top -->
                         <div class="media p-2 border_b">
                           <img src="https://picsum.photos/50" alt="John Doe" class="mr-2 rounded-circle">

@@ -10,7 +10,10 @@ class Template extends Model
     {
         return $this->hasMany(Frame::class);
     }
-
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
     public function tags()
@@ -36,7 +39,7 @@ class Template extends Model
     }
     public function firm_types()
     {
-        return $this->hasManyThrough('App\Firm', 'App\TemplateFirmType');
+        return $this->belongsToMany('App\FirmType', 'template_firm_types');
     }
 
     public function styles()
