@@ -2,7 +2,7 @@
 
 @section('content')
 <plans-list :plans="{{ $plans }}" :firm_types="{{$firm_types}}" inline-template>
-    <div class="container">
+    <div class="container py-4">
 
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 text-center">
@@ -23,7 +23,7 @@
             <div class="col next_plan_changer ">
                 <button v-if="formStep<2" @click="formStep++" type="button" class="btn btn-default bg-light btn-sm">Continue</button>
                 <span v-if="formStep == 2">
-                    <form class="" action="{{url('plans')}}" method="post">
+                    <form class="" action="{{url('order_plans')}}" method="post">
                         {{csrf_field()}}
                         <input type="hidden" name="plans" :value="JSON.stringify(localPlans.filter(el => el.is_selected))">
                         <input type="hidden" name="duration_selected" :value="duration_selected">
