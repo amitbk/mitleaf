@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class FirmPlan extends Model
 {
-    protected $dates = ['date_scheduled', 'date_expiry'];
+    protected $dates = ['date_start_from', 'date_scheduled_upto', 'date_expiry'];
 
     public function frames()
     {

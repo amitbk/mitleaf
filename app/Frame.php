@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Frame extends Model
 {
+    protected $dates = ['schedule_on'];
     public function image()
     {
         return $this->belongsTo(Image::class);

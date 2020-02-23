@@ -74,6 +74,6 @@ class RegisterController extends Controller
 
     protected function redirectTo()
     {
-        LoginController::beforeRedirectLogic();
+        return LoginController::beforeRedirectLogic();
     }
 }

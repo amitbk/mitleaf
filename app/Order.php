@@ -10,6 +10,11 @@ class Order extends Model
     {
         return $this->hasMany(OrderPlan::class);
     }
+    public function firm_plans()
+    {
+        return $this->hasManyThrough(FirmPlan::class, OrderPlan::class);
+    }
+
     public function wallets()
     {
         return $this->hasMany(Wallet::class);
@@ -28,7 +33,7 @@ class Order extends Model
 
     public function create_frames_of_plans($days = 30)
     {
-        $plans = $this->plans;
+        $order_plans = $this->plans;
 
         var_dump("hello");die();
         return "ok";
