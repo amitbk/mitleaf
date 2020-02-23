@@ -20,6 +20,7 @@ class CreateTemplateStylesTable extends Migration
 
             $table->integer('style_id')->unsigned()->nullable();
             $table->foreign('style_id')->references('id')->on('styles')->onDelete('cascade');
+            $table->text('data')->nullable();
         });
     }
 
