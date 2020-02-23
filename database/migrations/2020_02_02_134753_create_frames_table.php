@@ -20,8 +20,8 @@ class CreateFramesTable extends Migration
             $table->boolean('is_finalized')->default(false)->nullable();
             $table->text('content')->nullable();
             
-            $table->integer('firm_plans_id');
-            $table->foreign('firm_plans_id')->references('id')->on('firm_planss')->onDelete('set null');
+            $table->integer('firm_plan_id');
+            $table->foreign('firm_plan_id')->references('id')->on('firm_plans')->onDelete('set null');
 
             $table->integer('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');

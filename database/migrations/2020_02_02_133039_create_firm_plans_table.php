@@ -28,8 +28,8 @@ class CreateFirmPlansTable extends Migration
             $table->integer('firm_type_id')->nullable();
             $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
 
-            $table->timestamp('date_last_created')->nullable();
-            $table->timestamp('date_scheduled')->nullable();
+            $table->timestamp('date_start_from')->nullable()->default(null);
+            $table->timestamp('date_scheduled_upto')->nullable()->default(null);
             $table->timestamp('date_expiry')->nullable();
             $table->boolean('is_frame_plan')->default(true);
 
