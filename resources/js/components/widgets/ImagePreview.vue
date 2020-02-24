@@ -3,7 +3,7 @@
         <div v-if="!src" class="no-image fl_bg_gray">
           {{noImageMsg}}
         </div>
-        <img v-else class="img-fluid w-100" src="https://picsum.photos/500/300" alt="">
+        <img v-else class="img-fluid w-100" :src="src" alt="">
         <slot></slot>
     </div>
 </template>
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     src: function() {
-      // return !!this.image ? this.image.src : null;
+      return !!this.image ? "/"+this.image.url : null;
     }
   }, 
   methods: {
