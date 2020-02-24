@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Frame extends Model
 {
+    // protected $dateFormat = 'd';
     protected $dates = ['schedule_on'];
     public function image()
     {
@@ -19,4 +20,9 @@ class Frame extends Model
     {
         return $this->belongsTo(Template::class);
     }
+
+    // public function getScheduleOnFormatAttribute($value)
+    // {
+    //     return $this->schedule_on->format('d,m Y H:i:s a');
+    // }
 }

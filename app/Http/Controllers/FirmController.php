@@ -73,15 +73,11 @@ class FirmController extends Controller
      */
     public function show(Firm $firm)
     {
-        // $firm->increment('views');
-        // $logo = $firm->assets->where('asset_type_id',1)->first();
-        // return $firm->logo();
-        $frames = $firm->frames()->with('firm_plan')->with('firm_plan.plan')->orderBy('schedule_on', 'asc')->paginate(10);
-        
-        // return DB::enableQueryLog();
-        // return $frames;
+        // show all firm's frames
+
+        // check with big data set
+        $frames = $firm->frames()->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
         return view('firms.show', compact('firm'))->withFrames($frames);
-        // return route('home');
     }
 
     /**
