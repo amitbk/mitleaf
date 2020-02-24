@@ -24,6 +24,9 @@ Vue.component('firm-create', require('./components/Firms/FirmCreate.vue').defaul
 Vue.component('firm-edit-details', require('./components/Firms/FirmEditDetails.vue').default);
 Vue.component('firm-frame', require('./components/Firms/FirmFrame.vue').default);
 
+// widgets
+Vue.component('image-preview', require('./components/widgets/ImagePreview.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
