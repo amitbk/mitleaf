@@ -6,6 +6,7 @@
 
 <script>
 // import ImageUploader from 'vue-image-upload-resize'
+import axios from "axios";
 export default {
   name: "FirmFrame",
   props: ['frame'],
@@ -13,12 +14,19 @@ export default {
   },
   data() {
     return {
+        frameImage: this.frame.image
     };
   },
   computed: {
   },
   methods: {
+      onRecreateFrameClick() {
 
+          axios.post('/recreate_frame', this.frame).then(res => {
+
+              this.frameImage = res.data;
+          })
+      }
   }, // methods
 };
 </script>

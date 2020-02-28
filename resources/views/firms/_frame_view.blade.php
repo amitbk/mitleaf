@@ -19,10 +19,11 @@
             hello
         </div>
         <div class="card_media border_b">
-            <image-preview :image="frame.image" no-image-msg="No frame created yet."/>
+            <image-preview :image="frameImage" no-image-msg="No frame created yet."/>
         </div>
         <div class="card_options p-2">
-            <button class="btn btn-default btn-sm border_f" type="button" name="button"><i class="fas fa-sync"></i> Recreate</button>
+            <button @click="onRecreateFrameClick" class="btn btn-default btn-sm border_f" type="button" name="button">
+                <i class="fas fa-sync"></i> Recreate</button>
 
             <button class="btn btn-default btn-sm border_f float-right" type="button" name="button"><i class="fas fa-cloud-download-alt"></i> Download</button>
         </div>

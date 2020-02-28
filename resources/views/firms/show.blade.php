@@ -9,7 +9,7 @@
             @include('helpers._flash')
 
             <div class="row">
-                <div class="col-md-8 mb-5">
+                <div class="col-md-6 mb-5">
 
                     @foreach ($frames as $frame)
                         @include('firms._frame_view')                        

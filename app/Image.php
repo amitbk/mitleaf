@@ -14,7 +14,7 @@ class Image extends Model
      * @param[]  int  $old_image_id = delete old image if any.
      * @return true
      */
-    public function create_from_base64($data, $path, $old_image_id)
+    public function create_from_base64($data, $path, $old_image_id=null)
     {
         // upload image
         $img = explode(',', $data);

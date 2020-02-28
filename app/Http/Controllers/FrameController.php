@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Firm;
 use App\Frame;
+use App\FirmPlan;
+use App\Template;
+use App\Image as Img;
+use Image;
 use Illuminate\Http\Request;
 
 class FrameController extends Controller
@@ -177,4 +182,68 @@ class FrameController extends Controller
       // return $frame;
       return "<img src='$myframe'>";
     }
+
+
+    public function recreate(Request $request)
+    {
+        $frame = Frame::find($request->id);
+        $firm_plan = FirmPlan::find($request->firm_plan['id']);
+        $template = $this->get_random_template($firm_plan);
+        $frame_image = $this->get_generated_frame($template, $firm_plan);
+
+        $img = new Img;
+        $img->url = $frame_image;
+        $img->save();
+
+        $frame->image_id = $img->id;
+        $frame->save();
+        return $frame->image;
+    }
+
+    public function get_random_template(FirmPlan $firm_plan)
+    {
+        $template = Template::where('plan_id', $firm_plan->plan_id)->first();
+        return $template;
+    }
+
+    public function get_generated_frame(Template $template, FirmPlan $firm_plan)
+    {
+        $firm = Firm::find($firm_plan->firm_id);
+        $asset = $firm->assets->where('asset_type_id',1)->first();
+          $images=array(
+                    // center logo
+                      array('img_url'=>$asset->image->url, 'opacity' => '100',
+                      // 'location' => 'bottom-left', 'ratio' => '30',
+                      'location' => 'bottom', 'ratio' => '30',
+                      'border'=>'0','border_color'=>'000000',
+                      'x_right'=>'10','y_right'=>'10','rotate'=>'0',
+                      'circle_radius'=>'0'),
+                  );
+      $img = Image::make($template->image->url);
+      foreach($images as $image)
+      {
+        $img2 = Image::make($image['img_url']);
+
+        $needed_width = ($img->width()*$image['ratio'])/100;
+        $needed_height = ( $needed_width*$img2->height() )/ $img2->width();
+        $image['width'] = (int)$needed_width;
+        $image['height'] = (int)$needed_height;
+        $img2->resize($image['width']- $image['border'], $image['height']-$image['border']);
+        // $img2->resize($image['width']- $image['border'], $image['height']-$image['border']);
+        $img2->opacity($image['opacity']);
+        $img2->resizeCanvas($image['width'], $image['height'], 'center', false, $image['border_color']);
+        // $img2->rotate($rotate);
+        // $img2->crop(400, 500, 50, 0);
+        $img->insert($img2, $image['location'], $image['x_right'], $image['y_right']);
+      }
+
+      // save image in desired format
+      $myframe="images/1_".uniqid().".jpg";
+      // $myframe="images/1_new.jpg";
+      $img->save($myframe);
+
+      // return $frame;
+      return $myframe;
+    }
+
 }
