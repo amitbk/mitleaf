@@ -189,8 +189,7 @@ class FrameController extends Controller
         $frame = Frame::find($request->id);
         $firm_plan = FirmPlan::find($request->firm_plan['id']);
         $template = $this->get_random_template($frame);
-        if(!$template)
-            return abort(403, 'Template not found');
+
         $frame_image = $this->get_generated_frame($template, $firm_plan);
 
         $img = new Img;
@@ -222,6 +221,8 @@ class FrameController extends Controller
             // apply query
         }
         $template = $query->first();
+
+        if(!$template) return abort(403, 'Template not found');
         return $template;
     }
 
