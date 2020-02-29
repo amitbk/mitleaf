@@ -18,16 +18,20 @@ class CreateFramesTable extends Migration
             $table->timestamp('schedule_on')->nullable();
             $table->timestamp('is_posted_on_social_media')->nullable();
             $table->boolean('is_finalized')->default(false)->nullable();
-            $table->text('content')->nullable();
-            
+            $table->text('content')->nullable()->default(null);
+
             $table->integer('firm_plan_id');
             $table->foreign('firm_plan_id')->references('id')->on('firm_plans')->onDelete('set null');
 
-            $table->integer('image_id')->nullable();
+            $table->integer('event_id')->nullable()->default(null);
+            $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
+
+            $table->integer('image_id')->nullable()->default(null);
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
 
-            $table->integer('template_id')->nullable();
+            $table->integer('template_id')->nullable()->default(null);
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
+
 
             $table->timestamps();
         });

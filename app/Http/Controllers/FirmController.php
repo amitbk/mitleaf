@@ -75,7 +75,7 @@ class FirmController extends Controller
     {
         // show all firm's frames
         // check with big data set
-        $frames = $firm->frames()->with('image')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
+        $frames = $firm->frames()->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
         return view('firms.show', compact('firm'))->withFrames($frames);
     }
 
