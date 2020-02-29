@@ -2,15 +2,18 @@
     <div class="card my-2">
         <!-- top -->
         <div class="media p-2 border_b">
-        <img src="https://picsum.photos/50" alt="John Doe" class="mr-2 rounded-circle">
+        <img src="{{asset($firm->logo())}}" alt="John Doe" class="mr-2 fl_avatar">
         <div class="media-body">
             <div class="font-weight-bold">
                 @{{frame.firm_plan.firm.name}}
                 <small class="text-secondary" title="Frame was scheduled for this day."><i class="far fa-clock"></i> @{{frame.schedule_on | formatDate}}</small>
             </div>
             <div class="text-secondary">
+                <!-- plan name: Business | Indian Event | Quotes -->
                 <span class="fl_tag bg_sky1">@{{frame.firm_plan.plan.name}}</span>
+                <!-- Sub type: Hospital | Event Name -->
                 <span v-if="frame.firm_plan.firm_type_id" class="fl_tag">@{{frame.firm_plan.firm_type.name}}</span>
+                <span v-if="!!frame.event" class="fl_tag">@{{frame.event.name}}</span>
             </div>
         </div>
         </div>

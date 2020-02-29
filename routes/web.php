@@ -38,5 +38,5 @@ Route::get('/create_frames', 'CronController@create_frames')->name('create_frame
 Route::post('/recreate_frame', 'FrameController@recreate')->name('frame.recreate');
 Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
-// testing
+// this will create empty frames by order
 Route::get('/create_frames/{id}', 'OrderController@create_frames')->name('create_frames');

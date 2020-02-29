@@ -38,3 +38,7 @@
 .no_decoration {
     text-decoration: none;
 }
+
+.fl_avatar {
+    max-width: 50px;
+}
