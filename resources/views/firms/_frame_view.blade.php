@@ -1,5 +1,5 @@
 <firm-frame :frame="{{ $frame }}" inline-template>
-    <div class="card my-2">
+    <div class="card mb-2">
         <!-- top -->
         <div class="media p-2 border_b">
         <img src="{{asset($firm->logo())}}" alt="John Doe" class="mr-2 fl_avatar">

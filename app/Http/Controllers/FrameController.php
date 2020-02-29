@@ -188,7 +188,9 @@ class FrameController extends Controller
     {
         $frame = Frame::find($request->id);
         $firm_plan = FirmPlan::find($request->firm_plan['id']);
-        $template = $this->get_random_template($firm_plan);
+        $template = $this->get_random_template($frame);
+        if(!$template)
+            return abort(403, 'Template not found');
         $frame_image = $this->get_generated_frame($template, $firm_plan);
 
         $img = new Img;
@@ -200,9 +202,26 @@ class FrameController extends Controller
         return $frame->image;
     }
 
-    public function get_random_template(FirmPlan $firm_plan)
+    public function get_random_template(Frame $frame)
     {
-        $template = Template::where('plan_id', $firm_plan->plan_id)->first();
+        $firm_plan = $frame->firm_plan;
+
+        // $template = Template::where('plan_id', $firm_plan->plan_id)
+        //             ->when($firm_plan->plan_id == 3, // indian event
+        //                 function($q) use($event_id){
+        //                     return $q->where('event_id',$event_id);;
+        //                 },
+        //             );
+
+        $query = Template::where('plan_id', $firm_plan->plan_id);
+
+        if($firm_plan->plan_id == 3) { // indian events
+            $query->where('event_id',$frame->event_id);
+        }
+        if($firm_plan->plan_id == 4) {
+            // apply query
+        }
+        $template = $query->first();
         return $template;
     }
 
