@@ -63,6 +63,7 @@ class TemplateController extends Controller
         $template->language = $request->language;
         $template->shape = $request->shape;
         $template->color = $request->color;
+        $template->shade_type = $request->shade_type;
         $template->save();
 
         // save template styles

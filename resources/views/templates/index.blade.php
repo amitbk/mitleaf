@@ -13,7 +13,7 @@
 
     <div class="row justify-content-center py-4">
         <div class="col-md-2 my-2" >
-            <a href="#" class="btn btn-primary btn-block">Add New</a>
+            <a href="{{route('templates.create')}}" class="btn btn-primary btn-block">Add New</a>
             <a href="#" class="btn btn-light btn-block border_f">Filter</a>
         </div>
         <div class="col-md-4">

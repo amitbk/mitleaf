@@ -135,15 +135,15 @@
 
                 <!-- Style -->
                 <div class="form-group">
-                  <label for="style">Style:</label>
-                  <select name="style" value="{{ old('style', $template->style) }}" class="form-control {{ $errors->has('style') ? 'is-invalid' : '' }}" id="style">
+                  <label for="shade_type">Style:</label>
+                  <select name="shade_type" value="{{ old('shade_type', $template->shade_type) }}" class="form-control {{ $errors->has('shade_type') ? 'is-invalid' : '' }}" id="shade_type">
                     <option value="6">Both</option>
                     <option value="7" selected>Light</option>
                     <option value="8">Dark</option>
                   </select>
-                  @if ($errors->has('style'))
+                  @if ($errors->has('shade_type'))
                       <div class="invalid-feedback">
-                          <strong>{{ $errors->first('style') }}</strong>
+                          <strong>{{ $errors->first('shade_type') }}</strong>
                       </div>
                   @endif
                 </div>

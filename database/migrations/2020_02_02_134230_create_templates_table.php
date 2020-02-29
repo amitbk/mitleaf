@@ -41,7 +41,7 @@ class CreateTemplatesTable extends Migration
             $table->string('shape')->nullable();
             // shape=> 1=Square, 2=Portrate, 3=Landscape
 
-            // $table->string('style')->nullable();
+            $table->string('shade_type')->nullable();
             // style=> 6=Both, 7=Light, 8=Dark
 
             // color=> use color picker

@@ -18,7 +18,11 @@ class CreateStylesTable extends Migration
             $table->string('name')->nullable();
             $table->string('type')->nullable();
         });
-        
+
+        DB::table('styles')->insert(['id'=>6,'name' => 'Both Shades', 'type' => 'shade']);
+        DB::table('styles')->insert(['id'=>7,'name' => 'Light Shade', 'type' => 'shade']);
+        DB::table('styles')->insert(['id'=>8,'name' => 'Dark Shade', 'type' => 'shade']);
+
         DB::table('styles')->insert(['id'=>11,'name' => 'Bottom Center', 'type' => 'logo_support']);
         DB::table('styles')->insert(['id'=>12,'name' => 'Bottom Left', 'type' => 'logo_support']);
         DB::table('styles')->insert(['id'=>13,'name' => 'Bottom Right', 'type' => 'logo_support']);
