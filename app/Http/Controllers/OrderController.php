@@ -9,6 +9,7 @@ use App\OrderPlan;
 use App\FirmPlan;
 use App\Frame;
 use App\Firm;
+use App\Event;
 use Carbon\Carbon;
 use DB;
 
@@ -26,45 +27,83 @@ class OrderController extends Controller
 
     public function create_frames($id)
     {
-        $order = Order::find($id);
+        try {
+            DB::beginTransaction();
 
-        $firm_plans = $order->firm_plans;
-        foreach ($firm_plans as $firm_plan) {
+            $order = Order::find($id);
 
-            if($firm_plan->plan_id != 2)
-            {
+            $firm_plans = $order->firm_plans;
+            foreach ($firm_plans as $firm_plan) {
 
-                // find $frames having ->scheduled_on < $firm_plan->date_start_from
-                $is_frames_created = false;
-                if(!$is_frames_created)
+                if($firm_plan->plan_id == 3) // indian event
                 {
-                    // var_dump("<pre>",$firm_plan);die();
-                    $days_interval = 30/$firm_plan->qty_per_month;
-                    $start_day = $firm_plan->date_start_from;
-                    $next_day = $firm_plan->date_start_from;
+                    // get all future events for current year
+                    $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
+                    // create frames for each event
+                    foreach ($events as $event) {
 
-                    if($firm_plan->date_scheduled_upto != null)
-                    {
-                        // if some frames already created upto 'date_scheduled_upto' date
-                        $next_day = $firm_plan->date_scheduled_upto;
-                        $next_day->addDays($days_interval);
+
+                        // we should not create duplicate frame for 1 event
+                        // so-> find if frame is already created or not for this event and firm combination
+                        // nested query in laravel
+                        $firm_id = $firm_plan->firm->id;
+                        $frame = Frame::whereHas('firm_plan', function($q) use ($firm_id)
+                                {
+                                    $q->where('firm_id', $firm_id);
+                                })->where('event_id', $event->id)->first();
+
+                        if(!$frame)
+                        {
+                            $frame = new Frame;
+                            $frame->schedule_on = $event->date;
+                            $frame->firm_plan_id = $firm_plan->id;
+                            $frame->event_id = $event->id;
+                            $frame->content = $event->desc;
+                            $frame->save();
+                            $firm_plan->date_scheduled_upto = $frame->schedule_on;
+                        }
                     }
-
-                    // create frame if $next_day < $firm_plan->date_expiry
-                    while($next_day <= $firm_plan->date_expiry)
+                }
+                else
+                if($firm_plan->plan_id != 3)
+                {
+                    // find $frames having ->scheduled_on < $firm_plan->date_start_from
+                    $is_frames_created = false;
+                    if(!$is_frames_created)
                     {
-                        $frame = new Frame;
-                        $frame->schedule_on = $next_day;
-                        $frame->firm_plan_id = $firm_plan->id;
-                        $frame->save();
-                        $firm_plan->date_scheduled_upto = $next_day;
-                        $next_day->addDays($days_interval);
-                    }
-                }// if
+                        // var_dump("<pre>",$firm_plan);die();
+                        $days_interval = 30/$firm_plan->qty_per_month;
+                        $start_day = $firm_plan->date_start_from;
+                        $next_day = $firm_plan->date_start_from;
 
+                        if($firm_plan->date_scheduled_upto != null)
+                        {
+                            // if some frames already created upto 'date_scheduled_upto' date
+                            $next_day = $firm_plan->date_scheduled_upto;
+                            $next_day->addDays($days_interval);
+                        }
+
+                        // create frame if $next_day < $firm_plan->date_expiry
+                        while($next_day <= $firm_plan->date_expiry)
+                        {
+                            $frame = new Frame;
+                            $frame->schedule_on = $next_day;
+                            $frame->firm_plan_id = $firm_plan->id;
+                            $frame->save();
+                            $firm_plan->date_scheduled_upto = $next_day;
+                            $next_day->addDays($days_interval);
+                        }
+                    }// if
+                }
                 $firm_plan->save();
             }
+            DB::commit();
+            return "Done!";
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $e;
         }
+
     }
     /**
      * Show the form for creating a new resource.
