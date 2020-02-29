@@ -29,7 +29,7 @@ class Firm extends Model
     }
     public function strip()
     {
-        $asset = $this->assets->where('asset_type_id',2)->first();
+        $asset = $this->assets->where('asset_type_id',3)->first();
         return $asset ? $asset->image->url : null ;
     }
 

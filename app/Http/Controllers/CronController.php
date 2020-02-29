@@ -31,7 +31,9 @@ class CronController extends Controller
 
                 echo $firm_plan->firm_id." - ".$firm_plan->plan->id." ".$firm_plan->plan->name." ".$firm_plan->date_scheduled." - ".$date_tomorrow."<br>";
             }
+
         }
+        if($active_plans->count() == 0) echo "No active plans";
         // return $active_plans;
     }
 

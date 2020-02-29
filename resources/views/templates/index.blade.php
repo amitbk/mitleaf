@@ -21,7 +21,7 @@
 
 
                 @foreach($templates as $template)
-                <div class="card my-2">
+                <div class="card my-2 w-100">
                     <!-- top -->
                     <div class="media p-2 border_b">
                       <img src="https://picsum.photos/50" alt="John Doe" class="mr-2 rounded-circle">

@@ -8,13 +8,14 @@
 import axios from 'axios';
 export default {
   name: "PlansList",
-  props: ["plans", "firm_types"],
+  props: ["plans", "firm_types", "firms"],
   data() {
     return {
       formStep: 1,
       selectedTags: [],
       slab_selected: [],
       duration_selected: 1,
+      firm_id: !!this.firms ? this.firms[0].id : '',
       localPlans: this.plans.filter(el => {
                         el.is_selected = false;
                         el.slab_selected = el.is_slab_in_months ? 0.5 : 1;

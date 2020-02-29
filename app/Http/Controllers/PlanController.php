@@ -25,7 +25,8 @@ class PlanController extends Controller
     {
         $plans = Plan::where('is_active',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
-        return view('plans.index', compact('plans'), compact('firm_types') );
+        $firms = auth()->user()->firms;
+        return view('plans.index', compact('plans'), compact('firm_types') )->withFirms($firms);
     }
 
     public function myplans()
@@ -62,7 +63,7 @@ class PlanController extends Controller
     public function store(Request $request)
     {
 
-        
+
 
     }
 

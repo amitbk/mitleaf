@@ -2,7 +2,7 @@
 
 @section('content')
 <firm-edit-details  inline-template>
-    <div class="container">
+    <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-5">
                 @include('helpers._flash')

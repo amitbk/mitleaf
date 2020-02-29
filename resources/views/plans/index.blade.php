@@ -1,12 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<plans-list :plans="{{ $plans }}" :firm_types="{{$firm_types}}" inline-template>
+<plans-list :plans="{{ $plans }}" :firm_types="{{$firm_types}}" :firms="{{$firms}}" inline-template>
     <div class="container py-4">
 
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 text-center">
-                <h3>Select best plans to continue</h3>
+                
+                <!-- firm select option -->
+                <div class="form-group">
+                  <select v-model="firm_id" class="form-control" id="firm">
+                      <option v-for="firm in firms" :value="firm.id">Plan for @{{firm.name}}</option>
+                  </select>
+                </div>
+
             </div>
         </div>
         <div v-if="formStep == 1" class="plans1_container">
@@ -27,6 +34,7 @@
                         {{csrf_field()}}
                         <input type="hidden" name="plans" :value="JSON.stringify(localPlans.filter(el => el.is_selected))">
                         <input type="hidden" name="duration_selected" :value="duration_selected">
+                        <input type="hidden" name="firm_id" :value="firm_id">
                         <button @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
                         <button @click="submitForm()" type="submit" class="btn btn-default bg-light btn-sm">Done</button>
                     </form>

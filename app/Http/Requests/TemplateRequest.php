@@ -28,7 +28,7 @@ class TemplateRequest extends FormRequest
             'plan_id' => 'required',
             'language' => 'required',
             'shape' => 'required',
-            'style' => 'required',
+            // 'SHADE' => 'required',
             // 'image' => 'required',
         ];
     }
