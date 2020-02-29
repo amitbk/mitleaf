@@ -4,16 +4,17 @@
 <plans-list :plans="{{ $plans }}" :firm_types="{{$firm_types}}" :firms="{{$firms}}" inline-template>
     <div class="container py-4">
 
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-8 text-center">
-                
+        <div class="row mb-3">
+            <div class="col-md-9 col-xs-12 text-center text-sm-left">
+                <h3>Select a best plan for you</h3>
+            </div>
+            <div class="col-md-3 col-xs-12 text-center text-sm-right">
                 <!-- firm select option -->
                 <div class="form-group">
                   <select v-model="firm_id" class="form-control" id="firm">
                       <option v-for="firm in firms" :value="firm.id">Plan for @{{firm.name}}</option>
                   </select>
                 </div>
-
             </div>
         </div>
         <div v-if="formStep == 1" class="plans1_container">

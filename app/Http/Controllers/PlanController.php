@@ -32,15 +32,14 @@ class PlanController extends Controller
     public function myplans()
     {
         $user = Auth::user();
-        $firm = $user->firms()->first();
-        if($firm == null)
+        $firms = $user->firms;
+        if($firms == null)
         {
             flash("You don't have firm added yet, please add a firm.", 'danger');
             return redirect()->route('firms.index');
         }
-        $plans = $firm->plans;
 
-        return view('plans.myplans', compact('plans') );
+        return view('plans.myplans', compact('firms') );
     }
 
     /**
