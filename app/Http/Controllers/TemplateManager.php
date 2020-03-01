@@ -48,7 +48,7 @@ class TemplateManager
     }
 
     // will filter query to fetch templates of only events
-    public static functin filter_query_if_plan_for_events($query, $firm_plan)
+    public static function filter_query_if_plan_for_events($query, $firm_plan)
     {
         if($firm_plan->plan_id == 3) { // indian events
             $query->where('event_id',$frame->event_id);
@@ -57,7 +57,7 @@ class TemplateManager
     }
 
     // will filter query to fetch templates of only business type of plan
-    public static functin filter_query_if_plan_for_business($query, $firm_plan)
+    public static function filter_query_if_plan_for_business($query, $firm_plan)
     {
         if($firm_plan->plan_id == 4) { // firm type
             //find templates of $firm_type_id
