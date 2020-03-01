@@ -98,26 +98,28 @@ class TemplateManager
     {
         // $template->language = $firm_plan->language
         if(!!$firm_plan->st_language)
-            $q = $query->where('language',$firm_plan->st_language);
-
+            $query->where('language',$firm_plan->st_language);
+        $q = $query;
         return $q->count() != 0 ? $query : null ;
     }
 
     // will return null if no templates for selected shape
     public static function apply_shape($query, $firm_plan)
     {
+        // $template->shape = $firm_plan->st_shape
         if(!!$firm_plan->st_shape)
-            $q = $query->where('shape',$firm_plan->st_shape);
-            // $template->shape = $firm_plan->st_shape
+            $query->where('shape',$firm_plan->st_shape);
+        $q = $query;
         return $q->count() != 0 ? $query : null ;
     }
 
     // will return null if no templates for selected shade_type
     public static function apply_shade_type($query, $firm_plan)
     {
+        // $template->shape = $firm_plan->st_shade_type
         if(!!$firm_plan->st_shade_type)
-            $q = $query->where('shade_type',$firm_plan->st_shade_type);
-            // $template->shape = $firm_plan->st_shade_type
+            $query->where('shade_type',$firm_plan->st_shade_type);
+        $q = $query;
         return $q->count() != 0 ? $query : null ;
     }
 }
