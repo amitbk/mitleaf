@@ -1,4 +1,4 @@
-<firm-frame :frame="{{ $frame }}" inline-template>
+<firm-frame :frame-prop="{{ $frame }}" inline-template>
     <div class="card mb-2">
         <!-- top -->
         <div class="media p-2 border_b">
@@ -19,10 +19,10 @@
         </div>
 
         <div class="card_content p-2">
-            hello
+            @{{frame.content}}
         </div>
         <div class="card_media border_b">
-            <image-preview :image="frameImage" no-image-msg="No frame created yet."/>
+            <image-preview :image="frame.image" no-image-msg="No frame created yet."/>
         </div>
         <div class="card_options p-2">
             <button @click="onRecreateFrameClick" class="btn btn-default btn-sm border_f" type="button" name="button">

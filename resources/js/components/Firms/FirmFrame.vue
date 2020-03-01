@@ -9,12 +9,13 @@
 import axios from "axios";
 export default {
   name: "FirmFrame",
-  props: ['frame'],
+  props: ['frameProp'],
   components: {
   },
   data() {
     return {
-        frameImage: this.frame.image
+        frame: this.frameProp,
+        // frameImage: this.frameProp.image,
     };
   },
   computed: {
@@ -23,8 +24,7 @@ export default {
       onRecreateFrameClick() {
 
           axios.post('/recreate_frame', this.frame).then(res => {
-
-              this.frameImage = res.data;
+              this.frame = res.data;
           })
       }
   }, // methods

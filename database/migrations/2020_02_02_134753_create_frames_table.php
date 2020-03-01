@@ -16,6 +16,8 @@ class CreateFramesTable extends Migration
         Schema::create('frames', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamp('schedule_on')->nullable();
+            $table->integer('recreated')->default(0);
+
             $table->timestamp('is_posted_on_social_media')->nullable();
             $table->boolean('is_finalized')->default(false)->nullable();
             $table->text('content')->nullable()->default(null);
