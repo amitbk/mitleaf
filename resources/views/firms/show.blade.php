@@ -59,6 +59,11 @@
                         <div class="card-footer">Strip</div>
                     </div>
 
+                    <div class="card my-2 text-center">
+                        <div class="card-body">
+                            Update firm details
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

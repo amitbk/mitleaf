@@ -39,6 +39,7 @@ class TemplateManager
         // if no template found after applying settings, try after removing settings
         $query = TemplateManager::apply_settings_on_query(clone $query, $firm_plan);
 
+        // TODO: fetch latest templates
         // TODO: template must not be used earlier
 
         // skip templates, that are tested or checked

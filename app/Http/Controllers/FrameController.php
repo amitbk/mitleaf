@@ -197,6 +197,7 @@ class FrameController extends Controller
         $img->url = $frame_image;
         $img->save();
 
+        $frame->template_id = $template->id;
         $frame->recreated++;
         $frame->image_id = $img->id;
         !!$template->desc ? $frame->content = $template->desc:true;
