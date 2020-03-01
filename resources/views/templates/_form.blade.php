@@ -119,10 +119,11 @@
                 </div>
 
                 <!-- Shape -->
-                <div class="form-group">
+                <input type="hidden" name="shape" :value="imageShape">
+                <div class="form-group" v-if="false">
                   <label for="shape">Shape:</label>
-                  <select name="shape" value="{{ old('shape', $template->shape) }}" class="form-control {{ $errors->has('shape') ? 'is-invalid' : '' }}" id="shape">
-                    <option value="1" selected>Square</option>
+                  <select name="shape" v-model="imageShape" value="{{ old('shape', $template->shape) }}" class="form-control {{ $errors->has('shape') ? 'is-invalid' : '' }}" id="shape">
+                    <option value="1">Square</option>
                     <option value="2">Portrait</option>
                     <option value="3">Landscape</option>
                   </select>

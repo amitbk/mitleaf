@@ -56,7 +56,7 @@ class TemplateController extends Controller
         // save template
         $template = new Template;
         $template->user_id = Auth::id();
-        $template->name = $request->name;
+        $template->name = ucfirst($request->name);
         $template->plan_id = $request->plan_id;
         $template->event_id = $request->event_id;
         $template->image_id = $image->id;

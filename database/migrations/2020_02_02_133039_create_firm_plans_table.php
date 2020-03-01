@@ -36,6 +36,7 @@ class CreateFirmPlansTable extends Migration
             // settings for frame
             $table->string('st_language')->nullable();
             $table->string('st_shape')->nullable();
+            $table->string('st_shade_type')->nullable();
             $table->string('st_color')->nullable();
             $table->string('st_logo')->nullable();
             $table->string('st_strip')->nullable();

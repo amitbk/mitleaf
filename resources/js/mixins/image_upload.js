@@ -3,6 +3,7 @@ export const image_upload = {
           return {
               hasImage: false,
               image: {dataUrl: ''},
+              imageShape: 0
           }
       },
     methods: {
@@ -19,6 +20,14 @@ export const image_upload = {
       setImage(data) {
           this.hasImage = true;
           this.image = data;
+
+          // check image shape
+          let diff = this.image.info.newWidth - this.image.info.newHeight;
+          if(-10 < diff && diff < 10)
+            this.imageShape = 1;
+          else if( this.image.info.newWidth > this.image.info.newHeight )
+              this.imageShape = 3; // landscape
+          else this.imageShape = 2; // portrate
       },
       startImageResize(data) {
       },
