@@ -11,7 +11,7 @@ class Firm extends Model
     ];
     public function users()
     {
-      return $this->belongsToMany(User::class);
+      return $this->belongsToMany(User::class)->withTimestamps();
     }
     public function social_networks()
     {
@@ -25,17 +25,17 @@ class Firm extends Model
     public function logo()
     {
         $asset = $this->assets->where('asset_type_id',1)->first();
-        return $asset ? $asset->image->url : null ;
+        return $asset ? ($asset->image ? $asset->image->url :  null) : null ;
     }
     public function strip()
     {
         $asset = $this->assets->where('asset_type_id',3)->first();
-        return $asset ? $asset->image->url : null ;
+        return $asset ? ($asset->image ? $asset->image->url: null) : null ;
     }
 
     public function firm_type()
     {
-      return $this->belongsTo(FirmType::class, 'logo_id');
+      return $this->belongsTo(FirmType::class);
     }
 
     public function plans()

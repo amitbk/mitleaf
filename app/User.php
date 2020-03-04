@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function firms()
     {
-        return $this->belongsToMany(Firm::class);
+        return $this->belongsToMany(Firm::class)->withTimestamps();
     }
 
     public function avatar()

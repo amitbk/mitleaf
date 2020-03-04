@@ -2,10 +2,10 @@
 
 @section('content')
 <firm-create :firm_types="{{$firm_types}}" :firm_type_id="{{$firm->firm_type_id}}" inline-template>
-    <div class="container">
+    <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <h2 class="text-center">Tell us about your business</h2>
+                <h2 class="text-center">{{$firm->name}}</h2>
                 <div class="card">
 
 
@@ -16,9 +16,10 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('firms.store') }}" method="post">
+                        <form action="{{ route('firms.update', $firm->id) }}" method="post">
                             @csrf
-                            @include ("firms._form", ['buttonText' => "Save"])
+                            @method('PATCH')
+                            @include ("firms._form", ['buttonText' => "Update"])
                        </form>
                     </div>
                 </div>

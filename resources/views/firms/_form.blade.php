@@ -1,4 +1,3 @@
-@csrf
 <div class="form-group">
     <label for="firm-name">What is name of your business?</label>
     <input type="text" name="name" value="{{ old('name', $firm->name) }}" id="firm-name" class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}">

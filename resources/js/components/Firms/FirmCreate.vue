@@ -8,7 +8,7 @@
 // import ImageUploader from 'vue-image-upload-resize'
 export default {
   name: "FirmCreate",
-  props: ['firm_types'],
+  props: ['firm_types', 'firm_type_id'],
   components: {
       // ImageUploader
   },

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Firm;
 use App\FirmType;
+use App\FirmPlan;
 use App\Asset;
 use App\Image as Img;
 use Illuminate\Http\Request;
@@ -40,7 +41,7 @@ class FirmController extends Controller
     {
         $firm = new Firm();
         $firm_types = FirmType::where('is_active',1)->get();
-        return view('firms.create', compact('firm'), compact('firm_types'));
+        return view('firms.create', compact('firm','firm_types'));
     }
 
     /**
@@ -51,18 +52,7 @@ class FirmController extends Controller
      */
     public function store(FirmRequest $request)
     {
-        $user = Auth::user();
-        // $firm = $user->firms()->create($request->except('_token'));
-        $firm = new Firm;
-        $firm->name = $request->name;
-        $firm->firm_type_id = $request->firm_type_id;
-        $firm->save();
-        $user->firms()->attach($firm);
-
-        isset($id) ? $msg="Firm Updated Successfully!" : $msg="Firm Saved Successfully!";
-        flash($msg, 'success');
-
-        return redirect()->route('firms.index');
+        $this->update($request);
     }
 
     /**
@@ -88,7 +78,8 @@ class FirmController extends Controller
      */
     public function edit(Firm $firm)
     {
-        //
+        $firm_types = FirmType::where('is_active',1)->get();
+        return view('firms.edit', compact('firm','firm_types'));
     }
 
     public function edit_details($firm_id)
@@ -152,9 +143,29 @@ class FirmController extends Controller
      * @param  \App\Firm  $firm
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Firm $firm)
+    public function update(Request $request, Firm $firm=null)
     {
-        //
+        $user = Auth::user();
+        // $firm = $user->firms()->create($request->except('_token'));
+        $editing = $firm ? true : false;
+        if($firm == null)
+            $firm = new Firm;
+
+        $firm->name = $request->name;
+        $firm->firm_type_id = $request->firm_type_id;
+        $firm->save();
+
+        if(!$editing) // attach firm to user
+            $user->firms()->attach($firm);
+
+        // update firm_type_id in firm_plan
+        FirmPlan::where('plan_id', 4)
+          ->update(['firm_type_id' => $firm->firm_type_id]);
+
+        isset($editing) ? $msg="Firm Updated Successfully!" : $msg="Firm Saved Successfully!";
+        flash($msg, 'success');
+
+        return redirect()->route('firms.myfirms');
     }
 
     /**
