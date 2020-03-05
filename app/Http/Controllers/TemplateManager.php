@@ -41,42 +41,18 @@ class TemplateManager
         $query = TemplateManager::apply_settings_on_query(clone $query, $firm_plan);
 
         // template must not be used earlier
-        // $query->whereNotIn('templates.id', Frame::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray() );
+        $query->whereNotIn('templates.id', Frame::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray() );
 
-        // if asset type $firm_plan logo, order templates by logo
-        $logo_no = implode("','", config('amit.logo_styles'));
-        $strip_no = implode("','", config('amit.strip_styles'));
-        $query->select('templates.*',
-            \DB::raw("(SELECT count(*) FROM template_styles
-            WHERE template_styles.style_id IN ('$logo_no')
-            and template_styles.template_id = templates.id
-            ) as logo_support"),
-            \DB::raw("(SELECT count(*) FROM template_styles
-            WHERE template_styles.style_id IN ('$strip_no')
-            and template_styles.template_id = templates.id
-            ) as strip_support")
-        );
+        // if $firm_plan needs only strip, fetch templates which support strip only
+        // if count = 0, then templates who not support strip will also be returned
+        $strip_filter = TemplateManager::apply_filter_for_strips(clone $query, $firm_plan);
+        $query = !!$strip_filter ? $strip_filter : $query;
 
-
-        if( in_array($firm_plan->st_use_asset_type, config('amit.logo_assets') ) )
-        {
-            // $query->whereNotIn('logo_support',[0]);
-        }
-        else
-        if( in_array($firm_plan->st_use_asset_type, config('amit.strip_assets') ) )
-        {
-            // $query->whereNotIn('strip_support',[0]);
-        }
-
-        foreach ($query->get() as $tt) {
-            echo "TI:".$tt->id;
-            // echo "LC:".$tt->styles()->whereIn('style_id',config('amit.logo_styles'))->count();
-            // echo " SC:".$tt->styles()->whereIn('style_id',config('amit.strip_styles'))->count();
-            echo " ls:".$tt->logo_support;
-            echo " ss:".$tt->strip_support;
-            echo "\n";
-        }
-        abort(403, 'end firm_plan->'.$firm_plan->id);
+        // foreach ($query->get() as $tt) {
+        //     echo $tt->id;
+        //     echo "<br>";
+        // }
+        // abort(403, 'end '.$firm_plan->st_use_asset_type);
 
         // skip templates, that are tested or checked
         $offset = TemplateManager::apply_offset(clone $query, $frame);
@@ -86,9 +62,18 @@ class TemplateManager
         $template = $query->first();
         return $template;
     }
-
+    public static function apply_filter_for_strips($query, $firm_plan)
+    {
+        if( in_array($firm_plan->st_use_asset_type, config('amit.strip_assets') ) )
+            $query->whereHas('styles', function($q)
+                    {
+                        $q->whereIn('template_styles.style_id', config('amit.strip_styles'));
+                    });
+        $qr = $query;
+        return $qr->count() != 0 ? $query : null ;
+    }
     // will apply offset
-    // @return 0 if no template after"" applying offset, o/w will return offset
+    // @return 0 if no template after applying offset, o/w will return offset
     public static function apply_offset($query, $frame)
     {
         $t = $query->offset($frame->recreated)->first();
