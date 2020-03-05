@@ -188,22 +188,8 @@ class FrameController extends Controller
     {
         $frame = Frame::find($request->id);
         $firm_plan = FirmPlan::find($request->firm_plan['id']);
-        // return var_dump($frame);
-        $template = TemplateManager::get_random_template($frame);
-
-        $frame_image = FrameManager::get_generated_frame($template, $firm_plan);
-
-        $img = new Img;
-        $img->url = $frame_image;
-        $img->save();
-
-        $frame->template_id = $template->id;
-        $frame->recreated++;
-        $frame->image_id = $img->id;
-        !!$template->desc ? $frame->content = $template->desc:true;
-        $frame->save();
-
-        $frameData = Frame::where('id',$frame->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();
+        
+        $frameData = FrameManager::generate_and_store_frame_image($frame, $firm_plan);
         return $frameData;
     }
 
