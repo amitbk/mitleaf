@@ -33,7 +33,7 @@ class TemplateManager
         $firm_plan = $frame->firm_plan;
 
         $query = Template::latest()->where('plan_id', $firm_plan->plan_id);
-        $query = TemplateManager::filter_query_if_plan_for_events(clone $query, $firm_plan);
+        $query = TemplateManager::filter_query_if_plan_for_events(clone $query, $frame, $firm_plan);
         $query = TemplateManager::filter_query_if_plan_for_business(clone $query, $firm_plan);
 
         // apply settings if any, [these are optional]
@@ -80,7 +80,7 @@ class TemplateManager
     }
 
     // will filter query to fetch templates of only events
-    public static function filter_query_if_plan_for_events($query, $firm_plan)
+    public static function filter_query_if_plan_for_events($query, Frame $frame, $firm_plan)
     {
         if($firm_plan->plan_id == 3) { // indian events
             $query->where('event_id',$frame->event_id);
