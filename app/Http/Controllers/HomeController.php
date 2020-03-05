@@ -23,14 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $template = \App\Template::find(1);
-        $styles = $template->styles()
-                ->whereIn('style_id', [11, 12, 13, 14, 15, 16, 17, 18, 19])
-                ->orderByRaw("FIELD(style_id , 11, 12, 13, 14, 15, 16, 17, 18, 19) ASC")->get();
-
-        var_dump($styles->first()->style->slug);
-        // var_dump("<pre>styles",$styles);
-        // return "hello";
-        // return view('home');
+        return view('home');
     }
 }

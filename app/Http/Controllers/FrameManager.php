@@ -89,24 +89,25 @@ class FrameManager
 
         // now applying filter, we have multiple assets,
         // will check if selected template supports location for that asset and apply accordingly
-        foreach ($assets as $asset) {
+        foreach ($assets as $this_asset) {
             // where to add asset on frame
-            if(in_array($asset->asset_type_id, config('amit.logo_assets') )  )
+            if(in_array($this_asset->asset_type_id, config('amit.logo_assets') )  )
             {   // logo
                 $asset_location = TemplateManager::get_supported_logo_location($template);
                 $ratio = 30;  $x_axis = $y_axis = 10;
             }
-            else if(in_array($asset->asset_type_id, config('amit.strip_assets') ) )
+            else if(in_array($this_asset->asset_type_id, config('amit.strip_assets') ) )
             {   // strip
                 $asset_location = TemplateManager::get_supported_strip_location($template);
                 $ratio = 100; $x_axis = $y_axis = 0;
             }
-
+            $asset = $this_asset;
             if($asset_location) break;
         }
 
         if(!$asset_location)
-            abort(403, 'No supported assets for firm.');
+            abort(403, 'No supported assets for firm.'.$firm_plan->firm->name.' ('.$firm_plan->firm_id.')');
+
 
         $images=array(
                   array(

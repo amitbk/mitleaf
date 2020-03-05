@@ -40,3 +40,4 @@ Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
 // this will create empty frames by given order_id
 Route::get('/create_frames/{id}', 'OrderController@create_frames')->name('create_frames');
+Route::get('/generate_frame_images', 'CronController@generate_frame_images')->name('generate_frame_images');

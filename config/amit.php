@@ -31,4 +31,7 @@ return [
                 'bottom_touch'=> '21',
                 'bottom_with_padding'=> '22',
               ],
+
+      'logo_styles' => [11,12,13,14,15,16,17,18,19],
+      'strip_styles' => [21,22],
 ];
