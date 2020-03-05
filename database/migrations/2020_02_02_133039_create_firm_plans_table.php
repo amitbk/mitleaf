@@ -33,6 +33,8 @@ class CreateFirmPlansTable extends Migration
             $table->timestamp('date_expiry')->nullable();
             $table->boolean('is_frame_plan')->default(true);
 
+            // which asset to use while creating frames: ref in asset_types table
+            $table->integer('st_use_asset_type')->nullable()->default(1);
             // settings for frame
             $table->string('st_language')->nullable();
             $table->string('st_shape')->nullable();

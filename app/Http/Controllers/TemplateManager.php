@@ -43,6 +43,17 @@ class TemplateManager
         // template must not be used earlier
         $query->whereNotIn('id', Frame::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray() );
 
+        // if asset type $firm_plan logo, order templates by logo
+        if( in_array($firm_plan->asset_type_id, config('amit.logo_assets') ) )
+        {
+            
+        }
+        else
+        if( in_array($firm_plan->asset_type_id, config('amit.strip_assets') ) )
+        {
+
+        }
+
         // skip templates, that are tested or checked
         $offset = TemplateManager::apply_offset(clone $query, $frame);
         $template = $query->offset($offset)->first();
@@ -133,5 +144,22 @@ class TemplateManager
             $query->where('shade_type',$firm_plan->st_shade_type);
         $q = $query;
         return $q->count() != 0 ? $query : null ;
+    }
+
+    // will return supported locations priority wise
+    public static function get_supported_logo_location(Template $template)
+    {
+        $styles = $template->styles()
+                ->whereIn('style_id', [11, 12, 13, 14, 15, 16, 17, 18, 19])
+                ->orderByRaw("FIELD(style_id , 11, 12, 13, 14, 15, 16, 17, 18, 19) ASC")->get();
+        return $styles->first() ? $styles->first()->style->slug : null;
+    }
+
+    public static function get_supported_strip_location(Template $template)
+    {
+        $styles = $template->styles()
+                ->whereIn('style_id', [21, 22])
+                ->orderByRaw("FIELD(style_id , 21, 22) ASC")->get();
+        return $styles->first() ? $styles->first()->style->slug : null;
     }
 }

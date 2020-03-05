@@ -24,6 +24,7 @@ class CreateAssetsTable extends Migration
             $table->integer('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->string('name')->nullable();
+            $table->boolean('is_default')->nullable()->default(0);
             $table->timestamps();
         });
         DB::table('assets')->insert(['id'=>1,'firm_id' => 1, 'asset_type_id'=> 3, 'image_id'=>11 ]);

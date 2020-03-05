@@ -14,4 +14,8 @@ class TemplateStyle extends Model
     {
         return $this->belongsTo(Template::class);
     }
+    public function style()
+    {
+        return $this->belongsTo(Style::class);
+    }
 }

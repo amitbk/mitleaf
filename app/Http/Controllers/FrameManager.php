@@ -10,84 +10,8 @@ use App\Image as Img;
 use Image;
 use Illuminate\Http\Request;
 
-class FrameController extends Controller
+class FrameManager
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Frame $frame)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Frame $frame)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Frame $frame)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Frame  $frame
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Frame $frame)
-    {
-        //
-    }
-
     public function create_frame_working()
     {
 
@@ -103,14 +27,14 @@ class FrameController extends Controller
                 'location' => 'bottom', 'ratio' => '30',
                 'width'=>'310','height'=>'140',
                 'border'=>'0','border_color'=>'000000',
-                'x_right'=>'0','y_right'=>'60','rotate'=>'-5',
+                'x_axis'=>'0','y_axis'=>'60','rotate'=>'-5',
                 'circle_radius'=>'0'),
 
                 // array('img_url'=>$amit2, 'opacity' => '20',
                 // 'location' => 'top', 'ratio' => '60',
                 // 'width'=>'310','height'=>'140',
                 // 'border'=>'0','border_color'=>'000000',
-                // 'x_right'=>'0','y_right'=>'60','rotate'=>'-5',
+                // 'x_axis'=>'0','y_axis'=>'60','rotate'=>'-5',
                 // 'circle_radius'=>'0'),
 
                 // array('images/no1.png', '310','310','00','000000','300','180','-5','0'),
@@ -154,7 +78,7 @@ class FrameController extends Controller
         $img2->resizeCanvas($image['width'], $image['height'], 'center', false, $image['border_color']);
         // $img2->rotate($rotate);
         // $img2->crop(400, 500, 50, 0);
-        $img->insert($img2, $image['location'], $image['x_right'], $image['y_right']);
+        $img->insert($img2, $image['location'], $image['x_axis'], $image['y_axis']);
       }
 
       /* text */
@@ -191,7 +115,7 @@ class FrameController extends Controller
         // return var_dump($frame);
         $template = TemplateManager::get_random_template($frame);
 
-        $frame_image = FrameManager::get_generated_frame($template, $firm_plan);
+        $frame_image = $this->get_generated_frame($template, $firm_plan);
 
         $img = new Img;
         $img->url = $frame_image;
@@ -207,4 +131,91 @@ class FrameController extends Controller
         return $frameData;
     }
 
+
+
+    public static function get_generated_frame(Template $template, FirmPlan $firm_plan)
+    {
+        $firm = Firm::find($firm_plan->firm_id);
+        $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
+
+        // main template image
+        $template_img = Image::make($template->image->url);
+          foreach($images as $image)
+          {
+            $firm_asset_img = Image::make($image['url']);
+
+            $needed_width = ($template_img->width()*$image['ratio'])/100;
+            $needed_height = ( $needed_width*$firm_asset_img->height() )/ $firm_asset_img->width();
+            $image['width'] = (int)$needed_width;
+            $image['height'] = (int)$needed_height;
+            $firm_asset_img->resize($image['width']- $image['border'], $image['height']-$image['border']);
+            // $firm_asset_img->resize($image['width']- $image['border'], $image['height']-$image['border']);
+            $firm_asset_img->opacity($image['opacity']);
+            $firm_asset_img->resizeCanvas($image['width'], $image['height'], 'center', false, $image['border_color']);
+            // $firm_asset_img->rotate($rotate);
+            // $firm_asset_img->crop(400, 500, 50, 0);
+            $template_img->insert($firm_asset_img, $image['location'], $image['x_axis'], $image['y_axis']);
+          }
+
+          // save image in desired format
+          $myframe="images/1_".uniqid().".jpg";
+          // $myframe="images/1_new.jpg";
+          $template_img->save($myframe);
+
+          // return $frame;
+          return $myframe;
+    }
+
+    // check which asset to use and create a array object with settings for that asset
+    public static function get_images_from_firm_with_settings(Template $template, FirmPlan $firm_plan)
+    {
+
+        $asset = null;
+        $asset_location = null;
+
+        // find any availble asset, priority wise
+        // suppose setting is set to use strip, but strip is not uploaded by user,
+        // then by default logo will be picked from db
+        // and priority will be for default logo
+        $assets = $firm_plan->firm->assets()
+                ->orderBy('is_default', 'desc')
+                ->orderByRaw( "FIELD(asset_type_id, $firm_plan->st_use_asset_type) DESC" )
+                ->get();
+
+        if(!$assets)
+            abort(403, 'No asssets found for firm. (f'.$firm_plan->firm->id.'fp'.$$firm_plan->id.')');
+
+
+        // now applying filter, we have multiple assets,
+        // will check if selected template supports location for that asset and apply accordingly
+        foreach ($assets as $asset) {
+            // where to add asset on frame
+            if(in_array($asset->asset_type_id, config('amit.logo_assets') )  )
+            {   // logo
+                $asset_location = TemplateManager::get_supported_logo_location($template);
+                $ratio = 30;  $x_axis = $y_axis = 10;
+            }
+            else if(in_array($asset->asset_type_id, config('amit.strip_assets') ) )
+            {   // strip
+                $asset_location = TemplateManager::get_supported_strip_location($template);
+                $ratio = 100; $x_axis = $y_axis = 0;
+            }
+
+            if($asset_location) break;
+        }
+
+        if(!$asset_location)
+            abort(403, 'No supported assets for firm.');
+
+        $images=array(
+                  array(
+                  'url' => $asset->image->url,
+                  'opacity' => '100',
+                  'location' => $asset_location, 'ratio' => $ratio,
+                  'border'=>'0','border_color'=>'000000',
+                  'x_axis'=> $x_axis,'y_axis'=>$y_axis,'rotate'=>'0',
+                  'circle_radius'=>'0'),
+              );
+       return $images;
+    }
 }
