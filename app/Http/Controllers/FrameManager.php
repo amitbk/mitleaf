@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class FrameManager
 {
 
-    public static function generate_and_store_frame_image(Template $template, FirmPlan $firm_plan)
+    public static function generate_and_store_frame_image(Frame $frame, FirmPlan $firm_plan)
     {
         // return var_dump($frame);
         $template = TemplateManager::get_random_template($frame);
