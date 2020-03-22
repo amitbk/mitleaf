@@ -19,6 +19,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/c7890ac5ad.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app">
@@ -36,7 +38,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                       <li class="nav-item">
-                          <a class="nav-link" href="{{ route('firms.index') }}">{{ __('Firms') }}</a>
+                          <a class="nav-link" href="{{ route('firms.myfirms') }}">{{ __('Firms') }}</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ route('plans.index') }}">{{ __('Plans') }}</a>
                       </li>
                     </ul>
 
@@ -59,6 +64,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('myplans') }}">
+                                        {{ __('My Plans') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -68,6 +77,9 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+
+
+
                                 </div>
                             </li>
                         @endguest
@@ -76,9 +88,13 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
+        <div class="footer">
+
+
+        </div>
     </div>
 </body>
 </html>

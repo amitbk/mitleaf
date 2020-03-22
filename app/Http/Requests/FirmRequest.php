@@ -25,7 +25,7 @@ class FirmRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            // 'about' => 'required',
+            // 'business_type' => 'required',
         ];
     }
 }

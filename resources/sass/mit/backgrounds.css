@@ -1,0 +1,30 @@
+.fl_bg1 {
+    color: #000;
+    border: 0px;
+    background: #ed2f59;
+    background: -webkit-linear-gradient(bottom, #fff,#d2f6e3);
+    background: -o-linear-gradient(bottom, #fff,#d2f6e3);
+    background: -moz-linear-gradient(bottom, #fff,#d2f6e3);
+    background: linear-gradient(to bottom, #fff,#d2f6e3);
+}
+.fl_bg2 {
+    color: #8fe6bd;
+    border: 0px;
+    background: #ed2f59;
+    background: -webkit-linear-gradient(bottom, #1d9956,#1c2060);
+    background: -o-linear-gradient(bottom, #1d9956,#1c2060);
+    background: -moz-linear-gradient(bottom, #1d9956,#1c2060);
+    background: linear-gradient(to bottom, #1d9956,#1c2060);
+}
+
+.fl_bg_gray {
+    color: #000;
+    border: 0px;
+    background: #95ebbc;
+    background: -webkit-linear-gradient(bottom, #95ebbc,#e9ddf8);
+    background: -o-linear-gradient(bottom, #95ebbc,#e9ddf8);
+    background: -moz-linear-gradient(bottom, #95ebbc,#e9ddf8);
+    background: linear-gradient(to bottom, #95ebbc,#e9ddf8);
+}
+
+.bg_sky1 {background-color: #defee3}

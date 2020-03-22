@@ -1,0 +1,44 @@
+
+
+/* file upload */
+.upload-caption {
+    padding: 10px;
+    background: #3490dc;
+    display: table;
+    color: #ffffff;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    margin: 10px;
+    cursor: pointer;
+ }
+.fileinput {
+    display: none;
+}
+.img-preview {
+    display: flex;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+
+.border_f {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.border_b {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.fl_tag {
+    font-size: 12px;
+    border: 1px solid #accdbb;
+    border-radius: 3px;
+    padding: 0px 3px;
+}
+
+.no_decoration {
+    text-decoration: none;
+}
+
+.fl_avatar {
+    max-width: 50px;
+}

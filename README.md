@@ -39,7 +39,8 @@ After installing, to create auth
 
 ```php artisan make:model Image -a ```
 
-## Composer Dump-Autolod : required after changing config/composer.json/.env
+## Composer Dump-Autolod
+(required after changing config/composer.json/.env)
 
 ```php artisan config:cache```
 
@@ -66,6 +67,12 @@ This will help to create pivot table migrations
 ## Laravel Image Intervention
 
 ```composer require intervention/image```
+
+## Laravel Debugger
+
+```composer require barryvdh/laravel-debugbar --dev```
+
+- [Laravel Debugger - Link](https://github.com/barryvdh/laravel-debugbar).
 
 
 ## About Laravel
