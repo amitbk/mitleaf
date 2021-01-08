@@ -17,6 +17,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// admin
+Route::get('/fly', function () {
+    return view('admin.dashboard.index');
+})->name('admin');
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/templates', 'TemplateController');
 Route::resource('/firms', 'FirmController');

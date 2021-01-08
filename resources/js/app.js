@@ -35,7 +35,18 @@ Vue.component('image-preview', require('./components/widgets/ImagePreview.vue').
 
 const app = new Vue({
     el: '#app',
+    data() {
+      return {
+        isToggeled: false,
+        url: null,
+      }
+    },
     components: {
 
+    },
+    methods: {
+      toggleSidebar() {
+        this.isToggeled = !this.isToggeled
+      },
     }
 });
