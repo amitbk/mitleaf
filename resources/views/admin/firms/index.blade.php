@@ -1,18 +1,18 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container py-4">
     <div class="row">
         <div class="col-md-12 text-center">
+            @include('helpers._flash')
             <h2>{{ $pageTitle ?? 'Firms' }}
                 <a href="{{ route('firms.create')}}" class="btn btn-success btn-sm">Add New</a>
             </h2>
-            @include('helpers._flash')
         </div>
     </div>
     <div class="row justify-content-center">
         @foreach($firms as $firm)
-        <div class="col-md-4 justify-content-center mb-4">
+        <div class="col-md-4 justify-content-center">
 
             <div class="card">
                 <div class="card-body">

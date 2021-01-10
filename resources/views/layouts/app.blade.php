@@ -38,7 +38,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                       <li class="nav-item">
-                          <a class="nav-link" href="{{ route('firms.myfirms') }}">{{ __('Firms') }}</a>
+                          <a class="nav-link" href="{{ route('firms.myfirms') }}">{{ __('My Businesses') }}</a>
                       </li>
                       <li class="nav-item">
                           <a class="nav-link" href="{{ route('plans.index') }}">{{ __('Plans') }}</a>
@@ -64,6 +64,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                    @if(Auth::user()->role_id == 1)
+                                      <a class="dropdown-item" href="{{ route('admin') }}">
+                                          {{ __('Admin Panel') }}
+                                      </a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('myplans') }}">
                                         {{ __('My Plans') }}
                                     </a>
@@ -77,9 +84,6 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-
-
-
                                 </div>
                             </li>
                         @endguest

@@ -51,14 +51,16 @@ class LoginController extends Controller
         // var_dump(auth()->id());die();
         if(auth()->user()->firms->count() == 0)
         {
-            $firm = new Firm;
-            $firm->name = auth()->user()->name."'s Business";
-            $firm->save();
-            $firm->users()->attach(auth()->user());
+            // $firm = new Firm;
+            // $firm->name = auth()->user()->name."'s Business";
+            // $firm->save();
+            // $firm->users()->attach(auth()->user());
+            return '/firms/create';
+
         }
         // if(auth()->user()->firms)
         if (auth()->user()->role_id == 1) {
-            return '/admin';
+            return '/dashboard';
         }
         return '/home';
     }

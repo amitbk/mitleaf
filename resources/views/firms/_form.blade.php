@@ -10,6 +10,17 @@
 </div>
 
 <div class="form-group">
+    <label for="firm-name">What is your business tagline</label>
+    <input type="text" name="tagline" value="{{ old('tagline', $firm->tagline) }}" id="firm-tagline" class="form-control {{ $errors->has('tagline') ? 'is-invalid' : '' }}" placeholder="Enter tagline of your business">
+
+    @if ($errors->has('tagline'))
+        <div class="invalid-feedback">
+            <strong>{{ $errors->first('tagline') }}</strong>
+        </div>
+    @endif
+</div>
+
+<div class="form-group">
     <label for="firm_type_id">Select Business Type:</label>
     <select name="firm_type_id" v-model="firm_type_id" class="form-control" id="firm_type_id">
         <option v-for="firm_type in firm_types" :value="firm_type.id">@{{firm_type.name}}</option>
@@ -26,6 +37,7 @@
         </div>
     @endif
 </div>
+
 
 <div class="form-group text-center">
     <button type="submit" class="btn btn-primary btn-lg">{{ $buttonText }}</button>

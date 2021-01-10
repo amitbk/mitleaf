@@ -2,9 +2,9 @@
 
 @section('content')
 <firm-create :firm_types="{{$firm_types}}" :firm_type_id="{{$firm->firm_type_id ?? '2' }}" inline-template>
-    <div class="container">
+    <div class="container py-4">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-12 col-sm-9 col-md-7 col-lg-6">
                 <h2 class="text-center">Tell us about your business</h2>
                 <div class="card">
 

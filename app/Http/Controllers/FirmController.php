@@ -24,7 +24,7 @@ class FirmController extends Controller
     public function index()
     {
         $firms = Firm::latest()->paginate(10);
-        return view('firms.index', compact('firms') );
+        return view('admin.firms.index', compact('firms') );
     }
     public function myfirms()
     {
@@ -52,7 +52,7 @@ class FirmController extends Controller
      */
     public function store(FirmRequest $request)
     {
-        $this->update($request);
+        return $this->update($request);
     }
 
     /**
@@ -85,12 +85,14 @@ class FirmController extends Controller
     public function edit_details($firm_id)
     {
         $firm = Firm::find($firm_id);
-        return view('firms.edit_details', compact('firm'));
+        return view('firms.edit_asset', compact('firm'))->withTitle('Logo')->with('asset_type_id',1);
     }
     public function edit_details2($firm_id)
     {
         $firm = Firm::find($firm_id);
-        return view('firms.edit_details2', compact('firm'));
+        return view('firms.edit_asset', compact('firm'))->withTitle('Strip1')->with('asset_type_id',3);
+
+        // return view('firms.edit_details2', compact('firm'));
     }
 
     public function update_details(Request $request, $id)
@@ -99,10 +101,10 @@ class FirmController extends Controller
         // save assets
 
         $asset = Asset::firstOrNew(
-                ['firm_id' => $id, 'asset_type_id' => 1]
+                ['firm_id' => $id, 'asset_type_id' => $request->asset_type_id]
             );
         $asset->firm_id = $id;
-        $asset->asset_type_id = 1;
+        $asset->asset_type_id = $request->asset_type_id;
 
         // upload image
         $image = new Img;
@@ -111,30 +113,30 @@ class FirmController extends Controller
         $asset->image_id = $image->id;
         $asset->save();
 
-        flash("Logo Uploaded Successfully", 'success');
+        flash("File Uploaded Successfully", 'success');
         return redirect()->route('firms.show', $id);
     }
 
-    public function update_details2(Request $request, $id)
-    {
-        $firm = Firm::find($id);
-
-        $asset = Asset::firstOrNew(
-                ['firm_id' => $id, 'asset_type_id' => 3]
-            );
-        $asset->firm_id = $id;
-        $asset->asset_type_id = 3;
-
-        // upload image
-        $image = new Img;
-        $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
-
-        $asset->image_id = $image->id;
-        $asset->save();
-
-        flash("Strip Uploaded Successfully", 'success');
-        return redirect()->route('firms.show', $id);
-    }
+    // public function update_details2(Request $request, $id)
+    // {
+    //     $firm = Firm::find($id);
+    //
+    //     $asset = Asset::firstOrNew(
+    //             ['firm_id' => $id, 'asset_type_id' => 3]
+    //         );
+    //     $asset->firm_id = $id;
+    //     $asset->asset_type_id = 3;
+    //
+    //     // upload image
+    //     $image = new Img;
+    //     $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
+    //
+    //     $asset->image_id = $image->id;
+    //     $asset->save();
+    //
+    //     flash("Strip Uploaded Successfully", 'success');
+    //     return redirect()->route('firms.show', $id);
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -147,12 +149,13 @@ class FirmController extends Controller
     {
         $user = Auth::user();
         // $firm = $user->firms()->create($request->except('_token'));
-        $editing = $firm ? true : false;
+        $editing = ($firm && !!$firm->id) ? true : false;
         if($firm == null)
             $firm = new Firm;
 
         $firm->name = $request->name;
         $firm->firm_type_id = $request->firm_type_id;
+        $firm->tagline = $request->tagline;
         $firm->save();
 
         if(!$editing) // attach firm to user
@@ -162,7 +165,7 @@ class FirmController extends Controller
         FirmPlan::where('plan_id', 4)
           ->update(['firm_type_id' => $firm->firm_type_id]);
 
-        isset($editing) ? $msg="Firm Updated Successfully!" : $msg="Firm Saved Successfully!";
+        !!$editing ? $msg="Business profile updated Successfully!" : $msg="Business profile saved successfully!";
         flash($msg, 'success');
 
         return redirect()->route('firms.myfirms');

@@ -6,7 +6,8 @@
         <div class="row justify-content-center">
             <div class="col-md-5">
                 @include('helpers._flash')
-                <h3 class="text-center">Upload a logo of {{$firm->name}}.</h3>
+                <h3 class="text-center font-weight-bold">{{$firm->name}}</h3>
+                <h4 class="text-center">Upload a {{$title}}</h4>
                 <div class="card">
 
 
@@ -37,6 +38,7 @@
                             </image-uploader>
 
                             <input type="hidden" id="file" name="image" id="image" v-model="image.dataUrl">
+                            <input type="hidden" name="asset_type_id" value="{{$asset_type_id}}">
 
                             <div class="alert alert-secondary">
                               Try to upload a PNG logo. If you dont have PNG, still you can upload JPG/JPEG logo.

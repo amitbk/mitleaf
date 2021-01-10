@@ -12,7 +12,7 @@
 
                     <div class="card-body text-center">
 
-                        <form action="{{ route('firms.update_details2', $firm->id) }}" method="post">
+                        <form action="{{ route('firms.update_details', $firm->id) }}" method="post">
                             @csrf
                             <image-uploader
                                 :debug="0"
@@ -37,6 +37,7 @@
                             </image-uploader>
 
                             <input type="hidden" id="file" name="image" id="image" v-model="image.dataUrl">
+                            <input type="hidden" name="asset_type_id" value="3">
 
                             <div class="alert alert-secondary">
                               Try to upload a PNG Strip. If you dont have PNG, still you can upload JPG/JPEG logo.

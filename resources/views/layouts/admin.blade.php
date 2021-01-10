@@ -46,9 +46,9 @@
           <div class="list-group list-group-flush">
             <a href="{{route('admin')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">
+            <a href="{{route('users.index')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-bars"></i> Users</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">
+            <a href="{{route('firms.index')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-ice-cream"></i> Firms</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-lightbulb"></i> Orders</a>
@@ -56,6 +56,8 @@
               <i class="fas fa-images"></i> Trials</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-hand-holding-usd "></i> Tags</a>
+            <a href="{{route('users.index')}}" class="list-group-item list-group-item-action bg-light">
+              <i class="fas fa-bars"></i> Designers</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-users"></i> Admins</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">

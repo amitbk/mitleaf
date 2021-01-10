@@ -10,6 +10,10 @@ use App\Order;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function dashboard()
     {
       $users_count = User::get()->count();

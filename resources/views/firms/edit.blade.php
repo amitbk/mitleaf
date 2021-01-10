@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<firm-create :firm_types="{{$firm_types}}" :firm_type_id="{{$firm->firm_type_id}}" inline-template>
+<firm-create :firm_types="{{$firm_types}}" :firm_type_id="{{$firm->firm_type_id ?? '4'}}" inline-template>
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-md-5">
-                <h2 class="text-center">{{$firm->name}}</h2>
+                <!-- <h2 class="text-center">{{$firm->name}}</h2> -->
+                <h3 class="text-center font-weight-bold">{{$firm->name}}</h3>
+                <h4 class="text-center">Edit</h4>
                 <div class="card">
 
 

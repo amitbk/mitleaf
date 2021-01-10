@@ -18,9 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 // admin
-Route::get('/fly', function () {
-    return view('admin.dashboard.index');
-})->name('admin');
+Route::get('/fly', 'AdminController@dashboard')->name('admin');
+Route::resource('fly/users', 'UserController');
+
+
+// user start trial process
+Route::get('/start', 'TrialController@start')->name('start');
 
 
 Route::get('/home', 'HomeController@index')->name('home');

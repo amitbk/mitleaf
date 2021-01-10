@@ -61,6 +61,19 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
+
+            .btn-try {
+              color: white;
+              font-size: 25px;
+              line-height: 36px;
+              padding: 6px 40px 6px 40px;
+              border-radius: 5px;
+              background-color: #336e7a;
+              box-shadow: 0 6px #7bfc9b;
+              border: none;
+              font-weight: bold;
+              text-decoration: none;
+            }
         </style>
     </head>
     <body>
@@ -85,6 +98,8 @@
                   <div class="">
                     MitLeaf - The Bot
                   </div>
+
+                  <a class="btn-try" href="/register">Click here to try FREE Now</a>
                 </div>
             </div>
         </div>
