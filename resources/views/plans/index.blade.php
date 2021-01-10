@@ -5,9 +5,13 @@
     <div class="container py-4">
 
         <div class="row mb-3">
-            <div class="col-md-9 col-xs-12 text-center text-sm-left">
-                <h3>Select a best plan for you</h3>
+            <div class="col-12">
+              @include('helpers._flash')
             </div>
+            <div class="col-md-9 col-xs-12 text-center text-sm-left">
+                <h3 class="font-weight-bold">Select a best plan for you</h3>
+            </div>
+
             <div class="col-md-3 col-xs-12 text-center text-sm-right">
                 <!-- firm select option -->
                 <div class="form-group">
@@ -16,17 +20,43 @@
                   </select>
                 </div>
             </div>
+
+            @if(!$user->is_trial_used)
+            <div class="col-12">
+              <div class="alert alert-primary">
+                <strong>Hurrey!</strong> All plans are free for first 7 days!
+              </div>
+            </div>
+            @endif
         </div>
-        <div v-if="formStep == 1" class="plans1_container">
-            @include('plans._plans_list')
-        </div>
-        <div v-if="formStep == 2" class="plans2_container">
-            @include('plans._plans2_list')
+
+        <div class="row mb-3">
+          <div class="col-12">
+            <!-- Create | Publish -->
+            <ul class="nav nav-tabs mb-2 justify-content-center font-weight-bold">
+              <li class="nav-item" @click="formStep = 1">
+                <a class="nav-link" :class="{ active: formStep == 1 }" data-toggle="tab" href="#home">Create</a>
+              </li>
+              <li class="nav-item" @click="formStep = 2">
+                <a class="nav-link" :class="{ active: formStep == 2 }" data-toggle="tab" href="#menu1">Publish</a>
+              </li>
+            </ul>
+
+            <div v-if="formStep == 1" class="plans1_container">
+              @include('plans._plans_list')
+            </div>
+            <div v-if="formStep == 2" class="plans2_container">
+              @include('plans._plans2_list')
+            </div>
+          </div>
         </div>
 
         <div class="row fixed-bottom bg-primary p-1 text-white text-center">
             <div class="col final_amount">
-                Total <span class="font-weight-bold">₹@{{totalPlanAmount}}</span>
+                Total <span class="font-weight-bold">₹@{{totalPlanAmount}}/month</span>
+                @if(!$user->is_trial_used)
+                After 7 days
+                @endif
             </div>
             <div class="col next_plan_changer ">
                 <button v-if="formStep<2" @click="formStep++" type="button" class="btn btn-default bg-light btn-sm">Continue</button>
