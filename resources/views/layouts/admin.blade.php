@@ -47,17 +47,17 @@
             <a href="{{route('admin')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-tachometer-alt"></i> Dashboard</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-bars"></i> Menus</a>
+              <i class="fas fa-bars"></i> Users</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-ice-cream"></i> Items</a>
+              <i class="fas fa-ice-cream"></i> Firms</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-lightbulb"></i> Offers</a>
+              <i class="fas fa-lightbulb"></i> Orders</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-images"></i> Banners</a>
+              <i class="fas fa-images"></i> Trials</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-hand-holding-usd "></i> Orders</a>
+              <i class="fas fa-hand-holding-usd "></i> Tags</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-users"></i> Users</a>
+              <i class="fas fa-users"></i> Admins</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-sms"></i> SMS</a>
 

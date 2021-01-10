@@ -45,28 +45,28 @@
 
         <div class="col-3 col-md-3 mb-2">
           @include ("admin.dashboard._card2",
-                        ['count' => 50, 'label' => 'All Users',
+                        ['count' => $users_count, 'label' => 'All Users',
                         'icon' => "fas fa-users",
                         'bg_class' => 'bg-primary', 'text_class' => 'text-white'])
         </div>
 
         <div class="col-3 col-md-3 mb-2">
           @include ("admin.dashboard._card2",
-                        ['count' => 60, 'label' => 'All Items',
+                        ['count' => $firms_count, 'label' => 'All Firms',
                         'icon' => "fas fa-ice-cream",
                         'bg_class' => 'bg-success', 'text_class' => 'text-white'])
         </div>
 
         <div class="col-3 col-md-3 mb-2">
           @include ("admin.dashboard._card2",
-                        ['count' => 70, 'label' => 'All Menus',
+                        ['count' => $templates_count, 'label' => 'All Templates',
                         'icon' => "fas fa-list-alt",
                         'bg_class' => 'bg-info', 'text_class' => 'text-white'])
         </div>
 
         <div class="col-3 col-md-3 mb-2">
           @include ("admin.dashboard._card2",
-                        ['count' => 80, 'label' => 'All Orders',
+                        ['count' => $orders_count, 'label' => 'All Orders',
                         'icon' => "fas fa-hand-holding-usd",
                         'bg_class' => 'bg-info', 'text_class' => 'text-white'])
         </div>
