@@ -44,7 +44,7 @@
                             </div>
                             <hr>
                             <button type="submit" class="btn btn-success">Upload</button>
-                            <a href="{{route('firms.edit_details2', $firm->id)}}" class="btn btn-secondary">I don't have the strip.</a>
+                            <a href="{{route('firms.edit_assets', [ $firm->id, 1] )}}" class="btn btn-secondary">I don't have the strip.</a>
                        </form>
                     </div>
                 </div>

@@ -40,7 +40,7 @@
                                     No logo added.
                                 </div>
                             @endif
-                            <a href="{{route('firms.edit_details', $firm->id)}}" class="btn btn-primary"> {{$firm->logo() ? 'Change' : 'Add'}} Logo</a>
+                            <a href="{{route('firms.edit_assets', [$firm->id, 1] )}}" class="btn btn-primary"> {{$firm->logo() ? 'Change' : 'Add'}} Logo</a>
                         </div>
                         <div class="card-footer">Logo</div>
                     </div>
@@ -54,7 +54,7 @@
                                     No strip added.
                                 </div>
                             @endif
-                            <a href="{{route('firms.edit_details2', $firm->id)}}" class="btn btn-primary"> {{$firm->strip() ? 'Change' : 'Add'}} Strip</a>
+                            <a href="{{route('firms.edit_assets', [$firm->id, 3])}}" class="btn btn-primary"> {{$firm->strip() ? 'Change' : 'Add'}} Strip</a>
                         </div>
                         <div class="card-footer">Strip</div>
                     </div>

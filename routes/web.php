@@ -31,10 +31,10 @@ Route::resource('/templates', 'TemplateController');
 Route::resource('/firms', 'FirmController');
 Route::get('/myfirms', 'FirmController@myfirms')->name('firms.myfirms');
 
-Route::get('/firms/{id}/edit_details', 'FirmController@edit_details')->name('firms.edit_details');
-Route::post('/firms/{id}/update_details', 'FirmController@update_details')->name('firms.update_details');
-Route::get('/firms/{id}/edit_details2', 'FirmController@edit_details2')->name('firms.edit_details2');
-Route::post('/firms/{id}/update_details2', 'FirmController@update_details2')->name('firms.update_details2');
+Route::get('/firms/{id}/edit_assets/{asset_type_id}', 'FirmController@edit_assets')->name('firms.edit_assets');
+Route::post('/firms/{id}/update_assets', 'FirmController@update_details')->name('firms.update_assets');
+// Route::get('/firms/{id}/edit_details2', 'FirmController@edit_details2')->name('firms.edit_details2');
+// Route::post('/firms/{id}/update_details2', 'FirmController@update_details2')->name('firms.update_details2');
 
 Route::resource('/plans', 'PlanController');
 Route::resource('/orders', 'OrderController');

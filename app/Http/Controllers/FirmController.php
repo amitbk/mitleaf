@@ -6,6 +6,7 @@ use App\Firm;
 use App\FirmType;
 use App\FirmPlan;
 use App\Asset;
+use App\AssetType;
 use App\Image as Img;
 use Illuminate\Http\Request;
 use App\Http\Requests\FirmRequest;
@@ -82,62 +83,6 @@ class FirmController extends Controller
         return view('firms.edit', compact('firm','firm_types'));
     }
 
-    public function edit_details($firm_id)
-    {
-        $firm = Firm::find($firm_id);
-        return view('firms.edit_asset', compact('firm'))->withTitle('Logo')->with('asset_type_id',1);
-    }
-    public function edit_details2($firm_id)
-    {
-        $firm = Firm::find($firm_id);
-        return view('firms.edit_asset', compact('firm'))->withTitle('Strip1')->with('asset_type_id',3);
-
-        // return view('firms.edit_details2', compact('firm'));
-    }
-
-    public function update_details(Request $request, $id)
-    {
-        $firm = Firm::find($id);
-        // save assets
-
-        $asset = Asset::firstOrNew(
-                ['firm_id' => $id, 'asset_type_id' => $request->asset_type_id]
-            );
-        $asset->firm_id = $id;
-        $asset->asset_type_id = $request->asset_type_id;
-
-        // upload image
-        $image = new Img;
-        $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
-
-        $asset->image_id = $image->id;
-        $asset->save();
-
-        flash("File Uploaded Successfully", 'success');
-        return redirect()->route('firms.show', $id);
-    }
-
-    // public function update_details2(Request $request, $id)
-    // {
-    //     $firm = Firm::find($id);
-    //
-    //     $asset = Asset::firstOrNew(
-    //             ['firm_id' => $id, 'asset_type_id' => 3]
-    //         );
-    //     $asset->firm_id = $id;
-    //     $asset->asset_type_id = 3;
-    //
-    //     // upload image
-    //     $image = new Img;
-    //     $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
-    //
-    //     $asset->image_id = $image->id;
-    //     $asset->save();
-    //
-    //     flash("Strip Uploaded Successfully", 'success');
-    //     return redirect()->route('firms.show', $id);
-    // }
-
     /**
      * Update the specified resource in storage.
      *
@@ -168,7 +113,11 @@ class FirmController extends Controller
         !!$editing ? $msg="Business profile updated Successfully!" : $msg="Business profile saved successfully!";
         flash($msg, 'success');
 
-        return redirect()->route('firms.myfirms');
+        if($editing)
+          return redirect()->route('firms.myfirms');
+        else
+          return redirect()->route('firms.edit_assets', [$firm->id, 1]); // logo
+
     }
 
     /**
@@ -181,4 +130,41 @@ class FirmController extends Controller
     {
         //
     }
+
+    public function edit_assets($firm_id, $asset_type_id)
+    {
+        if( !in_array($asset_type_id, [1,3]) )
+          return redirect()->route("firms.show", $firm_id);
+
+        $firm = Firm::find($firm_id);
+        $asset_type = AssetType::find($asset_type_id);
+        return view('firms.edit_asset', compact('firm'))->with('asset_type_name', $asset_type->name_display)->with('asset_type_id', $asset_type_id);
+    }
+    public function update_details(Request $request, $id)
+    {
+        $firm = Firm::find($id);
+        // save assets
+
+        $asset = Asset::firstOrNew(
+                ['firm_id' => $id, 'asset_type_id' => $request->asset_type_id]
+            );
+        $asset->firm_id = $id;
+        $asset->asset_type_id = $request->asset_type_id;
+
+        // upload image
+        $image = new Img;
+        $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
+
+        $asset->image_id = $image->id;
+        $asset->save();
+
+        flash("File Uploaded Successfully", 'success');
+
+        if($firm->plans->count() == 0)
+          return redirect()->route('plans.index');
+        else
+          return redirect()->route('firms.show', $id);
+    }
+
+
 }

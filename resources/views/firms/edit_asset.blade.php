@@ -7,13 +7,13 @@
             <div class="col-md-5">
                 @include('helpers._flash')
                 <h3 class="text-center font-weight-bold">{{$firm->name}}</h3>
-                <h4 class="text-center">Upload a {{$title}}</h4>
+                <h4 class="text-center">Upload a {{$asset_type_name}}</h4>
                 <div class="card">
 
 
                     <div class="card-body text-center">
 
-                        <form action="{{ route('firms.update_details', $firm->id) }}" method="post">
+                        <form action="{{ route('firms.update_assets', $firm->id) }}" method="post">
                             @csrf
                             <image-uploader
                                 :debug="0"
@@ -45,7 +45,7 @@
                             </div>
                             <hr>
                             <button type="submit" class="btn btn-success">Upload</button>
-                            <a href="{{route('firms.edit_details2', $firm->id)}}" class="btn btn-secondary">I don't have the logo.</a>
+                            <a href="{{route('firms.edit_assets', [$firm->id, 3] )}}" class="btn btn-secondary">I don't have the logo.</a>
                        </form>
                     </div>
                 </div>
