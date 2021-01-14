@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
                 // 2=Other admins
                 // 3=can upload templates
 
+            $table->boolean('is_trial_used')->default(false);
             $table->string('name');
             $table->string('mobile')->nullable();
             $table->string('email')->unique();

@@ -2,6 +2,7 @@
 
 @section('content')
 <plans-list :plans="{{ $plans }}" :firm_types="{{$firm_types}}" :firms="{{$firms}}" inline-template>
+
     <div class="container py-4">
 
         <div class="row mb-3">
@@ -31,6 +32,21 @@
         </div>
 
         <div class="row mb-3">
+
+          @if($user->is_trial_used)
+          <!-- show month, year switch only if purchasing actual plan & not for trial -->
+          <div class="col-12 mb-2 justify-content-center">
+            <ul class="nav nav-pills font-weight-bold">
+              <li class="nav-item" @click="duration_selected = 1">
+                <a class="nav-link border active" data-toggle="pill" href="#month">Monthly billing</a>
+              </li>
+              <li class="nav-item" @click="duration_selected = 12">
+                <a class="nav-link border" data-toggle="pill" href="#year">Yearlly billing (20% OFF)</a>
+              </li>
+            </ul>
+          </div>
+          @endif
+
           <div class="col-12">
             <!-- Create | Publish -->
             <ul class="nav nav-tabs mb-2 justify-content-center font-weight-bold">
@@ -42,6 +58,7 @@
               </li>
             </ul>
 
+            <!-- Plans list -->
             <div v-if="formStep == 1" class="plans1_container">
               @include('plans._plans_list')
             </div>

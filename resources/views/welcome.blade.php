@@ -45,7 +45,7 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 50px;
             }
 
             .links > a {
@@ -96,9 +96,9 @@
                 <div class="title m-b-md">
                   <img src="{{asset('images/logos/logo3.png')}}" alt="" class="img-responsive">
                   <div class="">
-                    MitLeaf - The Bot
+                    The Social Media Bot
                   </div>
-
+                  <br>
                   <a class="btn-try" href="/register">Click here to try FREE Now</a>
                 </div>
             </div>

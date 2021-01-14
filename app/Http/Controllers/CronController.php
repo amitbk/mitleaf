@@ -13,7 +13,14 @@ class CronController extends Controller
 {
     public function generate_frame_images()
     {
-        $frames = Frame::whereNull('image_id')->whereNull('error')->limit(30)->get();
+        $days = 5; // for how many days upfront, frames will be created
+        $date = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + $days days"));
+
+        $frames = Frame::whereNull('image_id')
+                      ->where('error_count', '<=', 3)
+                      ->whereDate('schedule_on', '<=', $date )
+                      ->limit(30)->get();
+
         $count = 0;
         echo "Generating frame images::<br>";
 
@@ -24,7 +31,7 @@ class CronController extends Controller
                 $count++;
             } catch (\Exception $e) {
                 echo "<hr>Exception for frame--->".$frame->id."<br>";
-
+                $frame->error += 1;
                 $frame->error = $e->getMessage();
                 $frame->save();
                 echo $e->getMessage();

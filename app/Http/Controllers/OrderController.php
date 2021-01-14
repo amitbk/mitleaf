@@ -35,9 +35,9 @@ class OrderController extends Controller
 
             $firm_plans = $order->firm_plans;
             foreach ($firm_plans as $firm_plan) {
-
                 if($firm_plan->plan_id == 3) // indian event
                 {
+                    // var_dump("<br>1-", $firm_plan->plan_id, !in_array ( $firm_plan->plan_id, [1,3]  ) );
                     // get all future events for current year
                     $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
                     // create frames for each event
@@ -66,8 +66,10 @@ class OrderController extends Controller
                     }
                 }
                 else
-                if($firm_plan->plan_id != 3)
+                if( !in_array ( $firm_plan->plan_id, [1,3] ) )
                 {
+                  // var_dump("<br>2-", $firm_plan->plan_id, !in_array ( $firm_plan->plan_id, [1,3]  ) );
+
                     // find $frames having ->scheduled_on < $firm_plan->date_start_from
                     $is_frames_created = false;
                     if(!$is_frames_created)
@@ -127,6 +129,10 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             // TEMP
+
+            $is_trial = 1;
+            $plan_days = $is_trial ? 7 : 30;
+
             // CREATE order
             $user = Auth::user();
             $firm = Firm::find($request->firm_id);
@@ -145,6 +151,7 @@ class OrderController extends Controller
                 $order_plan->plan_id = $plan->id;
                 $order_plan->rate = $plan->rate;
                 $order_plan->qty = $plan->slab_selected;
+                $order_plan->is_trial = $is_trial;
                 $order_plan->save();
 
                 $total += $plan->rate*$order_plan->qty;
@@ -156,6 +163,7 @@ class OrderController extends Controller
                 $firm_plan->order_plan_id = $order_plan->id;
                 $firm_plan->is_frame_plan = $plan->is_frame_plan;
                 $firm_plan->qty_per_month = 30*$order_plan->qty;
+                $firm_plan->is_trial = $is_trial;
 
                 if(property_exists($plan, 'firm_type_id'))
                     $firm_plan->firm_type_id = $plan->firm_type_id;

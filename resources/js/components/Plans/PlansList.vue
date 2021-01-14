@@ -14,6 +14,7 @@ export default {
       formStep: 1,
       selectedTags: [],
       slab_selected: [],
+      is_trial_selected: 1,
       duration_selected: 1,
       firm_id: !!this.firms ? this.firms[0].id : '',
       localPlans: this.plans.filter(el => {

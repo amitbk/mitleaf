@@ -28,7 +28,11 @@
                             <td>{{$no++}}</td>
                             <td class="text-left">
                                 <div class="font-weight-bold">{{$plan->plan->name}}</div>
-                                {{$plan->firm_type->name ??''}}
+                                <div>{{$plan->firm_type->name ??''}} </div>
+
+                                @if($plan->is_trial)
+                                 <div class="badge badge-pill badge-primary">Trial Plan</div>
+                                @endif
                             </td>
                             <td>{{$plan->qty_per_month}}</td>
                             <td>{{$plan->date_start_from->format('d M,Y')}}</td>

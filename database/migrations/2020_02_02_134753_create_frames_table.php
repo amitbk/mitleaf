@@ -33,6 +33,7 @@ class CreateFramesTable extends Migration
 
             $table->integer('template_id')->nullable()->default(null);
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
+            $table->integer('error_count')->default(0);
             $table->text('error')->nullable()->default(null);
 
 

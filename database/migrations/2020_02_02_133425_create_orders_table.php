@@ -24,6 +24,11 @@ class CreateOrdersTable extends Migration
             $table->integer('firm_id')->unsigned();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
             $table->double('amount');
+            $table->boolean('is_trial')->default(false);
+            
+            $table->timestamp('date_start_from')->nullable()->default(null);
+            $table->timestamp('date_scheduled_upto')->nullable()->default(null);
+
             $table->integer('status')->default(0);
             $table->timestamps();
         });

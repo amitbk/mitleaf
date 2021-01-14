@@ -23,10 +23,11 @@ class PlanController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $plans = Plan::where('is_active',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
         $firms = auth()->user()->firms;
-        return view('plans.index', compact('plans'), compact('firm_types') )->withFirms($firms);
+        return view('plans.index', compact('plans'), compact('firm_types', 'user') )->withFirms($firms);
     }
 
     public function myplans()
