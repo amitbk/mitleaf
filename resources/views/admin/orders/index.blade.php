@@ -18,6 +18,7 @@
                   <th width="50px">#</th>
                   <th width="100px">Amount</th>
                   <th>User</th>
+                  <th width="80px">IsTrial</th>
                   <th width="200px">Date</th>
                 </tr>
               </thead>
@@ -31,6 +32,7 @@
                  <td>{{$order->user->name}}
                     <br> <small>{{$order->firm->name}}</small>
                  </td>
+                 <td>{{$order->is_trial}}</td>
                  <td>{{$order->created_at}}</td>
                </tr>
                @empty

@@ -18,6 +18,17 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function designers()
+    {
+      $users = User::latest()->has('templates', '>=', 1)->paginate(10);
+      return view('admin.users.designers', compact('users'))->with('pageTitle', 'Designers');
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
@@ -81,5 +92,20 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function revoke($id)
+    {
+        $user = User::find($id);
+        $user->is_revoked = !$user->is_revoked;
+        $user->save();
+        flash("User revoke status changed.", 'success');
+        return redirect()->back();
     }
 }

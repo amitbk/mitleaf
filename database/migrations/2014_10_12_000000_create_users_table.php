@@ -23,6 +23,9 @@ class CreateUsersTable extends Migration
                 // 3=can upload templates
 
             $table->boolean('is_trial_used')->default(false);
+
+            // restricted user
+            $table->boolean('is_revoked')->default(false);
             $table->string('name');
             $table->string('mobile')->nullable();
             $table->string('email')->unique();

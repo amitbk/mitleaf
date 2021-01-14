@@ -4,10 +4,10 @@
 <div class="container py-4">
     <div class="row">
         <div class="col-md-12">
-            <h2>{{ $pageTitle ?? 'Users' }}
-                <a href="{{ route('users.create')}}" class="btn btn-success btn-sm">Add New</a>
-            </h2>
             @include('helpers._flash')
+            <h2>{{ $pageTitle ?? 'Users' }}
+                <!-- <a href="{{ route('users.create')}}" class="btn btn-success btn-sm">Add New</a> -->
+            </h2>
         </div>
     </div>
     <div class="row ">
@@ -18,11 +18,9 @@
               <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Firms</th>
-                <th>TrialUsed</th>
-                <th>Orders</th>
+                <th>Templates</th>
                 <th>Registered</th>
-                <th>Last Order</th>
+                <th>Last template</th>
                 <th>Options</th>
               </tr>
             </thead>
@@ -31,14 +29,13 @@
               @forelse($users as $user)
               <tr>
                 <td>{{$i++}}</td>
-                <td>{{$user->name}}</td>
-                <td>{{$user->firms->count() ?? 'No'}}</td>
-                <td>{{$user->is_trial_used}}</td>
-                <td>{{$user->orders->count() ?? 'No'}}</td>
+                <td><a href="#">{{$user->name}}</a>
+                </td>
+                <td>{{$user->templates->count() ?? '0'}}</td>
                 <td>{{$user->created_at}}</td>
-                <td>{{$user->orders->last()->created_at ?? 'No'}}</td>
+                <td>{{$user->templates->last()->created_at ?? '-'}}</td>
                 <td>
-                  <a href="{{url('fly/users/'.$user->id.'/revoke')}}"> <?php echo $user->is_revoked ? '<strong>UnRevoke</strong>' : 'Revoke';?></a>
+
                 </td>
               </tr>
               @empty

@@ -50,13 +50,12 @@
               <i class="fas fa-bars"></i> Users</a>
             <a href="{{route('firms.index')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-ice-cream"></i> Firms</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">
+            <a href="{{route('admin.orders')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-lightbulb"></i> Orders</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-images"></i> Trials</a>
+
             <a href="{{route('admin.templates')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-sms"></i> Templates</a>
-            <a href="{{route('users.index')}}" class="list-group-item list-group-item-action bg-light">
+            <a href="{{route('admin.designers')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-bars"></i> Designers</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-hand-holding-usd "></i> Tags</a>
@@ -118,7 +117,9 @@
           </nav>
 
           <main>
+            <admin>
               @yield('content')
+            </admin>
           </main>
         </div>
         <!-- /#page-content-wrapper -->

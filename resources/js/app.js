@@ -16,6 +16,7 @@ Vue.filter('formatDate', function(value) {
 
 
 
+Vue.component('admin', require('./components/Admin.vue').default);
 Vue.component('plans-list', require('./components/Plans/PlansList.vue').default);
 Vue.component('create-template', require('./components/Templates/CreateTemplate.vue').default);
 

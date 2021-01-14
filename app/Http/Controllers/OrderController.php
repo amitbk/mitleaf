@@ -26,6 +26,17 @@ class OrderController extends Controller
       return view('admin.orders.index', compact('orders') );
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function admin()
+    {
+      $orders = Order::latest()->paginate(10);
+      return view('admin.orders.index', compact('orders') );
+    }
+
     public function create_frames($id)
     {
         try {
@@ -151,7 +162,7 @@ class OrderController extends Controller
                 $order_plan->plan_id = $plan->id;
                 $order_plan->rate = $plan->rate;
                 $order_plan->qty = $plan->slab_selected;
-                $order_plan->is_trial = $is_trial;
+                // $order_plan->is_trial = $is_trial;
                 $order_plan->save();
 
                 $total += $plan->rate*$order_plan->qty;
@@ -175,6 +186,8 @@ class OrderController extends Controller
                 $firm_plan->save();
             }
             $order->amount = $total;
+            $order->is_trial = $is_trial;
+
             $order->save();
 
             // return $total;

@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Network::class);
     }
+
+    public function templates()
+    {
+        return $this->hasMany(Template::class);
+    }
 }
