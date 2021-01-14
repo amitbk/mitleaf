@@ -54,14 +54,14 @@
               <i class="fas fa-lightbulb"></i> Orders</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-images"></i> Trials</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-hand-holding-usd "></i> Tags</a>
+            <a href="{{route('admin.templates')}}" class="list-group-item list-group-item-action bg-light">
+              <i class="fas fa-sms"></i> Templates</a>
             <a href="{{route('users.index')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-bars"></i> Designers</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-users"></i> Admins</a>
+              <i class="fas fa-hand-holding-usd "></i> Tags</a>
             <a href="#" class="list-group-item list-group-item-action bg-light">
-              <i class="fas fa-sms"></i> SMS</a>
+              <i class="fas fa-users"></i> Admins</a>
 
           </div>
         </div>
@@ -117,7 +117,7 @@
             </div>
           </nav>
 
-          <main class="py-4">
+          <main>
               @yield('content')
           </main>
         </div>

@@ -20,6 +20,7 @@ Auth::routes();
 // admin
 Route::get('/fly', 'AdminController@dashboard')->name('admin');
 Route::resource('fly/users', 'UserController');
+Route::get('fly/templates', 'TemplateController@admin')->name('admin.templates');
 
 
 // user start trial process

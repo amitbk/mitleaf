@@ -11,23 +11,42 @@
         </div>
     </div>
     <div class="row ">
-        @forelse($users as $user)
-        <div class="col-md-6">
-
-            <div class="card">
-                <div class="card-body">
-                    <h4><a href="{{route('users.show', $user->id)}}" class="text-decoration-none">{{$user->name}}</a></h4>
-                    {{$user->user_type->name ?? ''}}
-                </div>
-                <div class="card-footer">
-                    <a href="{{route('users.edit',$user->id)}}" class="btn btn-primary btn-sm">Edit Information</a>
-                </div>
-            </div>
-
+      <div class="col-12">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Firms</th>
+                <th>TrialUsed</th>
+                <th>Orders</th>
+                <th>Registered</th>
+                <th>Last Order</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php $i=1; ?>
+              @forelse($users as $user)
+              <tr>
+                <td>{{$i++}}</td>
+                <td>{{$user->name}}</td>
+                <td>{{$user->firms->count() ?? 'No'}}</td>
+                <td>{{$user->is_trial_used}}</td>
+                <td>{{$user->orders->count() ?? 'No'}}</td>
+                <td>{{$user->created_at}}</td>
+                <td>{{$user->orders->last()->created_at ?? 'No'}}</td>
+              </tr>
+              @empty
+                No users yet.
+              @endforelse
+            </tbody>
+          </table>
         </div>
-        @empty
-          No users yet.
-        @endforelse
+
+        {{$users->links()}}
+      </div>
+
     </div>
 </div>
 @endsection
