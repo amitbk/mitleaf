@@ -142,8 +142,8 @@ class OrderController extends Controller
             // TEMP
 
             $is_trial = 1;
-            $plan_days = $is_trial ? 7 : 30;
-
+            // $plan_days = $is_trial ? 7 : 30;
+            $trial_days = 10;
             // CREATE order
             $user = Auth::user();
             $firm = Firm::find($request->firm_id);
@@ -182,7 +182,7 @@ class OrderController extends Controller
                 // when to start plan
                 $firm_plan->date_start_from = Carbon::now()->addDays(1);
                 // $firm_plan->date_scheduled_upto = $firm_plan->date_start_from;
-                $firm_plan->date_expiry = Carbon::now()->addMonths($request->duration_selected)->addDays(1);
+                $firm_plan->date_expiry = $is_trial ? Carbon::now()->addDays($trial_days) : Carbon::now()->addMonths($request->duration_selected)->addDays(1);
                 $firm_plan->save();
             }
             $order->amount = $total;
