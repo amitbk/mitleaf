@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/test', 'HomeController@test')->name('test');
+
 Auth::routes();
 
 // admin
@@ -24,6 +26,7 @@ Route::get('fly/users/{id}/revoke', 'UserController@revoke');
 Route::get('fly/templates', 'TemplateController@admin')->name('admin.templates');
 Route::get('fly/orders', 'OrderController@admin')->name('admin.orders');
 Route::get('fly/designers', 'UserController@designers')->name('admin.designers');
+Route::get('fly/needs', 'AdminController@needs')->name('admin.needs');
 
 
 // user start trial process
@@ -34,6 +37,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/templates', 'TemplateController');
 Route::resource('/firms', 'FirmController');
 Route::get('/myfirms', 'FirmController@myfirms')->name('firms.myfirms');
+Route::get('/firms/{id}/plans', 'FirmController@plans')->name('firms.plans');
 
 Route::get('/firms/{id}/edit_assets/{asset_type_id}', 'FirmController@edit_assets')->name('firms.edit_assets');
 Route::post('/firms/{id}/update_assets', 'FirmController@update_details')->name('firms.update_assets');

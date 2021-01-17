@@ -10,8 +10,8 @@
             </div>
 
             <div class="card-body d-flex flex-column">
-                <div class="text-center">
-                    <h3>₹@{{ localPlan.rate}}/month</h3>
+                <div class="text-center font-weight-bold f-30">
+                    <div>₹@{{ localPlan.rate}}/month</div>
                 </div>
                 <div class="mb-3">
                     @{{localPlan.desc}}

@@ -23,6 +23,7 @@
                 <th>Created</th>
                 <th>Orders</th>
                 <th>Last Order</th>
+                <th>Expiry</th>
                 <th>Option</th>
               </tr>
             </thead>
@@ -36,6 +37,7 @@
                 <td>{{$firm->created_at}}</td>
                 <td>{{$firm->orders->count() ?? 'No'}}</td>
                 <td>{{$firm->orders->last()->created_at ?? 'No'}}</td>
+                <td>{{$firm->date_expiry() ?? 'No'}}</td>
                 <td>
                   <a href="{{route('firms.edit',$firm->id)}}" class="btn btn-primary btn-sm">Edit</a>
                 </td>

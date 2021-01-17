@@ -17,7 +17,10 @@
             <div class="card">
                 <div class="card-body">
                     <h4><a href="{{route('firms.show', $firm->id)}}" class="text-decoration-none">{{$firm->name}}</a></h4>
-                    {{$firm->firm_type->name ?? ''}}
+                    <div class="">
+                      {{$firm->firm_type->name ?? ''}}
+                    </div>
+                    <small class="font-weight-bold text-success">Plan expiring on: {{$firm->date_expiry()}}</small>
                 </div>
                 <div class="card-footer">
                     <a href="{{route('firms.edit',$firm->id)}}" class="btn btn-primary btn-sm">Edit Information</a>

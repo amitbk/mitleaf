@@ -36,7 +36,7 @@ class CreateFirmsTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('firms')->insert(['id'=>1,'name' => 'MitLeaf', 'tagline'=> 'A Social Media Bot', 'address' => 'Pune']);
+        DB::table('firms')->insert(['id'=>1,'name' => 'MitLeaf', 'tagline'=> 'A Social Media Bot', 'address' => 'Pune', 'firm_type_id' => config('amit.firm_not_mentioned_id') ]);
 
     }
 

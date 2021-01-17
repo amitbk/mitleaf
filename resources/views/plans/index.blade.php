@@ -33,19 +33,24 @@
 
         <div class="row mb-3">
 
-          @if($user->is_trial_used)
           <!-- show month, year switch only if purchasing actual plan & not for trial -->
-          <div class="col-12 mb-2 justify-content-center">
-            <ul class="nav nav-pills font-weight-bold">
-              <li class="nav-item" @click="duration_selected = 1">
-                <a class="nav-link border active" data-toggle="pill" href="#month">Monthly billing</a>
+          <div class="col-12 col-sm-6 mb-2 text-center m-auto">
+            <h4>Billing Cycle</h4>
+            <ul class="nav nav-pills font-weight-bold nav-justified billing-cycle f-20">
+              @if(!$user->is_trial_used)
+              <li class="nav-item p-1" @click="duration_selected = 0">
+                <a class="nav-link py-3 border" :class="{active: duration_selected == 0 }" data-toggle="pill" href="#month">Trial</a>
               </li>
-              <li class="nav-item" @click="duration_selected = 12">
-                <a class="nav-link border" data-toggle="pill" href="#year">Yearlly billing (20% OFF)</a>
+              @endif
+              <li class="nav-item p-1" @click="duration_selected = 3">
+                <a class="nav-link py-3 border" :class="{active: duration_selected == 3 }" data-toggle="pill" href="#month">3 Months</a>
+              </li>
+              <li class="nav-item p-1" @click="duration_selected = 12">
+                <a class="nav-link py-3 border" :class="{active: duration_selected == 12 }" data-toggle="pill" href="#year">1 Year (20% OFF)</a>
               </li>
             </ul>
+            <hr>
           </div>
-          @endif
 
           <div class="col-12">
             <!-- Create | Publish -->

@@ -34,4 +34,6 @@ return [
 
       'logo_styles' => [11,12,13,14,15,16,17,18,19],
       'strip_styles' => [21,22],
+
+      'firm_not_mentioned_id' => 4,
 ];

@@ -59,7 +59,7 @@ class FrameManager
           }
 
           // save image in desired format
-          $myframe="images/1_".uniqid().".jpg";
+          $myframe="images/frames/".$firm->id."/1_".uniqid().".jpg";
           // $myframe="images/1_new.jpg";
           $template_img->save($myframe);
 

@@ -50,4 +50,26 @@ class Firm extends Model
     {
       return $this->hasMany(Order::class);
     }
+
+    public function date_expiry()
+    {
+      $date = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 0 days"));
+      // return $date;
+      // return $this->whereHas('plans', function($q)
+      //         {
+      //             $date = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + 7 days"));
+      //         })->get();
+
+      return $r = \App\FirmPlan::where('firm_id', $this->id)
+                 ->whereDate('date_start_from', '<=',  date('Y-m-d 23:59:59') )
+                 ->whereDate('date_expiry', '>=', $date )->get();
+      return $this->plans->whereDate('date_expiry', '>', $date );
+      // $frames = Frame::whereNull('image_id')
+      //               ->where('error_count', '<=', 3)
+      //               ->whereDate('schedule_on', '<=', $date )
+      //               ->limit(30)->get();
+
+      $date = $this->plans->max('date_expiry');
+      return $date ? $date->format('d M, Y') : '';
+    }
 }

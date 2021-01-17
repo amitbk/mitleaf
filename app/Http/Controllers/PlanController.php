@@ -39,7 +39,6 @@ class PlanController extends Controller
             flash("You don't have firm added yet, please add a firm.", 'danger');
             return redirect()->route('firms.index');
         }
-
         return view('plans.myplans', compact('firms') );
     }
 

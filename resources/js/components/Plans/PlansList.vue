@@ -15,7 +15,7 @@ export default {
       selectedTags: [],
       slab_selected: [],
       is_trial_selected: 1,
-      duration_selected: 1,
+      duration_selected: 3,
       firm_id: !!this.firms ? this.firms[0].id : '',
       localPlans: this.plans.filter(el => {
                         el.is_selected = false;

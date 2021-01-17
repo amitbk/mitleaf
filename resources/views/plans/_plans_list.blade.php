@@ -10,9 +10,9 @@
             </div>
 
             <div class="card-body d-flex flex-column">
-                <div class="text-center">
-                    <h3 v-if="localPlan.id != 4">₹@{{ localPlan.rate*localPlan.slab_selected}}/month</h3>
-                    <h3 v-else>₹@{{ getFirmTypeRate }}/month</h3>
+                <div class="text-center font-weight-bold f-30">
+                    <div v-if="localPlan.id != 4">₹@{{ localPlan.rate*localPlan.slab_selected}}/month</div>
+                    <div v-else>₹@{{ getFirmTypeRate }}/month</div>
                 </div>
                 <div class="mb-3">
                     @{{localPlan.desc}}

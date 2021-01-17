@@ -140,12 +140,12 @@ class OrderController extends Controller
         try {
             DB::beginTransaction();
             // TEMP
+            $user = Auth::user();
 
-            $is_trial = 1;
+            $is_trial = !$user->is_trial_used;
             // $plan_days = $is_trial ? 7 : 30;
             $trial_days = 10;
             // CREATE order
-            $user = Auth::user();
             $firm = Firm::find($request->firm_id);
             // $firm = $user->firms()->first();
             $order = new Order;
@@ -180,17 +180,33 @@ class OrderController extends Controller
                     $firm_plan->firm_type_id = $plan->firm_type_id;
 
                 // when to start plan
-                $firm_plan->date_start_from = Carbon::now()->addDays(1);
-                // $firm_plan->date_scheduled_upto = $firm_plan->date_start_from;
-                $firm_plan->date_expiry = $is_trial ? Carbon::now()->addDays($trial_days) : Carbon::now()->addMonths($request->duration_selected)->addDays(1);
+                // check current plan expiry if any to start the plan
+                $fp_current_date_expiry = FirmPlan::where('firm_id', $firm->id)->where('plan_id', $plan->id)->max('date_expiry');
+                if( $fp_current_date_expiry )
+                  $firm_plan->date_start_from = $fp_current_date_expiry;
+                else
+                  $firm_plan->date_start_from = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 1 days"));
+
+                $expiry_string = $is_trial ? " + $trial_days days" : " + $request->duration_selected month";
+                $firm_plan->date_expiry = date('Y-m-d 00:00:00', strtotime( $firm_plan->date_start_from. $expiry_string ));
+
+                // $date_expiry = $is_trial ? Carbon::now()->addDays($trial_days) : Carbon::now()->addMonths($request->duration_selected)->addDays(1);
+                // $firm_plan->date_expiry = $date_expiry;
                 $firm_plan->save();
+
+                $order->date_start_from = $firm_plan->date_start_from;
+                $order->date_expiry = $firm_plan->date_expiry;
+                $order->duration_selected = $request->duration_selected;
             }
             $order->amount = $total;
             $order->is_trial = $is_trial;
 
             $order->save();
 
-            // return $total;
+            if($is_trial) {
+              $user->is_trial_used = 1;
+              $user->save();
+            }
 
             // ======================================================
             /* Here we have selected plans data
@@ -199,7 +215,6 @@ class OrderController extends Controller
             - create a data to send to payments gateway
             - send request to payments gateway
             */
-
             // TODO: Create a FirmPlan for order
             // $order->createFramesOfPlans();
             DB::commit();

@@ -43,7 +43,7 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('users')->insert(['id'=>1,'name' => 'Amit Kadam', 'role_id' => 1, 'email'=> 'amit.bk03@gmail.com', 'password' => bcrypt('9552015542')]);
+        DB::table('users')->insert(['id'=>1,'name' => 'Amit Kadam', 'mobile' => '9552015542', 'role_id' => 1, 'email'=> 'amit.bk03@gmail.com', 'password' => bcrypt('9552015542')]);
 
     }
 

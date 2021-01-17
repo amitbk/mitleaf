@@ -46,6 +46,8 @@
           <div class="list-group list-group-flush">
             <a href="{{route('admin')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a href="{{route('admin.needs')}}" class="list-group-item list-group-item-action bg-light">
+              <i class="fas fa-bars"></i> Needs</a>
             <a href="{{route('users.index')}}" class="list-group-item list-group-item-action bg-light">
               <i class="fas fa-bars"></i> Users</a>
             <a href="{{route('firms.index')}}" class="list-group-item list-group-item-action bg-light">

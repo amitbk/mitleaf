@@ -25,11 +25,13 @@ class CreateOrdersTable extends Migration
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
             $table->double('amount');
             $table->boolean('is_trial')->default(false);
-            
-            $table->timestamp('date_start_from')->nullable()->default(null);
-            $table->timestamp('date_scheduled_upto')->nullable()->default(null);
+            $table->integer('duration_selected')->default(0); // in months
 
-            $table->integer('status')->default(0);
+            $table->timestamp('date_start_from')->nullable()->default(null);
+            $table->timestamp('date_expiry')->nullable()->default(null);
+            // $table->timestamp('date_scheduled_upto')->nullable()->default(null);
+
+            $table->integer('status')->default(0); // is active or not
             $table->timestamps();
         });
     }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    protected $dates = ['date_start_from', 'date_expiry'];
+
     public function plans()
     {
         return $this->hasMany(OrderPlan::class);
