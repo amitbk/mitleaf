@@ -23,6 +23,7 @@ export default {
                         if(el.id == 4) el.firm_type_id = 1;
                           return el;
                   }),
+      yearDiscount: 15
         // services: this.plans.filter(el => !!el.is_frame_plan == false)
       // rulesAdded: !!this.rules.length ||  true
     };
@@ -32,8 +33,8 @@ export default {
           let thisPlan = this.localPlans.find(el => el.id == 4);
           let firmRate = this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate;
           let slab = this.localPlans.find(el => el.id == 4).slab_selected;
-          thisPlan.rate = firmRate;
-          let rate = firmRate*slab;
+          thisPlan.rate = firmRate - (this.duration_selected == 12 ? (firmRate*this.yearDiscount/100): 0);
+          let rate = thisPlan.rate*slab;
           return rate;
       },
       totalPlanAmount: function() {

@@ -11,7 +11,7 @@
 
             <div class="card-body d-flex flex-column">
                 <div class="text-center font-weight-bold f-30">
-                    <div v-if="localPlan.id != 4">₹@{{ localPlan.rate*localPlan.slab_selected}}/month</div>
+                    <div v-if="localPlan.id != 4">₹@{{ (localPlan.rate - (duration_selected == 12 ? (localPlan.rate*yearDiscount/100): 0) )*localPlan.slab_selected }}/month</div>
                     <div v-else>₹@{{ getFirmTypeRate }}/month</div>
                 </div>
                 <div class="mb-3">

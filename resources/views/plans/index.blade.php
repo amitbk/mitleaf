@@ -46,7 +46,7 @@
                 <a class="nav-link py-3 border" :class="{active: duration_selected == 3 }" data-toggle="pill" href="#month">3 Months</a>
               </li>
               <li class="nav-item p-1" @click="duration_selected = 12">
-                <a class="nav-link py-3 border" :class="{active: duration_selected == 12 }" data-toggle="pill" href="#year">1 Year (20% OFF)</a>
+                <a class="nav-link py-3 border" :class="{active: duration_selected == 12 }" data-toggle="pill" href="#year">1 Year (@{{yearDiscount}}% OFF)</a>
               </li>
             </ul>
             <hr>
