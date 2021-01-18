@@ -10,8 +10,9 @@
             </div>
 
             <div class="card-body d-flex flex-column">
-                <div class="text-center font-weight-bold f-30">
-                    <div>₹@{{ getRate(localPlan) }}/month</div>
+                <div class="text-center font-weight-bold">
+                  <div class="f-30">₹@{{ localPlan.finalRate }}/month</div>
+                  <div class="text-success"> Saving ₹@{{ localPlan.discount }}/month </div>
                 </div>
                 <div class="mb-3">
                     @{{localPlan.desc}}

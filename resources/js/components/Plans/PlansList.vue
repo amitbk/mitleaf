@@ -17,53 +17,67 @@ export default {
       is_trial_selected: 1,
       duration_selected: 3,
       firm_id: !!this.firms ? this.firms[0].id : '',
-      localPlans: this.plans.filter(el => {
-                        el.is_selected = false;
-                        el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
-                        if(el.id == 4) el.firm_type_id = 1;
-                          return el;
-                  }),
+      localPlans: this.plans
         // services: this.plans.filter(el => !!el.is_frame_plan == false)
       // rulesAdded: !!this.rules.length ||  true
     };
   },
   computed: {
-      getFirmTypeRate: function() {
-          let thisPlan = this.localPlans.find(el => el.id == 4);
-          let firmRate = this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate;
-          let slab = this.localPlans.find(el => el.id == 4).slab_selected;
-          let discount = (this.duration_selected == 12 ? (firmRate*this.yearDiscount/100): 0);
-          thisPlan.rate = firmRate - discount;
-          let rate = thisPlan.rate*slab;
-          return rate.toFixed(2);
-      },
       totalPlanAmount: function() {
           let total = 0;
-          this.localPlans.forEach(el => {
-              let discount = (this.duration_selected == 12 && el.id != 4) ? (el.rate*this.yearDiscount/100): 0;
-              if(el.is_selected == true) total += (el.rate-discount)*el.slab_selected;
+          this.localPlans.filter(el => {
+              if(el.is_selected == true && this.duration_selected > 0) total += el.finalRate;
           });
           return total.toFixed(2);
       }
   },
   methods: {
-    getRate(plan) {
-      // get rate of plan by applying discount
-      let rate = (plan.rate - (this.duration_selected == 12 ? (plan.rate*this.yearDiscount/100): 0) )*plan.slab_selected;
-      return rate.toFixed(2);
+    changeDuration(duration) {
+      this.duration_selected = duration;
+      this.calculatePlanRates();
+    },
+    calculatePlanRates() {
+      this.localPlans.filter(el => {
+        let rate = el.rate;
+        if(el.id == 4) { // firm plan
+          rate = this.firm_types.find(ft => ft.id == el.firm_type_id).rate;
+        }
+        let discount = (this.duration_selected == 12 ? (rate*this.yearDiscount/100): 0);
+
+        el.mrp = rate*el.slab_selected;
+        el.finalRate = (rate - discount)*el.slab_selected;
+        el.discount = discount*el.slab_selected;
+        return el;
+      })
     },
     onFirmChange(event, plan) {
         if(!!event)
         {
-            let index = this.localPlans.findIndex(el => el.id == plan.id);
-            this.localPlans[index].firm_type_id = event.target.value;
+            // let index = this.localPlans.findIndex(el => el.id == plan.id);
+            // this.localPlans[index].firm_type_id = event.target.value;
+
+            this.localPlans = this.localPlans.filter(el => {
+              if(el.id == plan.id) el.firm_type_id = event.target.value;
+              return el;
+            });
+            this.calculatePlanRates();
+
         }
     },
 
     selectPlan(plan, value) {
-        console.log("as");
-        let index = this.localPlans.findIndex(el => el.id == plan.id);
-        this.localPlans[index].is_selected = value;
+        this.localPlans = this.localPlans.filter(el => {
+          if(el.id == plan.id) el.is_selected = value;
+          return el;
+        });
+    },
+
+    changeSlab(event, plan) {
+        this.localPlans = this.localPlans.filter(el => {
+          if(el.id == plan.id) el.slab_selected = parseFloat(event.target.value);
+          return el;
+        });
+        this.calculatePlanRates();
     },
 
     submitForm() {
@@ -71,8 +85,20 @@ export default {
         axios.post('/plans', this.localPlans).then(response => {
             console.log("Submited: ",response);
         })
+    },
+    initLocalPlans() {
+      this.localPlans = this.localPlans.filter(el => {
+                          el.is_selected = false;
+                          el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
+                          if(el.id == 4) el.firm_type_id = 1;
+                            return el;
+                        })
     }
-}, // methods
+  }, // methods
+  mounted() {
+    this.initLocalPlans();
+    this.calculatePlanRates();
+  }
 };
 </script>
 

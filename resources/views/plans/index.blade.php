@@ -38,14 +38,14 @@
             <h4>Billing Cycle</h4>
             <ul class="nav nav-pills font-weight-bold nav-justified billing-cycle f-20">
               @if(!$user->is_trial_used)
-              <li class="nav-item p-1" @click="duration_selected = 0">
+              <li class="nav-item p-1" @click="changeDuration(0)">
                 <a class="nav-link py-3 border" :class="{active: duration_selected == 0 }" data-toggle="pill" href="#month">Trial</a>
               </li>
               @endif
-              <li class="nav-item p-1" @click="duration_selected = 3">
+              <li class="nav-item p-1" @click="changeDuration(3)">
                 <a class="nav-link py-3 border" :class="{active: duration_selected == 3 }" data-toggle="pill" href="#month">3 Months</a>
               </li>
-              <li class="nav-item p-1" @click="duration_selected = 12">
+              <li class="nav-item p-1" @click="changeDuration(12)">
                 <a class="nav-link py-3 border" :class="{active: duration_selected == 12 }" data-toggle="pill" href="#year">1 Year (@{{yearDiscount}}% OFF)</a>
               </li>
             </ul>
