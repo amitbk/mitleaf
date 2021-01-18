@@ -11,7 +11,7 @@
 
             <div class="card-body d-flex flex-column">
                 <div class="text-center font-weight-bold f-30">
-                    <div>₹@{{ localPlan.rate - (duration_selected == 12 ? (localPlan.rate*yearDiscount/100): 0) }}/month</div>
+                    <div>₹@{{ getRate(localPlan) }}/month</div>
                 </div>
                 <div class="mb-3">
                     @{{localPlan.desc}}

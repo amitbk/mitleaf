@@ -27,7 +27,7 @@ class PlanController extends Controller
         $plans = Plan::where('is_active',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
         $firms = auth()->user()->firms;
-        return view('plans.index', compact('plans'), compact('firm_types', 'user') )->withFirms($firms);
+        return view('plans.index', compact('plans'), compact('firm_types', 'user') )->withFirms($firms)->with('yearDiscount', config('amit.yearDiscount'));
     }
 
     public function myplans()

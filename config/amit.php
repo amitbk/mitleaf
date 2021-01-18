@@ -1,5 +1,7 @@
 <?php
 return [
+    'yearDiscount' => 20,
+
     'logo_assets' => [1,2],
     'strip_assets' => [3,4,5],
     'plans' =>[

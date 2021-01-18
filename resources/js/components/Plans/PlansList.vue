@@ -8,7 +8,7 @@
 import axios from 'axios';
 export default {
   name: "PlansList",
-  props: ["plans", "firm_types", "firms"],
+  props: ["plans", "firm_types", "firms", "yearDiscount"],
   data() {
     return {
       formStep: 1,
@@ -23,7 +23,6 @@ export default {
                         if(el.id == 4) el.firm_type_id = 1;
                           return el;
                   }),
-      yearDiscount: 15
         // services: this.plans.filter(el => !!el.is_frame_plan == false)
       // rulesAdded: !!this.rules.length ||  true
     };
@@ -33,20 +32,26 @@ export default {
           let thisPlan = this.localPlans.find(el => el.id == 4);
           let firmRate = this.firm_types.find(el => el.id == thisPlan.firm_type_id).rate;
           let slab = this.localPlans.find(el => el.id == 4).slab_selected;
-          thisPlan.rate = firmRate - (this.duration_selected == 12 ? (firmRate*this.yearDiscount/100): 0);
+          let discount = (this.duration_selected == 12 ? (firmRate*this.yearDiscount/100): 0);
+          thisPlan.rate = firmRate - discount;
           let rate = thisPlan.rate*slab;
-          return rate;
+          return rate.toFixed(2);
       },
       totalPlanAmount: function() {
           let total = 0;
           this.localPlans.forEach(el => {
-              if(el.is_selected == true) total += el.rate*el.slab_selected
+              let discount = (this.duration_selected == 12 && el.id != 4) ? (el.rate*this.yearDiscount/100): 0;
+              if(el.is_selected == true) total += (el.rate-discount)*el.slab_selected;
           });
-          return total;
+          return total.toFixed(2);
       }
   },
   methods: {
-
+    getRate(plan) {
+      // get rate of plan by applying discount
+      let rate = (plan.rate - (this.duration_selected == 12 ? (plan.rate*this.yearDiscount/100): 0) )*plan.slab_selected;
+      return rate.toFixed(2);
+    },
     onFirmChange(event, plan) {
         if(!!event)
         {
