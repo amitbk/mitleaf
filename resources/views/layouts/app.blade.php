@@ -72,10 +72,20 @@
                                       </a>
                                     @endif
 
+                                    <a class="dropdown-item" href="{{ route('firms.myfirms') }}">
+                                        {{ __('My Businesses') }}
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                        {{ __('Orders') }}
+                                    </a>
+
                                     <a class="dropdown-item" href="{{ route('myplans') }}">
                                         {{ __('My Plans') }}
                                     </a>
-
+                                    <a class="dropdown-item" href="{{ route('orders.index') }}">
+                                        {{ __('My Account') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
