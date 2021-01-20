@@ -142,9 +142,17 @@ class OrderController extends Controller
             // TEMP
             $user = Auth::user();
 
-            $is_trial = !$user->is_trial_used;
-            // $plan_days = $is_trial ? 7 : 30;
+            // check if trial selected
+            $is_trial = 0;
             $trial_days = 10;
+            if($request->duration_selected == 0) {
+              // trial can be selected only if not used before
+              $user->is_trial_used ? $request->duration_selected = 3 : $is_trial = 1;
+            }
+
+            // discount if plan selected for a year
+            $discount = $request->duration_selected == 12 ? config('amit.yearDiscount') : 0;
+
             // CREATE order
             $firm = Firm::find($request->firm_id);
             // $firm = $user->firms()->first();
@@ -160,12 +168,14 @@ class OrderController extends Controller
                 $order_plan = new OrderPlan;
                 $order_plan->order_id = $order->id;
                 $order_plan->plan_id = $plan->id;
-                $order_plan->rate = $plan->rate;
+                $order_plan->rate = $plan->finalRate;
+                // $order_plan->rate = $discount > 0 ? $plan->rate - ($plan->rate*$discount/100) : $plan->rate ;
                 $order_plan->qty = $plan->slab_selected;
                 // $order_plan->is_trial = $is_trial;
                 $order_plan->save();
 
-                $total += $plan->rate*$order_plan->qty;
+                // $total += $plan->finalRate*$order_plan->qty;
+                $total += $plan->finalRate;
 
                 // TEMP: Create active plan
                 $firm_plan = new FirmPlan;
