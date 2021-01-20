@@ -42,7 +42,7 @@ export default {
         if(el.id == 4) { // firm plan
           rate = this.firm_types.find(ft => ft.id == el.firm_type_id).rate;
         }
-        let discount = (this.duration_selected == 12 ? (rate*this.yearDiscount/100): 0);
+        let discount = (this.duration_selected == 12 && this.yearDiscount > 0) ? (rate*this.yearDiscount/100): 0;
 
         el.mrp = rate*el.slab_selected;
         el.finalRate = (rate - discount)*el.slab_selected;
