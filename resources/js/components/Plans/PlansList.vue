@@ -18,7 +18,7 @@ export default {
       duration_selected: 3,
       firm_id: !!this.firms ? this.firms[0].id : '',
       localPlans: this.plans
-        // services: this.plans.filter(el => !!el.is_frame_plan == false)
+        // services: this.plans.filter(el => !!el.is_post_plan == false)
       // rulesAdded: !!this.rules.length ||  true
     };
   },

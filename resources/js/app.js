@@ -26,7 +26,7 @@ Vue.component('posts', require('./components/Home/Posts.vue').default);
 
 Vue.component('firm-create', require('./components/Firms/FirmCreate.vue').default);
 Vue.component('firm-edit-details', require('./components/Firms/FirmEditDetails.vue').default);
-Vue.component('firm-frame', require('./components/Firms/FirmFrame.vue').default);
+Vue.component('firm-post', require('./components/Firms/FirmPost.vue').default);
 
 // widgets
 Vue.component('image-preview', require('./components/widgets/ImagePreview.vue').default);

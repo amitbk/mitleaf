@@ -42,9 +42,9 @@ class Firm extends Model
     {
       return $this->hasMany(FirmPlan::class);
     }
-    public function frames()
+    public function posts()
     {
-        return $this->hasManyThrough('App\Frame', 'App\FirmPlan');
+        return $this->hasManyThrough('App\Post', 'App\FirmPlan');
     }
     public function orders()
     {
@@ -64,7 +64,7 @@ class Firm extends Model
                  ->whereDate('date_start_from', '<=',  date('Y-m-d 23:59:59') )
                  ->whereDate('date_expiry', '>=', $date )->get();
       return $this->plans->whereDate('date_expiry', '>', $date );
-      // $frames = Frame::whereNull('image_id')
+      // $posts = Post::whereNull('image_id')
       //               ->where('error_count', '<=', 3)
       //               ->whereDate('schedule_on', '<=', $date )
       //               ->limit(30)->get();

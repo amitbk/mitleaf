@@ -46,7 +46,7 @@ class TemplateController extends Controller
     {
         $template = new Template();
 
-        $plans = Plan::where('is_active',1)->where('is_frame_plan',1)->get();
+        $plans = Plan::where('is_active',1)->where('is_post_plan',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
         $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
         return view('templates.create', compact('template'), compact('plans') )->with('events', $events)->with('firm_types', $firm_types);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Firm;
-use App\Frame;
+use App\Post;
 use App\FirmPlan;
 use App\Template;
 use App\Image as Img;
@@ -13,30 +13,29 @@ use Illuminate\Http\Request;
 class FrameManager
 {
 
-    public static function generate_and_store_frame_image(Frame $frame, FirmPlan $firm_plan)
+    public static function generate_and_store_post_image(Post $post, FirmPlan $firm_plan)
     {
-        // return var_dump($frame);
-        $template = TemplateManager::get_random_template($frame);
+        // return var_dump($post);
+        $template = TemplateManager::get_random_template($post);
 
-        $frame_image = FrameManager::get_generated_frame($template, $firm_plan);
+        $post_image = FrameManager::get_generated_post($template, $firm_plan);
 
         $img = new Img;
-        $img->url = $frame_image;
+        $img->url = $post_image;
         $img->save();
 
-        $frame->template_id = $template->id;
-        $frame->recreated++;
-        $frame->image_id = $img->id;
-        !!$template->desc ? $frame->content = $template->desc:true;
+        $post->template_id = $template->id;
+        $post->recreated++;
+        $post->image_id = $img->id;
+        !!$template->desc ? $post->content = $template->desc:true;
 
-        // $frame->firm_id = ;
-        $frame->save();
+        $post->save();
 
-        $frameData = Frame::where('id',$frame->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();
-        return $frameData;
+        $postData = Post::where('id',$post->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();
+        return $postData;
     }
 
-    public static function get_generated_frame(Template $template, FirmPlan $firm_plan)
+    public static function get_generated_post(Template $template, FirmPlan $firm_plan)
     {
         $firm = Firm::find($firm_plan->firm_id);
         $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
@@ -60,17 +59,17 @@ class FrameManager
             $template_img->insert($firm_asset_img, $image['location'], $image['x_axis'], $image['y_axis']);
           }
 
-          $path = "images/frames/".$firm->id;
+          $path = "images/posts/".$firm->id;
           if(!is_dir($path))
               mkdir($path, 0755, true);
 
           // save image in desired format
-          $myframe= $path."/1_".uniqid().".jpg";
-          // $myframe="images/1_new.jpg";
-          $template_img->save($myframe);
+          $mypost= $path."/1_".uniqid().".jpg";
+          // $mypost="images/1_new.jpg";
+          $template_img->save($mypost);
 
-          // return $frame;
-          return $myframe;
+          // return $post;
+          return $mypost;
     }
 
     // check which asset to use and create a array object with settings for that asset
@@ -96,7 +95,7 @@ class FrameManager
         // now applying filter, we have multiple assets,
         // will check if selected template supports location for that asset and apply accordingly
         foreach ($assets as $this_asset) {
-            // where to add asset on frame
+            // where to add asset on post
             if(in_array($this_asset->asset_type_id, config('amit.logo_assets') )  )
             {   // logo
                 $asset_location = TemplateManager::get_supported_logo_location($template);
@@ -127,7 +126,7 @@ class FrameManager
        return $images;
     }
 
-    public function create_frame_working()
+    public function create_post_working()
     {
 
         $amit = "images/amit.png";
@@ -214,12 +213,12 @@ class FrameManager
       }
 
       // save image in desired format
-      // $myframe="images/1_".uniqid().".jpg";
-      $myframe="images/1_new.jpg";
-      $img->save($myframe);
+      // $mypost="images/1_".uniqid().".jpg";
+      $mypost="images/1_new.jpg";
+      $img->save($mypost);
 
-      // return $frame;
-      return "<img src='$myframe'>";
+      // return $post;
+      return "<img src='$mypost'>";
     }
 
 

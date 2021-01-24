@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Frame;
+use App\Post;
 use App\FirmPlan;
 use App\Template;
 use App\Firm;
@@ -11,34 +11,34 @@ use Image;
 
 class CronController extends Controller
 {
-    public function generate_frame_images()
+    public function generate_post_images()
     {
-        $days = 5; // for how many days upfront, frames will be created
+        $days = 5; // for how many days upfront, posts will be created
         $date = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + $days days"));
 
-        $frames = Frame::whereNull('image_id')
+        $posts = Post::whereNull('image_id')
                       ->where('error_count', '<=', 3)
                       ->whereDate('schedule_on', '<=', $date )
                       ->limit(30)->get();
 
         $count = 0;
-        echo "Generating frame images::<br>";
+        echo "Generating post images::<br>";
 
-        foreach ($frames as $frame) {
+        foreach ($posts as $post) {
             try {
-                FrameManager::generate_and_store_frame_image($frame, $frame->firm_plan);
-                echo "<hr>Generated img for frame ==".$frame->id."<br>";
+                FrameManager::generate_and_store_post_image($post, $post->firm_plan);
+                echo "<hr>Generated img for post ==".$post->id."<br>";
                 $count++;
             } catch (\Exception $e) {
-                echo "<hr>Exception for frame--->".$frame->id."<br>";
-                $frame->error += 1;
-                $frame->error = $e->getMessage();
-                $frame->save();
+                echo "<hr>Exception for post--->".$post->id."<br>";
+                $post->error += 1;
+                $post->error = $e->getMessage();
+                $post->save();
                 echo $e->getMessage();
             }
         }
 
 
-        return "<hr>Frame images created = ".$count;
+        return "<hr>Post images created = ".$count;
     }
 }

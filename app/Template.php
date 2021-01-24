@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Template extends Model
 {
-    public function frames()
+    public function posts()
     {
-        return $this->hasMany(Frame::class);
+        return $this->hasMany(Post::class);
     }
     public function user()
     {

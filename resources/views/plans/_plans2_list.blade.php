@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
 
 
-    <div class="col-md-4 mb-3" v-for="localPlan in localPlans.filter(el => !!el.is_frame_plan == false)">
+    <div class="col-md-4 mb-3" v-for="localPlan in localPlans.filter(el => !!el.is_post_plan == false)">
         <div class="card h-100">
             <div class="card-header">
               <div class="text-center font-weight-bold">

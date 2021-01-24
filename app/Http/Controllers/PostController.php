@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Firm;
-use App\Frame;
+use App\Post;
 use App\FirmPlan;
 use App\Template;
 use App\Image as Img;
 use Image;
 use Illuminate\Http\Request;
 
-class FrameController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class FrameController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Frame::where('firm_id', $request->firm_id)->get();
+        $posts = Post::where('firm_id', $request->firm_id)->get();
         return $posts;
     }
 
@@ -47,10 +47,10 @@ class FrameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Frame  $frame
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Frame $frame)
+    public function show(Post $post)
     {
         //
     }
@@ -58,10 +58,10 @@ class FrameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Frame  $frame
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Frame $frame)
+    public function edit(Post $post)
     {
         //
     }
@@ -70,10 +70,10 @@ class FrameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Frame  $frame
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Frame $frame)
+    public function update(Request $request, Post $post)
     {
         //
     }
@@ -81,15 +81,15 @@ class FrameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Frame  $frame
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Frame $frame)
+    public function destroy(Post $post)
     {
         //
     }
 
-    public function create_frame_working()
+    public function create_post_working()
     {
 
     }
@@ -97,11 +97,11 @@ class FrameController extends Controller
 
     public function recreate(Request $request)
     {
-        $frame = Frame::find($request->id);
+        $post = Post::find($request->id);
         $firm_plan = FirmPlan::find($request->firm_plan['id']);
 
-        $frameData = FrameManager::generate_and_store_frame_image($frame, $firm_plan);
-        return $frameData;
+        $postData = FrameManager::generate_and_store_post_image($post, $firm_plan);
+        return $postData;
     }
 
 }

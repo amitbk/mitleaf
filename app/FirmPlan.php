@@ -8,9 +8,9 @@ class FirmPlan extends Model
 {
     protected $dates = ['date_start_from', 'date_scheduled_upto', 'date_expiry'];
 
-    public function frames()
+    public function posts()
     {
-        return $this->hasMany(Frame::class);
+        return $this->hasMany(Post::class);
     }
     public function firm()
     {

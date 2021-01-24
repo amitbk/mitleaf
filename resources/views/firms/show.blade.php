@@ -21,13 +21,13 @@
                         </div>
                     @endif
 
-                    @forelse ($frames as $frame)
-                        @include('firms._frame_view2')
+                    @forelse ($posts as $post)
+                        @include('firms._post_view2')
                     @empty
-                        <h4>No frames yet</h4>
+                        <h4>No posts yet</h4>
                     @endforelse
 
-                    {{$frames->links()}}
+                    {{$posts->links()}}
                 </div>
 
                 <div class="col-md-4">

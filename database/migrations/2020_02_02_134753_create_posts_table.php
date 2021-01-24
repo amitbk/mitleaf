@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFramesTable extends Migration
+class CreatePostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,23 @@ class CreateFramesTable extends Migration
      */
     public function up()
     {
-        Schema::create('frames', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
+
+            $table->integer('firm_id');
+            $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
+
+            $table->integer('firm_plan_id');
+            $table->foreign('firm_plan_id')->references('id')->on('firm_plans')->onDelete('set null');
+
             $table->timestamp('schedule_on')->nullable();
             $table->integer('recreated')->default(0);
 
             $table->timestamp('is_posted_on_social_media')->nullable();
             $table->boolean('is_finalized')->default(false)->nullable();
-            $table->text('content')->nullable()->default(null);
 
-            $table->integer('firm_plan_id');
-            $table->foreign('firm_plan_id')->references('id')->on('firm_plans')->onDelete('set null');
+            $table->text('title')->nullable()->default(null);
+            $table->text('content')->nullable()->default(null);
 
             $table->integer('event_id')->nullable()->default(null);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
@@ -48,6 +54,6 @@ class CreateFramesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('frames');
+        Schema::dropIfExists('posts');
     }
 }

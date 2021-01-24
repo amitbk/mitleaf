@@ -69,11 +69,11 @@ class FirmController extends Controller
      */
     public function show(Firm $firm)
     {
-        // show all firm's frames
+        // show all firm's posts
         // check with big data set
         $firm_types = FirmType::where('is_active',1)->get();
-        $frames = $firm->frames()->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
-        return view('firms.show', compact('firm'))->withFrames($frames)->with('firm_types',$firm_types);
+        $posts = $firm->posts()->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
+        return view('firms.show', compact('firm'))->withPosts($posts)->with('firm_types',$firm_types);
     }
 
     /**

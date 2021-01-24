@@ -33,7 +33,7 @@ class Order extends Model
     }
 
 
-    public function create_frames_of_plans($days = 30)
+    public function create_posts_of_plans($days = 30)
     {
         $order_plans = $this->plans;
 

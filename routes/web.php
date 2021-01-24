@@ -51,10 +51,10 @@ Route::get('/myplans', 'PlanController@myplans')->name('myplans');
 
 Route::resource('/tags', 'TagController');
 
-Route::get('/create_frames', 'CronController@create_frames')->name('create_frames');
-Route::post('/recreate_frame', 'FrameController@recreate')->name('frame.recreate');
+Route::get('/create_posts', 'CronController@create_posts')->name('create_posts');
+Route::post('/recreate_post', 'PostController@recreate')->name('post.recreate');
 Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
-// this will create empty frames by given order_id
-Route::get('/create_frames/{id}', 'OrderController@create_frames')->name('create_frames');
-Route::get('/generate_frame_images', 'CronController@generate_frame_images')->name('generate_frame_images');
+// this will create empty posts by given order_id
+Route::get('/create_frames/{id}', 'OrderController@create_posts')->name('create_posts');
+Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');

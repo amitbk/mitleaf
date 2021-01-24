@@ -15,8 +15,10 @@ class CreateFirmPlansTable extends Migration
     {
         Schema::create('firm_plans', function (Blueprint $table) {
             $table->bigIncrements('id');
+            
             $table->integer('firm_id')->unsigned()->index();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
+
             $table->integer('plan_id')->unsigned()->index();
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
@@ -31,12 +33,12 @@ class CreateFirmPlansTable extends Migration
             $table->timestamp('date_start_from')->nullable()->default(null);
             $table->timestamp('date_scheduled_upto')->nullable()->default(null);
             $table->timestamp('date_expiry')->nullable();
-            $table->boolean('is_frame_plan')->default(true);
+            $table->boolean('is_post_plan')->default(true);
             $table->boolean('is_trial')->default(false);
 
-            // which asset to use while creating frames: ref in asset_types table
+            // which asset to use while creating posts: ref in asset_types table
             $table->integer('st_use_asset_type')->nullable()->default(1);
-            // settings for frame
+            // settings for post
             $table->string('st_language')->nullable();
             $table->string('st_shape')->nullable();
             $table->string('st_shade_type')->nullable();

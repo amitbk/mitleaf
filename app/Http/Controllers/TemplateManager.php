@@ -7,7 +7,7 @@ use App\TemplateStyle;
 use App\FirmType;
 use App\Event;
 use App\Plan;
-use App\Frame;
+use App\Post;
 use App\Image as Img;
 use Image;
 use DB;
@@ -16,24 +16,24 @@ class TemplateManager
      /**
      * Find proper teplate depending on firm settings
      *
-     * @param  \App\Frame  $frame
+     * @param  \App\Post  $post
      * @return \App\Controller\Template
      */
-    public static function get_random_template(Frame $frame)
+    public static function get_random_template(Post $post)
     {
 
-        $template = TemplateManager::find_template($frame);
+        $template = TemplateManager::find_template($post);
 
         if(!$template) return abort(403, 'Template not found');
         return $template;
     }
 
-    public static function find_template(Frame $frame)
+    public static function find_template(Post $post)
     {
-        $firm_plan = $frame->firm_plan;
+        $firm_plan = $post->firm_plan;
 
         $query = Template::latest()->where('plan_id', $firm_plan->plan_id);
-        $query = TemplateManager::filter_query_if_plan_for_events(clone $query, $frame, $firm_plan);
+        $query = TemplateManager::filter_query_if_plan_for_events(clone $query, $post, $firm_plan);
         $query = TemplateManager::filter_query_if_plan_for_business(clone $query, $firm_plan);
 
         // apply settings if any, [these are optional]
@@ -41,7 +41,7 @@ class TemplateManager
         $query = TemplateManager::apply_settings_on_query(clone $query, $firm_plan);
 
         // template must not be used earlier
-        $query->whereNotIn('templates.id', Frame::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray() );
+        $query->whereNotIn('templates.id', Post::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray() );
 
         // if $firm_plan needs only strip, fetch templates which support strip only
         // if count = 0, then templates who not support strip will also be returned
@@ -55,7 +55,7 @@ class TemplateManager
         // abort(403, 'end '.$firm_plan->st_use_asset_type);
 
         // skip templates, that are tested or checked
-        $offset = TemplateManager::apply_offset(clone $query, $frame);
+        $offset = TemplateManager::apply_offset(clone $query, $post);
         $template = $query->offset($offset)->first();
 
 
@@ -74,17 +74,17 @@ class TemplateManager
     }
     // will apply offset
     // @return 0 if no template after applying offset, o/w will return offset
-    public static function apply_offset($query, $frame)
+    public static function apply_offset($query, $post)
     {
-        $t = $query->offset($frame->recreated)->first();
-        return !!$t ? $frame->recreated : 0 ;
+        $t = $query->offset($post->recreated)->first();
+        return !!$t ? $post->recreated : 0 ;
     }
 
     // will filter query to fetch templates of only events
-    public static function filter_query_if_plan_for_events($query, Frame $frame, $firm_plan)
+    public static function filter_query_if_plan_for_events($query, Post $post, $firm_plan)
     {
         if($firm_plan->plan_id == 3) { // indian events
-            $query->where('event_id',$frame->event_id);
+            $query->where('event_id',$post->event_id);
         }
         return $query;
     }

@@ -1,9 +1,9 @@
 <template>
     <div class="image__container">
-        <div v-if="!src" class="no-image fl_bg_gray h-100 p-2" :class="{h200: frameView == 1}">
+        <div v-if="!src" class="no-image fl_bg_gray h-100 p-2" :class="{h200: postView == 1}">
           {{noImageMsg}}
         </div>
-        <img v-else class="img-fluid w-100" :src="src" alt="" :class="frameView == 2 ? 'card__image img-fluid h-100 w-100 pr-3 pr-sm-0' : '' ">
+        <img v-else class="img-fluid w-100" :src="src" alt="" :class="postView == 2 ? 'card__image img-fluid h-100 w-100 pr-3 pr-sm-0' : '' ">
         <slot></slot>
     </div>
 </template>
@@ -20,7 +20,7 @@ export default {
             type: String,
             default: "No Image"
           },
-          frameView: {
+          postView: {
             type: Number,
             default: 1
           }

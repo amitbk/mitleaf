@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Frame extends Model
+class Post extends Model
 {
     // protected $dateFormat = 'd';
     protected $dates = ['schedule_on'];

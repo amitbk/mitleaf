@@ -8,23 +8,23 @@
 // import ImageUploader from 'vue-image-upload-resize'
 import axios from "axios";
 export default {
-  name: "FirmFrame",
-  props: ['frameProp'],
+  name: "FirmPost",
+  props: ['postProp'],
   components: {
   },
   data() {
     return {
-        frame: this.frameProp,
-        // frameImage: this.frameProp.image,
+        post: this.postProp,
+        // postImage: this.postProp.image,
     };
   },
   computed: {
   },
   methods: {
-      onRecreateFrameClick() {
+      onRecreatePostClick() {
 
-          axios.post('/recreate_frame', this.frame).then(res => {
-              this.frame = res.data;
+          axios.post('/recreate_post', this.post).then(res => {
+              this.post = res.data;
           })
       }
   }, // methods

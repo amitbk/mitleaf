@@ -7,7 +7,7 @@ use Auth;
 use App\Order;
 use App\OrderPlan;
 use App\FirmPlan;
-use App\Frame;
+use App\Post;
 use App\Firm;
 use App\Event;
 use Carbon\Carbon;
@@ -37,7 +37,7 @@ class OrderController extends Controller
       return view('admin.orders.index', compact('orders') );
     }
 
-    public function create_frames($id)
+    public function create_posts($id)
     {
         try {
             DB::beginTransaction();
@@ -51,28 +51,29 @@ class OrderController extends Controller
                     // var_dump("<br>1-", $firm_plan->plan_id, !in_array ( $firm_plan->plan_id, [1,3]  ) );
                     // get all future events for current year
                     $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
-                    // create frames for each event
+                    // create posts for each event
                     foreach ($events as $event) {
 
 
-                        // we should not create duplicate frame for 1 event
-                        // so-> find if frame is already created or not for this event and firm combination
+                        // we should not create duplicate post for 1 event
+                        // so-> find if post is already created or not for this event and firm combination
                         // nested query in laravel
                         $firm_id = $firm_plan->firm->id;
-                        $frame = Frame::whereHas('firm_plan', function($q) use ($firm_id)
+                        $post = Post::whereHas('firm_plan', function($q) use ($firm_id)
                                 {
                                     $q->where('firm_id', $firm_id);
                                 })->where('event_id', $event->id)->first();
 
-                        if(!$frame)
+                        if(!$post)
                         {
-                            $frame = new Frame;
-                            $frame->schedule_on = $event->date;
-                            $frame->firm_plan_id = $firm_plan->id;
-                            $frame->event_id = $event->id;
-                            $frame->content = $event->desc;
-                            $frame->save();
-                            $firm_plan->date_scheduled_upto = $frame->schedule_on;
+                            $post = new Post;
+                            $post->schedule_on = $event->date;
+                            $post->firm_plan_id = $firm_plan->id;
+                            $post->event_id = $event->id;
+                            $post->content = $event->desc;
+                            $post->firm_id = $firm_plan->firm_id;
+                            $post->save();
+                            $firm_plan->date_scheduled_upto = $post->schedule_on;
                         }
                     }
                 }
@@ -81,9 +82,9 @@ class OrderController extends Controller
                 {
                   // var_dump("<br>2-", $firm_plan->plan_id, !in_array ( $firm_plan->plan_id, [1,3]  ) );
 
-                    // find $frames having ->scheduled_on < $firm_plan->date_start_from
-                    $is_frames_created = false;
-                    if(!$is_frames_created)
+                    // find $posts having ->scheduled_on < $firm_plan->date_start_from
+                    $is_posts_created = false;
+                    if(!$is_posts_created)
                     {
                         // var_dump("<pre>",$firm_plan);die();
                         $days_interval = 30/$firm_plan->qty_per_month;
@@ -92,18 +93,20 @@ class OrderController extends Controller
 
                         if($firm_plan->date_scheduled_upto != null)
                         {
-                            // if some frames already created upto 'date_scheduled_upto' date
+                            // if some posts already created upto 'date_scheduled_upto' date
                             $next_day = $firm_plan->date_scheduled_upto;
                             $next_day->addDays($days_interval);
                         }
 
-                        // create frame if $next_day < $firm_plan->date_expiry
+                        // create post if $next_day < $firm_plan->date_expiry
                         while($next_day <= $firm_plan->date_expiry)
                         {
-                            $frame = new Frame;
-                            $frame->schedule_on = $next_day;
-                            $frame->firm_plan_id = $firm_plan->id;
-                            $frame->save();
+                            $post = new Post;
+                            $post->schedule_on = $next_day;
+                            $post->firm_plan_id = $firm_plan->id;
+                            $post->firm_id = $firm_plan->firm_id;
+                            
+                            $post->save();
                             $firm_plan->date_scheduled_upto = $next_day;
                             $next_day->addDays($days_interval);
                         }
@@ -182,7 +185,7 @@ class OrderController extends Controller
                 $firm_plan->firm_id = $firm->id;
                 $firm_plan->plan_id = $plan->id;
                 $firm_plan->order_plan_id = $order_plan->id;
-                $firm_plan->is_frame_plan = $plan->is_frame_plan;
+                $firm_plan->is_post_plan = $plan->is_post_plan;
                 $firm_plan->qty_per_month = 30*$order_plan->qty;
                 $firm_plan->is_trial = $is_trial;
 
@@ -226,7 +229,7 @@ class OrderController extends Controller
             - send request to payments gateway
             */
             // TODO: Create a FirmPlan for order
-            // $order->createFramesOfPlans();
+            // $order->createPostsOfPlans();
             DB::commit();
             return redirect('myplans');
         } catch (\Exception $e) {
