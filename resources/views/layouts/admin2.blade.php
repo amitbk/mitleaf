@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -35,7 +36,7 @@
     <div class="wrapper" id="app">
       <admin>
         <!-- Sidebar  -->
-        <nav id="sidebar" :class="{active: isToggeled}">
+        <nav id="sidebar" class="check-active-link" :class="{active: isToggeled}">
             <div class="sidebar-header">
                 <span class="f-30 font-weight-bold">MitLeaf</span>
                 <span class="float-right sidebar-toggle-btn">
@@ -46,43 +47,39 @@
             </div>
 
             <ul class="list-unstyled components">
-                <p>Dummy Heading</p>
-                <li class="active">
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li>
-                            <a href="#">Home 1</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 2</a>
-                        </li>
-                        <li>
-                            <a href="#">Home 3</a>
-                        </li>
-                    </ul>
+                @guest
+
+
+                @else
+
+                <p>Welcome {{Auth()->user()->name}}</p>
+
+                <li>
+                  <a href="{{url('home')}}">Home</a>
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a href="{{url('myfirms')}}">My Businesses</a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <a href="#">Social Media</a>
+                </li>
+                <li>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">My Account</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#">Page 1</a>
+                            <a href="#">Active Plans</a>
                         </li>
                         <li>
-                            <a href="#">Page 2</a>
+                            <a href="#">Wallet</a>
                         </li>
                         <li>
-                            <a href="#">Page 3</a>
+                            <a href="#">Settings</a>
                         </li>
                     </ul>
                 </li>
+                @endguest
                 <li>
-                    <a href="#">Portfolio</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
+                    <a href="#">Refer & Earn</a>
                 </li>
             </ul>
 
@@ -99,7 +96,7 @@
         <!-- Page Content  -->
         <div id="content" :class="{active: isToggeled}">
 
-            <nav v-if="false" class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav v-if="false" class="navbar navbar-expand-lg navbar-light bg-light check-active-link">
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info" @click="toggleSidebar">
@@ -187,19 +184,6 @@
       </admin>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            // $("#sidebar").mCustomScrollbar({
-            //     theme: "minimal"
-            // });
-
-            // $('#sidebarCollapse').on('click', function () {
-            //     $('#sidebar, #content').toggleClass('active');
-            //     $('.collapse.in').toggleClass('in');
-            //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            // });
-        });
-    </script>
 </body>
 
 </html>

@@ -49,5 +49,20 @@ const app = new Vue({
       toggleSidebar() {
         this.isToggeled = !this.isToggeled
       },
+      setActiveMenu() {
+        var url = window.location;
+        const allLinks = document.querySelectorAll('.check-active-link a, .nav-item a');
+        const currentLink = [...allLinks].filter(e => {
+        return e.href == url;
+        });
+
+        currentLink[0].classList.add("active")
+        // currentLink[0].closest(".nav-treeview").style.display="block";
+        // currentLink[0].closest(".has-treeview").classList.add("active");
+      }
+    },
+
+    mounted() {
+      this.setActiveMenu();
     }
 });
