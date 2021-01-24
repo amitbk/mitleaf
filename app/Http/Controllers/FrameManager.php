@@ -28,6 +28,8 @@ class FrameManager
         $frame->recreated++;
         $frame->image_id = $img->id;
         !!$template->desc ? $frame->content = $template->desc:true;
+
+        // $frame->firm_id = ;
         $frame->save();
 
         $frameData = Frame::where('id',$frame->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();

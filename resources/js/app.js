@@ -20,6 +20,9 @@ Vue.component('admin', require('./components/Admin.vue').default);
 Vue.component('plans-list', require('./components/Plans/PlansList.vue').default);
 Vue.component('create-template', require('./components/Templates/CreateTemplate.vue').default);
 
+// Home
+Vue.component('posts', require('./components/Home/Posts.vue').default);
+
 
 Vue.component('firm-create', require('./components/Firms/FirmCreate.vue').default);
 Vue.component('firm-edit-details', require('./components/Firms/FirmEditDetails.vue').default);
