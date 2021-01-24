@@ -12,6 +12,7 @@ export default {
   data() {
     return {
       admin: true,
+      isToggeled: false
     }
   },
   components: {
@@ -20,12 +21,18 @@ export default {
   },
   methods: {
 
+    toggleSidebar() {
+      this.isToggeled = !this.isToggeled;
+      $('#sidebar, #content').toggleClass('active');
+      $('.collapse.in').toggleClass('in');
+      $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    },
     changeUserStatus() {
         console.log("Submit Form", this.localPlans);
         axios.post('/users/status', data ).then(response => {
             console.log("Submited: ",response);
         })
-    }
+    },
   }, // methods
 }
 </script>

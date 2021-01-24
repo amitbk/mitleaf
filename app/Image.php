@@ -24,6 +24,9 @@ class Image extends Model
         // $path = "images/templates/";
         $imageName = Auth::id()."_".date('yymd_his').".". $type[0];
         // return $imageName;
+        // if(!is_dir($path))
+        //   mkdir($backupLoc, 0755, true);
+
         file_put_contents($path.$imageName, base64_decode($image));
         $this->url = $path.$imageName;
         $this->save();

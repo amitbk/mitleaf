@@ -22,7 +22,7 @@
                     @endif
 
                     @forelse ($frames as $frame)
-                        @include('firms._frame_view')
+                        @include('firms._frame_view2')
                     @empty
                         <h4>No frames yet</h4>
                     @endforelse

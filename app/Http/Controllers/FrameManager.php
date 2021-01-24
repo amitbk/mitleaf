@@ -58,8 +58,12 @@ class FrameManager
             $template_img->insert($firm_asset_img, $image['location'], $image['x_axis'], $image['y_axis']);
           }
 
+          $path = "images/frames/".$firm->id;
+          if(!is_dir($path))
+              mkdir($path, 0755, true);
+
           // save image in desired format
-          $myframe="images/frames/".$firm->id."/1_".uniqid().".jpg";
+          $myframe= $path."/1_".uniqid().".jpg";
           // $myframe="images/1_new.jpg";
           $template_img->save($myframe);
 
