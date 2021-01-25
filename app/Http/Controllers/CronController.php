@@ -31,7 +31,7 @@ class CronController extends Controller
                 $count++;
             } catch (\Exception $e) {
                 echo "<hr>Exception for post--->".$post->id."<br>";
-                $post->error += 1;
+                $post->error_count += 1;
                 $post->error = $e->getMessage();
                 $post->save();
                 echo $e->getMessage();

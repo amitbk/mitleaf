@@ -25,6 +25,10 @@ class Post extends Model
         return $this->belongsTo(Event::class);
     }
 
+    // public function getScheduleOnDateAttribute()
+    // {
+    //     return date("Y-m-d", strtotime($this->schedule_on) );
+    // }
     // public function getScheduleOnFormatAttribute($value)
     // {
     //     return $this->schedule_on->format('d,m Y H:i:s a');

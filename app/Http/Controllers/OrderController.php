@@ -105,7 +105,6 @@ class OrderController extends Controller
                             $post->schedule_on = $next_day;
                             $post->firm_plan_id = $firm_plan->id;
                             $post->firm_id = $firm_plan->firm_id;
-                            
                             $post->save();
                             $firm_plan->date_scheduled_upto = $next_day;
                             $next_day->addDays($days_interval);
