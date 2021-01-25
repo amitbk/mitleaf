@@ -1,21 +1,23 @@
 <template>
   <div class="posts__wrapper">
 
-    <div v-for="(date, index) in dates">
+    <div v-for="(date, i) in dates">
 
       <div class="post__wrapper mb-3">
         <div class="post_date py-3">
           <span class="font-weight-bold "> {{ date.label }}</span>
-          <span class="text-secondary">2 posts</span>
+          <span class="text-secondary">{{ !!date.posts ? Object.keys(date.posts).length : '0' }} posts</span>
           <button type="button" class="btn btn-sm btn-outline-primary float-right">Add Post</button>
         </div>
 
+        <!-- <transition-group name="fade" tag="div" > -->
+          <div :key="$uuid.v1()" v-for="(post, index) in date.posts">
+            <Post :post="post" :dateIndex="i" :index="index"
+              @delete-post="deletePost"/>
+          </div>
+        <!-- </transition-group> -->
 
-        <div v-for="post in date.posts">
-          <Post :post="post"/>
-        </div>
-
-        <div v-if="!!date.posts == false" class="bg-lightcyan2 p-2 text-center text-secondary">
+        <div v-if="!!date.posts == false || Object.keys(date.posts).length == 0" class="bg-lightcyan2 p-2 text-center text-secondary">
           No posts for this day.
         </div>
 
@@ -45,24 +47,18 @@ export default {
     }
   },
   methods: {
-    getDateLabel(index, date) {
-      if(index == 0) return "Today";
-      if(index == 1) return "Tomorrow";
+
+    getDateLabel(i, date) {
+      if(i == 0 || i == 1) return ["Today", "Tomorrow"][i];
       return timeData.days[date.getMonth()] + ", " + date.getDate() + " " + timeData.months[date.getMonth()] + ", "+ date.getFullYear();
     },
-
-    getPosts(date) {
-      console.log("55", date.ymd, this.posts[date.ymd] );
-      return this.posts[date.ymd];
-    },
-
     createDateObject() {
       // find next 30 days craete create object
       let today = new Date()
       for (let i = 0; i < 30; i++) {
         let el = {};
         el.date = new Date( new Date().setDate(today.getDate()+i) );
-        el.ymd = el.date.toISOString().split('T')[0]; // Y-m-d
+        el.ymd = el.date.toISOString().split('T')[0]; // = Y-m-d
         el.label = this.getDateLabel(i, el.date);
         el.posts = {};
         this.dates.push( el );
@@ -72,16 +68,7 @@ export default {
     getPostsAndAttachToDate() {
       let data = {firm_id: 2};
       postServices.getPosts(data).then(res => {
-        let posts = res.data;
-
-        // add posts to local data by date group
-        posts.filter(el => {
-          let post_date = el.schedule_on.split(' ')[0]
-          if(!this.posts[post_date])
-            this.posts[post_date] = [];
-
-          this.posts[post_date].push(el);
-        })
+        this.posts = postServices.groupByDate(res.data);
 
         // add posts to local date object
         this.dates.filter(el => {
@@ -90,6 +77,12 @@ export default {
         })
 
       })
+    },
+
+    deletePost(data) {
+      postServices.deletePost(data.id).then(res => {
+        this.getPostsAndAttachToDate();
+      });
     }
   },
   mounted() {

@@ -28,7 +28,7 @@
             <i class="fas fa-clock"></i> Scheduled on 10:11 PM (GMT+5.30)
           </div>
           <div class="col-12 col-sm-6 text-right">
-              <button type="button" class="btn btn-sm btn-outline-danger">Delete</button>
+              <button type="button" class="btn btn-sm btn-outline-danger" @click="$emit('delete-post', {id: post.id, dateIndex: dateIndex, index: index })">Delete</button>
               <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
               <button type="button" class="btn btn-sm btn-primary">Share Now</button>
           </div>
@@ -42,6 +42,7 @@
 <script>
 
 export default {
+  props: ['post', 'dateIndex', 'index']
 }
 </script>
 

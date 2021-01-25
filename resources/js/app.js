@@ -14,7 +14,15 @@ Vue.filter('formatDate', function(value) {
     }
   });
 
+// uuid
+import UUID from "vue-uuid";
+Vue.use(UUID);
 
+// sweetalert2
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
+// window.Vue.swal = in other files can be used like this
 
 Vue.component('admin', require('./components/Admin.vue').default);
 Vue.component('plans-list', require('./components/Plans/PlansList.vue').default);
@@ -62,7 +70,7 @@ const app = new Vue({
         currentLink[0].classList.add("active")
         // currentLink[0].closest(".nav-treeview").style.display="block";
         // currentLink[0].closest(".has-treeview").classList.add("active");
-      }
+      },
     },
 
     mounted() {

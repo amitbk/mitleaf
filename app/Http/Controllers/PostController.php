@@ -19,8 +19,12 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::where('firm_id', $request->firm_id)->get();
-        return $posts;
+        $posts = Post::where('error_count', 0 );
+
+        if( $request->has('firm_id') )
+          $posts->where('firm_id', $request->firm_id);
+
+        return $posts->get();
     }
 
     /**
@@ -84,9 +88,16 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(Request $request, Post $post)
     {
-        //
+        $post->delete();
+
+        if($request->wantsJson())
+          return "User deleted successfully.";
+        else
+        {
+
+        }
     }
 
     public function create_post_working()

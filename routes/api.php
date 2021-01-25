@@ -23,4 +23,4 @@ Route::get('/amit', function (Request $request) {
 });
 
 
-Route::middleware('auth')->get('/posts/{firm_id}', 'PostController@index');
+Route::middleware('auth')->resource('posts', 'PostController');
