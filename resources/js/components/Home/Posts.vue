@@ -7,7 +7,7 @@
         <div class="post_date py-3">
           <span class="font-weight-bold "> {{ date.label }}</span>
           <span class="text-secondary">{{ !!date.posts ? Object.keys(date.posts).length : '0' }} posts</span>
-          <button type="button" class="btn btn-sm btn-outline-primary float-right">Add Post</button>
+          <button v-if="false" type="button" class="btn btn-sm btn-outline-primary float-right">Add Post</button>
         </div>
 
         <!-- <transition-group name="fade" tag="div" > -->
@@ -24,10 +24,6 @@
       </div>
     </div>
 
-
-    <!-- <div v-for="post in posts">
-      <Post :post="post"/>
-    </div> -->
   </div>
 </template>
 
@@ -42,6 +38,7 @@ export default {
   },
   data () {
     return {
+      firm_id: null,
       dates: [],
       posts: {}
     }
@@ -66,7 +63,7 @@ export default {
     },
 
     getPostsAndAttachToDate() {
-      let data = {firm_id: 2};
+      let data = {firm_id: this.firm_id};
       postServices.getPosts(data).then(res => {
         this.posts = postServices.groupByDate(res.data);
 
@@ -89,6 +86,7 @@ export default {
     this.createDateObject();
     this.getPostsAndAttachToDate();
   }
+
 }
 </script>
 

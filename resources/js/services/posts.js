@@ -6,7 +6,7 @@ export default {
   getPosts: function(data) {
     return new Promise(function(resolve, reject) {
       let url = "/api/posts?";
-      if(data.firm_id) url += "firm_id="+ data.firm_id;
+      if(!!data.firm_id) url += "firm_id="+ data.firm_id;
       axios.get( url )
         .then(response => {
           resolve(response);

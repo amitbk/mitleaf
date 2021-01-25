@@ -8,6 +8,7 @@ use App\FirmPlan;
 use App\Template;
 use App\Image as Img;
 use Image;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -19,12 +20,23 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $posts = Post::where('error_count', 0 );
+        $user = Auth::user();
 
-        if( $request->has('firm_id') )
-          $posts->where('firm_id', $request->firm_id);
+        $posts = Post::with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')
+                      ->where('error_count', 0 );
 
-        return $posts->get();
+        // Firm filter
+        if( $request->has('firm_id') ) {
+          // check if user is member of requested firm and then only return the posts of that firm
+          $posts->whereIn('firm_id', $user->firms->where('id', $request->firm_id )->pluck('id') );
+        }
+        else {
+          // return post of all firms
+          $posts->whereIn('firm_id', $user->firms->pluck('id') );
+        }
+
+
+        return $posts->orderBy('schedule_on', 'asc')->get();
     }
 
     /**
