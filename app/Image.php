@@ -29,6 +29,9 @@ class Image extends Model
 
         file_put_contents($path.$imageName, base64_decode($image));
         $this->url = $path.$imageName;
+        $this->thumbnail = $path.$imageName;
+        $this->free = $path.$imageName;
+        
         $this->save();
 
         // old image will be deleted

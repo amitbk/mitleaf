@@ -102,7 +102,7 @@ class PostController extends Controller
      */
     public function destroy(Request $request, Post $post)
     {
-        $post->delete();
+        // $post->delete();
 
         if($request->wantsJson())
           return "User deleted successfully.";

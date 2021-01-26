@@ -24,3 +24,5 @@ Route::get('/amit', function (Request $request) {
 
 
 Route::middleware('auth')->resource('posts', 'PostController');
+Route::middleware('auth')->get('templates', 'TemplateController@index');
+Route::middleware('auth')->get('plans', 'PlanController@index');

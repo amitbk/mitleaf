@@ -1,6 +1,11 @@
 <template>
   <div class="posts__wrapper">
 
+    <button type="button" class="btn btn-primary" @click="$bvModal.show('modalNewPost')">
+      New Post
+    </button>
+    <post-create/>
+
     <div v-for="(date, i) in dates">
 
       <div class="post__wrapper mb-3">
@@ -12,7 +17,7 @@
 
         <!-- <transition-group name="fade" tag="div" > -->
           <div :key="$uuid.v1()" v-for="(post, index) in date.posts">
-            <Post :post="post" :dateIndex="i" :index="index"
+            <post :post="post" :dateIndex="i" :index="index"
               @delete-post="deletePost"/>
           </div>
         <!-- </transition-group> -->
@@ -28,14 +33,10 @@
 </template>
 
 <script>
-import Post from "./Post";
 import postServices from "../../services/posts"
 import timeData from "../../data/time"
 
 export default {
-  components: {
-    Post
-  },
   data () {
     return {
       firm_id: null,

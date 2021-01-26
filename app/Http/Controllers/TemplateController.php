@@ -7,6 +7,7 @@ use App\TemplateStyle;
 use App\FirmType;
 use App\Event;
 use App\Plan;
+use App\Firm;
 use App\Image as Img;
 use Illuminate\Http\Request;
 use App\Http\Requests\TemplateRequest;
@@ -20,9 +21,27 @@ class TemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $templates = Template::latest()->paginate(10);
+        $templates = Template::with('image');
+
+        if($request->has('plan_id') && $request->plan_id > 0) {
+          $templates->where('plan_id', $request->plan_id);
+
+          if($request->plan_id == 4) // business specific type: then fetch only business related templates
+          {
+            $firm = Firm::find($request->firm_id);
+            $templates->whereHas('template_firm_types', function($q) use($firm)
+            {
+                $q->where('template_firm_types.firm_type_id', $firm->firm_type_id );
+            });
+          }
+        }
+
+        $templates = $templates->latest()->paginate(10);
+        if($request->wantsJson())
+          return $templates;
+
         return view('templates.index', compact('templates') );
     }
 

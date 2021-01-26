@@ -16,7 +16,9 @@ class CreateImagesTable extends Migration
         Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->text('url');
+            $table->text('url'); // paid & actual image
+            $table->text('free'); // actual image with watermark
+            $table->text('thumbnail'); // thumbnail with watermark
             $table->timestamps();
         });
         Schema::table('users', function (Blueprint $table) {

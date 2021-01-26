@@ -60,11 +60,10 @@ a:focus {
     top: 0;
     left: 0;
     height: 100vh;
-    z-index: 999;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
-    z-index: 9999;
+    z-index: 1030;
 }
 
 #sidebar.active {

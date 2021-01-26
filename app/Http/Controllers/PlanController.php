@@ -21,12 +21,16 @@ class PlanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $plans = Plan::where('is_active',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
         $firms = auth()->user()->firms;
+
+        if($request->wantsJson())
+          return ['plans' => $plans, 'firm_types' => $firm_types, 'firms' => $firms];
+          
         return view('plans.index', compact('plans'), compact('firm_types', 'user') )->withFirms($firms)->with('yearDiscount', config('amit.yearDiscount'));
     }
 

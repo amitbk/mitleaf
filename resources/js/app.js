@@ -18,6 +18,12 @@ Vue.filter('formatDate', function(value) {
 import UUID from "vue-uuid";
 Vue.use(UUID);
 
+// BootstrapVue
+import { BootstrapVue } from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+
 // sweetalert2
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -30,6 +36,8 @@ Vue.component('create-template', require('./components/Templates/CreateTemplate.
 
 // Home
 Vue.component('posts', require('./components/Home/Posts.vue').default);
+Vue.component('post', require('./components/Home/Post.vue').default);
+Vue.component('post-create', require('./components/Posts/Create.vue').default);
 
 
 Vue.component('firm-create', require('./components/Firms/FirmCreate.vue').default);
@@ -44,13 +52,18 @@ Vue.component('image-preview', require('./components/widgets/ImagePreview.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import planServices from "./services/plans";
 
 const app = new Vue({
     el: '#app',
     data() {
       return {
+        mitleaf: {},
+        selectedFirmId: 0,
         isToggeled: false,
         url: null,
+
+        templates: [],
       }
     },
     components: {
@@ -75,5 +88,10 @@ const app = new Vue({
 
     mounted() {
       this.setActiveMenu();
+
+      planServices.getPlans().then(r => {
+        this.mitleaf = r.data;
+        this.selectedFirmId = this.mitleaf.firms[0].id;
+      })
     }
 });
