@@ -30,7 +30,7 @@ class PlanController extends Controller
 
         if($request->wantsJson())
           return ['plans' => $plans, 'firm_types' => $firm_types, 'firms' => $firms];
-          
+
         return view('plans.index', compact('plans'), compact('firm_types', 'user') )->withFirms($firms)->with('yearDiscount', config('amit.yearDiscount'));
     }
 

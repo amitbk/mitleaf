@@ -9,6 +9,7 @@ class Firm extends Model
     protected $fillable = [
         'name', 'desc', 'address',
     ];
+    protected $appends  = [ 'logo' ];
     public function users()
     {
       return $this->belongsToMany(User::class)->withTimestamps();
@@ -22,7 +23,7 @@ class Firm extends Model
     {
       return $this->hasMany(Asset::class);
     }
-    public function logo()
+    public function getLogoAttribute()
     {
         $asset = $this->assets->where('asset_type_id',1)->first();
         return $asset ? ($asset->image ? $asset->image->url :  null) : null ;
@@ -53,6 +54,7 @@ class Firm extends Model
 
     public function date_expiry()
     {
+      return '';
       $date = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 0 days"));
       // return $date;
       // return $this->whereHas('plans', function($q)
