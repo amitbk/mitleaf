@@ -28,6 +28,7 @@ export const image_upload = {
           else if( this.image.info.newWidth > this.image.info.newHeight )
               this.imageShape = 3; // landscape
           else this.imageShape = 2; // portrate
+
       },
       startImageResize(data) {
       },

@@ -22,14 +22,37 @@
 
         <div class="col-lg-3 col-md-4 col-6 text-center pt-3">
 
-          <button class="btn btn-outline-primary">
+          <!-- <button class="btn btn-outline-primary">
             <div><i class="fas fa-cloud-upload-alt fa-3x"></i></div>
-            Upload your design</button>
+            Upload your design</button> -->
+
+            <image-uploader
+                :debug="1"
+                :max-width="600"
+                :quality="0.7"
+                :auto-rotate=true
+                output-format="verbose"
+                :preview=true
+                :class-name="['fileinput', { 'fileinput--loaded' : hasImage }]"
+                :capture="false"
+                accept="video/*,image/*"
+                doNot-resize="['gif', 'svg']"
+                @input="setImage"
+                @on-upload="startImageResize"
+                @on-complete="endImageResize"
+              >
+              <span class="clearfix"></span>
+              <label for="fileInput" slot="upload-label">
+                <div class="upload-caption">{{ hasImage ? 'Replace File' : 'Upload image' }}</div>
+              </label>
+
+            </image-uploader>
+
         </div>
 
         <template v-for="template in $root.templates.data">
           <div v-if="!!template.image" class="col-lg-3 col-md-4 col-6">
-            <a href="#" class="d-block mb-4 h-100">
+            <a @click="selectTemplateImage(template)" href="#" class="d-block mb-4 h-100">
                 <img class="img-fluid img-thumbnail" :src="template.image.url" alt="">
             </a>
           </div>
@@ -44,10 +67,29 @@
 </template>
 
 <script>
+import ImageUploader from 'vue-image-upload-resize'
+import {image_upload} from "../../mixins/image_upload";
+
 export default {
+  components: {
+      ImageUploader
+  },
+  mixins: [image_upload],
+
+  watch: {
+    image: function (newVal, oldVal) {
+      this.$root.post.templateImageUrl = newVal.dataUrl;
+      this.$emit('process-done', 1);
+    }
+  },
   methods: {
     getTemplates: function (ev) {
       this.$emit('get-templates', { filters: { plan_id: ev.target.value } } );
+    },
+
+    selectTemplateImage(template) {
+      this.$root.post.templateImageUrl = template.image.url;
+      this.$emit('process-done', 1);
     }
   }
 }

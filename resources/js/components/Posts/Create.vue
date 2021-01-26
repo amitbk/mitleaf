@@ -17,7 +17,8 @@
       </template>
 
       <template>
-        <SelectTemplate @get-templates="getTemplates"/>
+        <SelectTemplate v-if="step == 1 " @get-templates="getTemplates" @process-done="onProcessDone"/>
+        <FrameManager  v-else-if="step == 2 " @process-done="onProcessDone"/>
       </template>
 
     </b-modal>
@@ -31,6 +32,11 @@ import FrameManager from "./_FrameManager";
 import templateServices from "../../services/templates"
 
 export default {
+  data () {
+    return {
+      step: 1
+    }
+  },
   components: {
     SelectTemplate,
     FrameManager
@@ -44,6 +50,10 @@ export default {
         this.$root.templates = r.data;
       })
     },
+
+    onProcessDone(data) {
+      this.step = data+1;
+    }
   }
 }
 </script>

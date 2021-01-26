@@ -53,6 +53,7 @@ Vue.component('image-preview', require('./components/widgets/ImagePreview.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import planServices from "./services/plans";
+import postObj from "./obj/post";
 
 const app = new Vue({
     el: '#app',
@@ -64,6 +65,8 @@ const app = new Vue({
         url: null,
 
         templates: [],
+
+        post: postObj
       }
     },
     components: {
