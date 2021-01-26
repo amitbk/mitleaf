@@ -15,7 +15,6 @@ export default {
   data() {
     return {
         post: this.postProp,
-        // postImage: this.postProp.image,
     };
   },
   computed: {

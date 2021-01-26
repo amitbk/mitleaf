@@ -69,7 +69,7 @@ export default {
 
         // add posts to local date object
         this.dates.filter(el => {
-          el.posts = this.posts[el.ymd];
+          el.posts = !!this.posts[el.ymd] ? this.posts[el.ymd] : [];
           return el;
         })
 
@@ -78,9 +78,13 @@ export default {
 
     deletePost(data) {
       postServices.deletePost(data.id).then(res => {
-        this.getPostsAndAttachToDate();
+        // this.getPostsAndAttachToDate();
+        let date = this.dates[data.dateIndex];
+        date.posts.splice(data.index, 1);
+        Vue.set(this.dates, data.dateIndex, date )
       });
-    }
+    },
+
   },
   mounted() {
     this.createDateObject();
