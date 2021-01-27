@@ -13,10 +13,11 @@ use Illuminate\Http\Request;
 class FrameManager
 {
 
-    public static function generate_and_store_post_image(Post $post, FirmPlan $firm_plan)
+    public static function generate_and_store_post_image(Post $post, FirmPlan $firm_plan, Template $template = null)
     {
         // return var_dump($post);
-        $template = TemplateManager::get_random_template($post);
+        if($template == null)
+          $template = TemplateManager::get_random_template($post);
 
         $post_image = FrameManager::get_generated_post($template, $firm_plan);
 

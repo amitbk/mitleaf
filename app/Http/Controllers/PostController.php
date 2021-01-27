@@ -10,6 +10,7 @@ use App\Image as Img;
 use Image;
 use Auth;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
@@ -126,5 +127,34 @@ class PostController extends Controller
         $postData = FrameManager::generate_and_store_post_image($post, $firm_plan);
         return $postData;
     }
+
+    public function create_frame_by_template(Request $request)
+    {
+
+      $post = Post::findOrNew($request->id);
+      $template = Template::findOrNew($request->template_id);
+      $firm_plan = FirmPlan::where('firm_id', $request->firm_id)
+                            ->where('plan_id', $request->plan_id)
+                            ->where('date_start_from', '<=', Carbon::now())
+                            ->where('date_expiry', '>=', Carbon::now())->first();
+
+      $post = FrameManager::generate_and_store_post_image($post, $firm_plan, $template);
+      return $post;
+    }
+
+    public function create_frame_by_userimage(Request $request)
+    {
+      $user = Auth::user();
+      $post = Post::findOrNew($request->id);
+
+      $image = new Img;
+      $image->create_from_base64($request->templateImageUrl, "images/posts/".$user->id."/", $post->image_id);
+
+      $post->image_id = $image->id;
+      $post->recreated++;
+      $post->save();
+      return $post;
+    }
+
 
 }

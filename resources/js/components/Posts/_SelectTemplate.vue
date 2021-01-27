@@ -6,7 +6,7 @@
       </div>
 
       <div class="form-group ml-2">
-        <select @change="getTemplates($event)" class="form-control form-control-sm" id="category">
+        <select v-model="$root.post.plan_id" v-if="!!$root.mitleaf.plans" @change="getTemplates($event)" class="form-control form-control-sm" id="category">
           <option value="0">Select Type</option>
           <option :value="plan.id" v-for="plan in $root.mitleaf.plans.filter(el => !!el.is_post_plan)">{{plan.name}}</option>
         </select>
@@ -88,8 +88,11 @@ export default {
     },
 
     selectTemplateImage(template) {
+      this.$root.post.template_id = template.id;
       this.$root.post.templateImageUrl = template.image.url;
+      // this.$emit('template-selected');
       this.$emit('process-done', 1);
+
     }
   }
 }

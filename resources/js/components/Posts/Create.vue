@@ -5,7 +5,7 @@
       <template #modal-header="{ close }">
         <!-- Emulate built in modal header close button action -->
         <span class="f-20">Create a new post for
-          <select v-model="$root.selectedFirmId" class="form-control form-control-sm" style="width: auto" >
+          <select v-model="$root.post.firm_id" class="form-control form-control-sm" style="width: auto" >
             <option value="0">Select Business</option>
             <option :value="firm.id" v-for="firm in $root.mitleaf.firms">{{firm.name}}</option>
           </select>
@@ -17,8 +17,9 @@
       </template>
 
       <template>
-        <SelectTemplate v-if="step == 1 " @get-templates="getTemplates" @process-done="onProcessDone"/>
+        <SelectTemplate v-if="step == 1 " @get-templates="getTemplates" @process-done="onProcessDone" @template-selected="onProcessDone"/>
         <FrameManager  v-else-if="step == 2 " @process-done="onProcessDone"/>
+        <Schedule  v-else-if="step == 3" @save="savePost"  @process-done="onProcessDone"/>
       </template>
 
     </b-modal>
@@ -29,6 +30,8 @@
 <script>
 import SelectTemplate from "./_SelectTemplate";
 import FrameManager from "./_FrameManager";
+import Schedule from "./_Schedule";
+
 import templateServices from "../../services/templates"
 
 export default {
@@ -38,8 +41,7 @@ export default {
     }
   },
   components: {
-    SelectTemplate,
-    FrameManager
+    SelectTemplate, FrameManager, Schedule
   },
 
   methods: {
@@ -53,6 +55,16 @@ export default {
 
     onProcessDone(data) {
       this.step = data+1;
+    },
+
+    savePost() {
+      let url = !!this.$root.post.template_id ? 'create_frame_by_template' : 'create_frame_by_userimage';
+      axios.post('/api/'+url, this.$root.post).then(res => {
+        // frame generated
+          this.post = res.data;
+      })
+
+      this.step = 2;
     }
   }
 }

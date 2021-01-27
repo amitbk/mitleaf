@@ -26,3 +26,7 @@ Route::get('/amit', function (Request $request) {
 Route::middleware('auth')->resource('posts', 'PostController');
 Route::middleware('auth')->get('templates', 'TemplateController@index');
 Route::middleware('auth')->get('plans', 'PlanController@index');
+
+// create post from ui for user
+Route::middleware('auth')->post('create_frame_by_template', 'PostController@create_frame_by_template');
+Route::middleware('auth')->post('create_frame_by_userimage', 'PostController@create_frame_by_userimage');
