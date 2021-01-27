@@ -4,6 +4,7 @@ export default {
   plan_id: 0,
   event_id: 0,
   firm_type_id: 0,
-
+  content: '',
+  template_id: null,
   templateImageUrl: null
 }

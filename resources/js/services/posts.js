@@ -46,6 +46,8 @@ export default {
     // groupBy Date
     let groupByDate = [];
     posts.filter(el => {
+      if(!!el.schedule_on == false) return false;
+      
       let post_date = el.schedule_on.split(' ')[0]
       if(!groupByDate[post_date])
         groupByDate[post_date] = [];

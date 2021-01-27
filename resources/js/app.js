@@ -66,7 +66,7 @@ const app = new Vue({
 
         templates: [],
 
-        post: postObj
+        post: { ...postObj }
       }
     },
     components: {

@@ -2,6 +2,16 @@ import axios from "axios";
 // import config from "../config.js";
 
 export default {
+
+  success: function(title) {
+    window.Vue.swal({
+      position: 'top-end',
+      icon: 'success',
+      title: title,
+      showConfirmButton: false,
+      timer: 1500
+    })
+  },
   deleteSuccess: function(label = 'Record') {
       window.Vue.swal(
       'Deleted!',

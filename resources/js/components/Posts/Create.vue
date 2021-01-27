@@ -1,26 +1,20 @@
 <template>
   <div class="new_post__wrapper">
     <!-- The Modal -->
-    <b-modal id="modalNewPost" title="BootstrapVue" hide-footer size="lg" @shown="getTemplates">
-      <template #modal-header="{ close }">
-        <!-- Emulate built in modal header close button action -->
-        <span class="f-20">Create a new post for
-          <select v-model="$root.post.firm_id" class="form-control form-control-sm" style="width: auto" >
-            <option value="0">Select Business</option>
-            <option :value="firm.id" v-for="firm in $root.mitleaf.firms">{{firm.name}}</option>
-          </select>
-        </span>
-
+    <b-modal id="modalNewPost" hide-footer title="Create a new post" size="lg" @shown="getTemplates">
+      <template :class="'p-2 px-3'" #modal-header="{ close }">
+        <h4>Create a new post</h4>
         <b-button size="sm" variant="outline-danger" @click="close()">
           Close
         </b-button>
       </template>
 
-      <template>
+      <template :class="'p-2'">
         <SelectTemplate v-if="step == 1 " @get-templates="getTemplates" @process-done="onProcessDone" @template-selected="onProcessDone"/>
-        <FrameManager  v-else-if="step == 2 " @process-done="onProcessDone"/>
+        <FrameManager  v-else-if="step == 2 " @save="savePost" @process-done="onProcessDone"/>
         <Schedule  v-else-if="step == 3" @save="savePost"  @process-done="onProcessDone"/>
       </template>
+
 
     </b-modal>
 
@@ -32,7 +26,9 @@ import SelectTemplate from "./_SelectTemplate";
 import FrameManager from "./_FrameManager";
 import Schedule from "./_Schedule";
 
-import templateServices from "../../services/templates"
+import templateServices from "../../services/templates";
+import alert from "../../services/alert";
+import postObj from "../../obj/post";
 
 export default {
   data () {
@@ -62,6 +58,13 @@ export default {
       axios.post('/api/'+url, this.$root.post).then(res => {
         // frame generated
           this.post = res.data;
+          this.$root.post = { ...postObj };
+          this.$bvModal.hide('modalNewPost');
+
+          alert.success('Post has been saved successfully.');
+          this.step = 1;
+
+          this.$emit('post-added');
       })
 
       this.step = 2;

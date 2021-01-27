@@ -1,15 +1,49 @@
 <template>
   <div>
-    Edit Post Image
-    <button @click="addLogo" class="btn btn-info btn-sm">Add Logo</button>
-    <button @click="getImage" class="btn btn-info btn-sm">Get Now</button>
-    <button @click="processDone" class="btn btn-info btn-sm">Next</button>
-    <br>
-    <canvas id="canvas"
-        style="border:1px solid #000000">
-    </canvas>
-    <!-- <button @click="processDone">Done</button> -->
-    <!-- <img :src="$root.post.templateImageUrl" alt="Template image" class="img-fluid"> -->
+    <div class="d-flex flex-wrap">
+      <div class="p-1 mr-auto">
+        <span v-if="!!$root.post.template_id" class="text-success font-weight-bold">Template is selected.</span>
+        <button v-else @click="addLogo" class="btn btn-info btn-sm">Add Logo</button>
+      </div>
+
+      <div class="p-1">
+        <select v-model="$root.post.firm_id" class="form-control form-control-sm" style="width: auto" >
+          <option value="0">Select Business</option>
+          <option :value="firm.id" v-for="firm in $root.mitleaf.firms">{{firm.name}}</option>
+        </select>
+      </div>
+
+      <div class="p-1">
+        <select v-model="$root.post.plan_id" class="form-control form-control-sm" style="width: auto" >
+          <option value="0">Select Plan</option>
+          <option :value="plan.id" v-for="plan in $root.mitleaf.plans">{{plan.name}}</option>
+        </select>
+      </div>
+
+      <div class="p-1">
+        <div class="form-group" style="width: auto">
+          <input v-model="$root.post.schedule_on" type="date" class="form-control form-control-sm" id="usr">
+        </div>
+      </div>
+      <!-- <button @click="processDone" class="btn btn-info btn-sm ">Schedule</button> -->
+      <div class="p-1">
+        <button class="btn btn-success btn-sm" @click="onSaveClick"> Save</button>
+      </div>
+
+    </div>
+    <div v-if="!!$root.post.template_id" class="text-success font-weight-bold text-center">(This is template preview only, logo will be added automatically after saving.)</div>
+    <div v-else>
+      <div class="form-group" style="width: auto">
+        <input v-model="$root.post.content" type="text" class="form-control form-control-sm" placeholder="Enter content, hashtags, message to post with image (optional)">
+      </div>
+    </div>
+
+    <div class="p-3" style="overflow: scroll;">
+      <canvas id="canvas"
+          style="border:1px solid #000000">
+      </canvas>
+    </div>
+
   </div>
 </template>
 
@@ -24,28 +58,11 @@ export default {
     }
   },
   mounted() {
-
-      // let url = this.$root.post.templateImageUrl;
-      // let options = {id: this.$uuid.v1()};
-      // this.$refs.canvas.createImage(url,options)
-
       this.canvas = new fabric.Canvas("canvas");
-
-      // Get the image element
-      // var image = document.getElementById('my-image');
-      // console.log("image: ", image.height, image.width);
-      //
-      // this.canvas.setHeight(image.height);
-      // this.canvas.setWidth(image.width);
 
       this.canvas.setHeight(400);
       this.canvas.setWidth(550);
 
-      // var image2 = document.getElementById('my-image2');
-      //
-      // // Initiate a Fabric instance
-      // var fabricImage = new fabric.Image(image);
-      // var fabricImage2 = new fabric.Image(image2);
       let self = this;
       // fabric.Image.fromURL(this.$root.post.templateImageUrl, function(oImg) {
       //   self.canvas.add(oImg);
@@ -62,14 +79,6 @@ export default {
           self.canvas.setWidth(this.width);
       };
       img.src = this.$root.post.templateImageUrl
-
-
-    // fabric.Image.fromURL('https://cdn.pixabay.com/photo/2014/02/27/16/10/tree-276014__340.jpg', function(oImg) {
-    //   this.canvas.add(oImg);
-    // });
-
-
-
   },
   methods: {
     addLogo() {
@@ -78,31 +87,25 @@ export default {
         self.canvas.add(oImg);
       });
     },
+    onSaveClick() {
 
-    getImage() {
-      this.canvas.discardActiveObject().renderAll();
-      var dataURL = canvas.toDataURL({
-        format: 'jpeg',
-        quality: 0.8
-      });
+      if( !!this.$root.post.template_id == false ) {
+        this.canvas.discardActiveObject().renderAll();
+        let dataURL = canvas.toDataURL({
+          format: 'jpg',
+          quality: 0.8
+        });
+        this.$root.post.templateImageUrl = dataURL;
+      }
 
-      console.log(dataURL);
+      this.$emit('save');
     },
-    processDone() {
-      this.canvas.discardActiveObject().renderAll();
-      let dataURL = canvas.toDataURL({
-        format: 'jpg',
-        quality: 0.8
-      });
-
-      console.log(dataURL);
-      this.$root.post.templateImageUrl = dataURL;
-      this.$emit('process-done', 2);
-    }
   }
 }
 </script>
 
 <style>
-
+.canvas-container {
+  margin: 0 auto;
+}
 </style>

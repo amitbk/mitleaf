@@ -32,6 +32,8 @@ class FrameManager
 
         $post->title = $template->name;
         $post->content = $template->desc;
+        $post->firm_plan_id = $firm_plan->id;
+        $post->firm_id = $firm_plan->firm_id;
         $post->save();
 
         $postData = Post::where('id',$post->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();

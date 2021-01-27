@@ -4,7 +4,7 @@
     <button type="button" class="btn btn-primary" @click="$bvModal.show('modalNewPost')">
       New Post
     </button>
-    <post-create/>
+    <post-create @post-added="getPostsAndAttachToDate"/>
 
     <div v-for="(date, i) in dates">
 

@@ -103,7 +103,7 @@ class PostController extends Controller
      */
     public function destroy(Request $request, Post $post)
     {
-        // $post->delete();
+        $post->delete();
 
         if($request->wantsJson())
           return "User deleted successfully.";
@@ -132,6 +132,8 @@ class PostController extends Controller
     {
 
       $post = Post::findOrNew($request->id);
+      $post->schedule_on = date('Y-m-d H:i:s', strtotime($request->schedule_on) );
+
       $template = Template::findOrNew($request->template_id);
       $firm_plan = FirmPlan::where('firm_id', $request->firm_id)
                             ->where('plan_id', $request->plan_id)
@@ -146,14 +148,29 @@ class PostController extends Controller
     {
       $user = Auth::user();
       $post = Post::findOrNew($request->id);
+      $firm = Firm::findOrNew($request->firm_id);
+
+      $firm_plan = FirmPlan::where('firm_id', $request->firm_id)
+                            ->where('plan_id', $request->plan_id)
+                            ->where('date_start_from', '<=', Carbon::now())
+                            ->where('date_expiry', '>=', Carbon::now())->first();
 
       $image = new Img;
       $image->create_from_base64($request->templateImageUrl, "images/posts/".$user->id."/", $post->image_id);
 
       $post->image_id = $image->id;
       $post->recreated++;
+      $post->schedule_on = date('Y-m-d H:i:s', strtotime($request->schedule_on) );
+
+      $post->title = $request->title;
+      $post->content = $request->content;
+      $post->firm_plan_id = $firm_plan->id;
+      $post->firm_id = $firm_plan->firm_id;
+
       $post->save();
-      return $post;
+
+      $postData = Post::where('id',$post->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();
+      return $postData;
     }
 
 
