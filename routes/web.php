@@ -59,3 +59,7 @@ Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 // this will create empty posts by given order_id
 Route::get('/create_frames/{id}', 'OrderController@create_posts')->name('create_posts');
 Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
+
+
+// test routes
+Route::get('/test_mail', 'TestController@mail');
