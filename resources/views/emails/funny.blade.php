@@ -1,6 +1,6 @@
 @component('mail::message')
-# This is a Funny Email
-Enjoy some funny one liners on us.
+# Hey {{ $name }}!
+This email was sent by events.
 
 ## Boomerang
 "I threw a boomerang a few years ago...I now live in constant fear."

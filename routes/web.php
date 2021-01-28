@@ -63,3 +63,4 @@ Route::get('/generate_post_images', 'CronController@generate_post_images')->name
 
 // test routes
 Route::get('/test_mail', 'TestController@mail');
+Route::get('/test_event', 'TestController@event');

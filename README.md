@@ -78,6 +78,11 @@ This will help to create pivot table migrations
 
 - [Blog on Mailable - Link](https://medium.com/dev-genius/laravel-8-x-mailable-29cffdd19332).
 
+## Events and Listeners
+
+- [Blog - Link](https://medium.com/dev-genius/laravel-8-x-events-and-listeners-5608ff25f997).
+
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
