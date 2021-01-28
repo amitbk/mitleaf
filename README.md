@@ -74,6 +74,9 @@ This will help to create pivot table migrations
 
 - [Laravel Debugger - Link](https://github.com/barryvdh/laravel-debugbar).
 
+## Mailable
+
+- [Blog on Mailable - Link](https://medium.com/dev-genius/laravel-8-x-mailable-29cffdd19332).
 
 ## About Laravel
 

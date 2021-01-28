@@ -7,20 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class RandomEmail extends Mailable
+class FunnyEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    private $name;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name)
+    public function __construct()
     {
-        $this->name = $name;
+        //
     }
 
     /**
@@ -30,8 +28,8 @@ class RandomEmail extends Mailable
      */
     public function build()
     {
-      return $this->from('dinocajic@gmail.com')
-                  ->subject('Pure Randomness')
-                  ->view('emails.random-email', ['name' => $this->name]);
+        return $this->from('amitkadam@gmail.com')
+                    ->subject('Pure Randomness')
+                    ->markdown('emails.funny',  ['name' => 'Rohini']);
     }
 }
