@@ -7,6 +7,8 @@ use App\FirmType;
 use App\Order;
 use App\OrderPlan;
 use App\FirmPlan;
+use App\Firm;
+
 use Illuminate\Http\Request;
 use Auth;
 use Carbon\Carbon;
@@ -27,11 +29,14 @@ class PlanController extends Controller
         $plans = Plan::where('is_active',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
         $firms = auth()->user()->firms;
+        $firm = Firm::find($request->firm_id);
 
         if($request->wantsJson())
           return ['plans' => $plans, 'firm_types' => $firm_types, 'firms' => $firms];
 
-        return view('plans.index', compact('plans'), compact('firm_types', 'user') )->withFirms($firms)->with('yearDiscount', config('amit.yearDiscount'));
+        return view('plans.index', compact('plans'), compact('firm_types', 'user') )
+                    ->withFirms($firms)->with('firmId', $request->firm_id ?? '0')
+                    ->with('yearDiscount', config('amit.yearDiscount'))->with('future_plans', $firm->future_plans() );
     }
 
     public function myplans()

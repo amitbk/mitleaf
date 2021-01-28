@@ -8,7 +8,7 @@
 import axios from 'axios';
 export default {
   name: "PlansList",
-  props: ["plans", "firm_types", "firms", "yearDiscount"],
+  props: ["plans", "firm_types", "firms", "yearDiscount", "firmId", "futurePlans"],
   data() {
     return {
       formStep: 1,
@@ -16,7 +16,7 @@ export default {
       slab_selected: [],
       is_trial_selected: 1,
       duration_selected: 3,
-      firm_id: !!this.firms ? this.firms[0].id : '',
+      firm_id: !!this.firmId ? this.firmId : (!!this.firms ? this.firms[0].id : ''),
       localPlans: this.plans
         // services: this.plans.filter(el => !!el.is_post_plan == false)
       // rulesAdded: !!this.rules.length ||  true
@@ -88,7 +88,8 @@ export default {
     },
     initLocalPlans() {
       this.localPlans = this.localPlans.filter(el => {
-                          el.is_selected = false;
+                          let index = this.futurePlans.findIndex(fp => fp.plan_id == el.id)
+                          el.is_selected = index >= 0 ? true : false ;
                           el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
                           if(el.id == 4) el.firm_type_id = 1;
                             return el;

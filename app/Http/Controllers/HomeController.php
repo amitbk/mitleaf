@@ -31,10 +31,17 @@ class HomeController extends Controller
         return view('home', compact('plans') )->with('firm_types', $firm_types);
     }
 
+    public function sessions()
+    {
+      return session()->all();
+    }
     public function test()
     {
-      $img = \App\Image::find(1);
-      return $img->create_thumbnail($img->url);
+      // $img = \App\Image::find(1);
+      // return $img->create_thumbnail($img->url);
+
+      $firm = \App\Firm::find(2);
+      return $firm->active_plans();
 
 
       // return \App\FirmPlan::where('firm_id', 1)->where('plan_id', 2)->max('date_expiry');

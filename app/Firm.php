@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Firm extends Model
 {
@@ -52,26 +53,20 @@ class Firm extends Model
       return $this->hasMany(Order::class);
     }
 
+    public function active_plans()
+    {
+      return $this->plans()->where('date_start_from', '<=', Carbon::now())
+                           ->where('date_expiry', '>=', Carbon::now())->get();
+    }
+
+    public function future_plans()
+    {
+      return $this->plans()->where('date_expiry', '>=', Carbon::now())->get();
+    }
+
     public function date_expiry()
     {
-      return '';
-      $date = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 0 days"));
-      // return $date;
-      // return $this->whereHas('plans', function($q)
-      //         {
-      //             $date = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + 7 days"));
-      //         })->get();
-
-      return $r = \App\FirmPlan::where('firm_id', $this->id)
-                 ->whereDate('date_start_from', '<=',  date('Y-m-d 23:59:59') )
-                 ->whereDate('date_expiry', '>=', $date )->get();
-      return $this->plans->whereDate('date_expiry', '>', $date );
-      // $posts = Post::whereNull('image_id')
-      //               ->where('error_count', '<=', 3)
-      //               ->whereDate('schedule_on', '<=', $date )
-      //               ->limit(30)->get();
-
-      $date = $this->plans->max('date_expiry');
+      $date = $this->future_plans()->max('date_expiry');
       return $date ? $date->format('d M, Y') : '';
     }
 }

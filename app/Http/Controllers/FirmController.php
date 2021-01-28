@@ -166,7 +166,7 @@ class FirmController extends Controller
         flash("File Uploaded Successfully", 'success');
 
         if($firm->plans->count() == 0)
-          return redirect()->route('plans.index');
+          return redirect()->route('plans.index', ['firm_id' => $firm->id]);
         else
           return redirect()->route('firms.show', $id);
     }

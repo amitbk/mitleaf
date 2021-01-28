@@ -22,6 +22,8 @@ Route::get('/amit', function (Request $request) {
     return $request->user();
 });
 
+Route::get('sessions1', 'HomeController@sessions');
+
 
 Route::middleware('auth')->resource('posts', 'PostController');
 Route::middleware('auth')->get('templates', 'TemplateController@index');

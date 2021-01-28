@@ -82,8 +82,8 @@ const app = new Vue({
         const currentLink = [...allLinks].filter(e => {
         return e.href == url;
         });
-
-        currentLink[0].classList.add("active")
+        if(!!currentLink[0])
+          currentLink[0].classList.add("active")
         // currentLink[0].closest(".nav-treeview").style.display="block";
         // currentLink[0].closest(".has-treeview").classList.add("active");
       },
