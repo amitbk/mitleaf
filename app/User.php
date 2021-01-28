@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'mobile', 'email', 'password',
+        'name', 'mobile', 'email', 'password', 'referrer_id'
     ];
 
     /**
@@ -65,5 +65,25 @@ class User extends Authenticatable
     public function templates()
     {
         return $this->hasMany(Template::class);
+    }
+
+    /**
+     * A user has a referrer.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referrer_id', 'id');
+    }
+
+    /**
+     * A user has many referrals.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referrer_id', 'id');
     }
 }

@@ -66,11 +66,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $referrer = User::find(session()->pull('ref.id'));
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
+            'referrer_id' => $referrer ? $referrer->id : null,
         ]);
     }
 

@@ -67,6 +67,9 @@
                     <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">My Account</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
+                            <a href="{{route('profile')}}">Profile</a>
+                        </li>
+                        <li>
                             <a href="{{route('myplans')}}">Active Plans</a>
                         </li>
                         <li>
