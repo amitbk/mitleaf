@@ -86,4 +86,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'referrer_id', 'id');
     }
+
+    // public function routeNotificationFor($for) {
+    //     switch ($for) {
+    //       case 'sms':
+    //         return $this->mobile;
+    //         break;
+    //
+    //       case 'sms':
+    //         return $this->email;
+    //         break;
+    //
+    //       default:
+    //         return null;
+    //         break;
+    //     }
+    // }
 }

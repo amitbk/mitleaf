@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+// use Illuminate\Support\Facades\Notification;
+
+// use App\Channels\SmsChannel;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
+      // Notification::extend('sms', function ($app) {
+      //     return new SmsChannel();
+      // });
     }
 }
