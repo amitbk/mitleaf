@@ -83,6 +83,14 @@ This will help to create pivot table migrations
 - [Blog - Link](https://medium.com/dev-genius/laravel-8-x-events-and-listeners-5608ff25f997).
 
 
+## Laravel Notifications
+
+- [ Blog ](https://medium.com/@sirajul.anik/laravel-notifications-part-2-creating-a-custom-notification-channel-6b0eb0d81294).
+
+- **[ Custom Channel Git Repository ](https://github.com/laravel-notification-channels/facebook-poster).**
+- [ Custom notification channel data](https://github.com/laravel-notification-channels/facebook-poster/blob/master/src/FacebookPosterPost.php)
+- [ Custom notification channel ](https://github.com/laravel-notification-channels/facebook-poster/blob/master/src/FacebookPosterChannel.php)
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
