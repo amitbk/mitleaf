@@ -8,6 +8,7 @@ use App\Mail\FunnyEmail;
 use Mail;
 
 use App\Events\TestEvent;
+use Softon\Sms\Facades\Sms;
 
 class TestController extends Controller
 {
@@ -26,5 +27,10 @@ class TestController extends Controller
       $to = "731067022b-35793a@inbox.mailtrap.io";
       event( new TestEvent($to, 'Amit') );
       return 'test event fired';
+    }
+
+    public function sms()
+    {
+      return Sms::send(['7020227842'],'sms.test',['user'=>'Amit', 'token' => 'TASAS'])->response();;  
     }
 }

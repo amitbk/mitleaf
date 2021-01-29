@@ -14,6 +14,7 @@
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
+        "softon/sms": "^2.0",
         "webpatser/laravel-uuid": "^3.0"
     },
     "require-dev": {
