@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+         Softon\Sms\SmsServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Sms' => Softon\Sms\Facades\Sms::class, 
     ],
 
 ];

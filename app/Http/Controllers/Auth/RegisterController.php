@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Firm;
+use App\Notifications\NewReferralAdded;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -67,13 +68,16 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         $referrer = User::find(session()->pull('ref.id'));
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
             'referrer_id' => $referrer ? $referrer->id : null,
         ]);
+
+        $referrer->notify( new NewReferralAdded($user) );
+        return $user;
     }
 
     protected function redirectTo()

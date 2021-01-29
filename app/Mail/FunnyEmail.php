@@ -11,14 +11,16 @@ class FunnyEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    private $name;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($name)
     {
-        //
+      $this->name = $name;
     }
 
     /**
@@ -30,6 +32,6 @@ class FunnyEmail extends Mailable
     {
         return $this->from('amitkadam@gmail.com')
                     ->subject('Pure Randomness')
-                    ->markdown('emails.funny',  ['name' => 'Rohini']);
+                    ->markdown('emails.funny',  ['name' => $this->name]);
     }
 }
