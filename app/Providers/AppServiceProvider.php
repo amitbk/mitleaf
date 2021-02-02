@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
+      \URL::forceScheme('https');
       // Notification::extend('sms', function ($app) {
       //     return new SmsChannel();
       // });

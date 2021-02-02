@@ -178,6 +178,7 @@ return [
 
         Barryvdh\Debugbar\ServiceProvider::class,
 
+        App\Providers\FacebookServiceProvider::class,
     ],
 
     /*
@@ -230,7 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Sms' => Softon\Sms\Facades\Sms::class, 
+        'Sms' => Softon\Sms\Facades\Sms::class,
     ],
 
 ];

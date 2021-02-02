@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Plan;
 use App\FirmType;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -39,6 +40,9 @@ class HomeController extends Controller
     {
       // $img = \App\Image::find(1);
       // return $img->create_thumbnail($img->url);
+
+      $user = Auth::user();
+      return $user->facebook_token();
 
       $firm = \App\Firm::find(2);
       return $firm->active_plans();

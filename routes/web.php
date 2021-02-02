@@ -61,6 +61,12 @@ Route::get('/create_frames/{id}', 'OrderController@create_posts')->name('create_
 Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
 
 
+// social login
+Route::get('/redirect/{social_network}', 'SocialNetworkController@redirect')->name('redirect');
+Route::get('/callback/{social_network}', 'SocialNetworkController@callback')->name('callback');
+Route::get('/facebook/update_pages', 'SocialMedia\GraphController@update_pages');
+Route::get('/facebook/publish_to_page', 'SocialMedia\GraphController@publish_to_page');
+
 // test routes
 Route::get('/test_mail', 'TestController@mail');
 Route::get('/test_event', 'TestController@event');

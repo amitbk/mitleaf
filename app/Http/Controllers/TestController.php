@@ -16,6 +16,7 @@ class TestController extends Controller
 
     public function mail(Request $request)
     {
+      var_dump(openssl_get_cert_locations());die();
       // return new FunnyEmail();
       $name = "Dino Cajic";
       $to = "731067022b-35793a@inbox.mailtrap.io";
@@ -31,6 +32,6 @@ class TestController extends Controller
 
     public function sms()
     {
-      return Sms::send(['7020227842'],'sms.test',['user'=>'Amit', 'token' => 'TASAS'])->response();;  
+      return Sms::send(['7020227842'],'sms.test',['user'=>'Amit', 'token' => 'TASAS'])->response();;
     }
 }

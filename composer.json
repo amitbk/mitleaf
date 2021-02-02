@@ -9,9 +9,11 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "facebook/graph-sdk": "^5.7",
         "fideloper/proxy": "^4.0",
         "intervention/image": "^2.5",
         "laravel/framework": "^6.2",
+        "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
         "softon/sms": "^2.0",

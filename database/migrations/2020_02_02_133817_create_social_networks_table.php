@@ -30,6 +30,11 @@ class CreateSocialNetworksTable extends Migration
             // details from social site
             $table->string('social_profile_id')->nullable();
             $table->string('token')->nullable();
+            $table->timestamp('expire_by')->nullable();
+
+            $table->string('avatar')->nullable();
+            $table->string('name')->nullable();
+            $table->string('category')->nullable();
 
             $table->timestamps();
         });

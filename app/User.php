@@ -57,9 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }
 
-    public function network()
+    public function social_networks()
     {
-        return $this->hasMany(Network::class);
+        return $this->hasMany(SocialNetwork::class);
     }
 
     public function templates()
@@ -87,6 +87,11 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'referrer_id', 'id');
     }
 
+    public function facebook_token($value='')
+    {
+      // return $this->social_networks;
+      return $this->social_networks()->where('social_network_type_id', 1)->first()->token ?? null;
+    }
     // public function routeNotificationFor($for) {
     //     switch ($for) {
     //       case 'sms':
