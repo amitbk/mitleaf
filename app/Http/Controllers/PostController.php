@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Firm;
+use App\Plan;
+use App\FirmType;
 use App\Post;
 use App\FirmPlan;
 use App\Template;
@@ -23,21 +25,29 @@ class PostController extends Controller
     {
         $user = Auth::user();
 
-        $posts = Post::with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')
-                      ->where('error_count', 0 );
+        if($request->wantsJson())
+        {
+          $posts = Post::with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')
+                        ->where('error_count', 0 );
 
-        // Firm filter
-        if( $request->has('firm_id') ) {
-          // check if user is member of requested firm and then only return the posts of that firm
-          $posts->whereIn('firm_id', $user->firms->where('id', $request->firm_id )->pluck('id') );
+          // Firm filter
+          if( $request->has('firm_id') ) {
+            // check if user is member of requested firm and then only return the posts of that firm
+            $posts->whereIn('firm_id', $user->firms->where('id', $request->firm_id )->pluck('id') );
+          }
+          else {
+            // return post of all firms
+            $posts->whereIn('firm_id', $user->firms->pluck('id') );
+          }
+
+
+          return $posts->orderBy('schedule_on', 'asc')->get();
         }
         else {
-          // return post of all firms
-          $posts->whereIn('firm_id', $user->firms->pluck('id') );
+          $plans = Plan::where('is_active',1)->where('is_post_plan',1)->get();
+          $firm_types = FirmType::where('is_active',1)->get();
+          return view('home', compact('plans') )->with('firm_types', $firm_types);
         }
-
-
-        return $posts->orderBy('schedule_on', 'asc')->get();
     }
 
     /**
@@ -140,6 +150,9 @@ class PostController extends Controller
                             ->where('date_start_from', '<=', Carbon::now())
                             ->where('date_expiry', '>=', Carbon::now())->first();
 
+      if(!$firm_plan)
+        abort(403, 'Hmm! No plan found for firm.', );
+
       $post = FrameManager::generate_and_store_post_image($post, $firm_plan, $template);
       return $post;
     }
@@ -154,6 +167,8 @@ class PostController extends Controller
                             ->where('plan_id', $request->plan_id)
                             ->where('date_start_from', '<=', Carbon::now())
                             ->where('date_expiry', '>=', Carbon::now())->first();
+      if(!$firm_plan)
+        abort(403, 'Hmm! No plan found for firm.', );
 
       $image = new Img;
       $image->create_from_base64($request->templateImageUrl, "images/posts/".$user->id."/", $post->image_id);

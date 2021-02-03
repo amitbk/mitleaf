@@ -13,8 +13,11 @@ use Auth;
 class GraphController extends Controller
 {
   private $api;
-  public function __construct(Facebook $fb)
+  public function __construct(Facebook $fb )
   {
+      // dd( app( Facebook::class ) );
+      // dd( app()->make(Facebook::class) );
+      // dd( $fb );
       // $this->middleware('auth');
       $this->middleware(function ($request, $next) use ($fb) {
           $fb->setDefaultAccessToken(Auth::user()->facebook_token());
@@ -54,9 +57,45 @@ class GraphController extends Controller
       }
   }
 
+  public function get_pages(Request $request)
+  {
+      // try {
+      //     $response = $this->api->post('/me/feed', [
+      //         'message' => $request->message
+      //     ])->getGraphNode()->asArray();
+      //     if($response['id']){
+      //        // post created
+      //     }
+      // } catch (FacebookSDKException $e) {
+      //     dd($e); // handle exception
+      // }
+
+      $user = Auth::user();
+      $network = SocialNetwork::find(1);
+
+
+      try {
+
+        // Returns a `Facebook\FacebookResponse` object
+        $response = $this->api->get(
+            "/$network->social_profile_id/accounts",
+            $network->token
+          );
+        } catch(Facebook\Exceptions\FacebookResponseException $e) {
+          echo 'Graph returned an error: ' . $e->getMessage();
+          exit;
+        } catch(Facebook\Exceptions\FacebookSDKException $e) {
+          echo 'Facebook SDK returned an error: ' . $e->getMessage();
+          exit;
+        }
+        // $graphNode = $response->getGraphNode();
+        return $graphEdge = $response->getGraphEdge();
+  }
+
   public function update_pages()
   {
       $user = Auth::user();
+      dd($this);
       try {
            // Get the \Facebook\GraphNodes\GraphUser object for the current user.
            // If you provided a 'default_access_token', the '{access-token}' is optional.

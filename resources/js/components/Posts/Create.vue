@@ -61,10 +61,12 @@ export default {
           this.$root.post = { ...postObj };
           this.$bvModal.hide('modalNewPost');
 
-          alert.success('Post has been saved successfully.');
+          alert.msg('Post has been saved successfully.');
           this.step = 1;
 
           this.$emit('post-added');
+      }).catch(e => {
+        alert.msg(e.response.data.message, 'warning');
       })
 
       this.step = 2;

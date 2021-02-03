@@ -34,6 +34,7 @@ Route::get('/start', 'TrialController@start')->name('start');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/posts', 'PostController@index')->name('posts');
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::resource('/templates', 'TemplateController');
 Route::resource('/firms', 'FirmController');
@@ -61,11 +62,16 @@ Route::get('/create_frames/{id}', 'OrderController@create_posts')->name('create_
 Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
 
 
+Route::get('/social_networks', 'SocialNetworkController@index')->name('social_networks');
+
 // social login
 Route::get('/redirect/{social_network}', 'SocialNetworkController@redirect')->name('redirect');
 Route::get('/callback/{social_network}', 'SocialNetworkController@callback')->name('callback');
-Route::get('/facebook/update_pages', 'SocialMedia\GraphController@update_pages');
 Route::get('/facebook/publish_to_page', 'SocialMedia\GraphController@publish_to_page');
+Route::get('/facebook/pages', 'SocialMedia\GraphController@get_pages');
+
+Route::get('/facebook/connect_pages', 'SocialNetworkController@connect_pages');
+Route::get('/facebook/update_pages', 'SocialMedia\GraphController@update_pages')->name('update_pages');
 
 // test routes
 Route::get('/test_mail', 'TestController@mail');

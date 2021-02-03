@@ -3,13 +3,13 @@ import axios from "axios";
 
 export default {
 
-  success: function(title) {
+  msg: function(title, type = 'success') {
     window.Vue.swal({
       position: 'top-end',
-      icon: 'success',
+      icon: type,
       title: title,
       showConfirmButton: false,
-      timer: 1500
+      timer: 2500
     })
   },
   deleteSuccess: function(label = 'Record') {

@@ -55,17 +55,20 @@
                 <p>Welcome {{Auth()->user()->name}}</p>
 
                 <li>
-                  <a href="{{url('home')}}">Home</a>
+                  <a href="{{url('dashboard')}}">Dashboard</a>
+                </li>
+                <li>
+                  <a href="{{url('posts')}}">Posts</a>
                 </li>
                 <li>
                     <a href="{{url('myfirms')}}">My Businesses</a>
                 </li>
                 <li>
-                    <a href="#">Social Media</a>
+                    <a href="{{url('social_networks')}}">Social Media</a>
                 </li>
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">My Account</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <a href="#sub_menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">My Account</a>
+                    <ul class="collapse list-unstyled" id="sub_menus">
                         <li>
                             <a href="{{route('profile')}}">Profile</a>
                         </li>

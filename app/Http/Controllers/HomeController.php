@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\SocialMedia\GraphController;
+use Facebook\Facebook;
+use Facebook\Exceptions\FacebookSDKException;
+
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Plan;
@@ -10,14 +14,23 @@ use Auth;
 
 class HomeController extends Controller
 {
+    public $api;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Facebook $fb)
     {
         $this->middleware('auth');
+        $this->middleware(function ($request, $next) use ($fb) {
+            $fb->setDefaultAccessToken(Auth::user()->facebook_token());
+            $this->api = $fb;
+            return $next($request);
+        });
+
+        // dd($this);
     }
 
     /**
@@ -40,7 +53,13 @@ class HomeController extends Controller
     {
       // $img = \App\Image::find(1);
       // return $img->create_thumbnail($img->url);
-
+      $aa = app(GraphController::class, [Facebook::class] );
+      // $cc = app()->bind(GraphController::class, Facebook::class);
+      dd($aa);
+      // $this->api = app()->make(Facebook::class);
+      // return $this->app->instance(Facebook::class);
+      $gc = (new GraphController( $this->api ) )->update_pages();
+      dd($gc);
       $user = Auth::user();
       return $user->facebook_token();
 

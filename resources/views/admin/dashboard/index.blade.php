@@ -1,10 +1,10 @@
-@extends('layouts.admin')
+@extends('layouts.admin2')
 
 @section('content')
 <div class="container-fluid">
 
     <!-- Orders Status Cards -->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-3">
 
         <!-- new order -->
         <div class="col-md-3 mb-2">
