@@ -23,9 +23,9 @@ class CreateUsersTable extends Migration
                 // 3=can upload templates
 
             $table->boolean('is_trial_used')->default(false);
-            $table->unsignedBigInteger('referrer_id');
+            $table->unsignedBigInteger('referrer_id')->nullable();
             $table->foreign('referrer_id')->references('id')->on('users');
-            
+
             // restricted user
             $table->boolean('is_revoked')->default(false);
             $table->string('name');

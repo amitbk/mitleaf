@@ -76,7 +76,8 @@ class RegisterController extends Controller
             'referrer_id' => $referrer ? $referrer->id : null,
         ]);
 
-        $referrer->notify( new NewReferralAdded($user) );
+        if($referrer)
+          $referrer->notify( new NewReferralAdded($user) );
         return $user;
     }
 
