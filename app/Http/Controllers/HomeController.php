@@ -14,21 +14,21 @@ use Auth;
 
 class HomeController extends Controller
 {
-    public $api;
+    // public $api;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Facebook $fb)
+    public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(function ($request, $next) use ($fb) {
-            $fb->setDefaultAccessToken(Auth::user()->facebook_token());
-            $this->api = $fb;
-            return $next($request);
-        });
+        // $this->middleware(function ($request, $next) use ($fb) {
+        //     $fb->setDefaultAccessToken(Auth::user()->facebook_token());
+        //     $this->api = $fb;
+        //     return $next($request);
+        // });
 
         // dd($this);
     }

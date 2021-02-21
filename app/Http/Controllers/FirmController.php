@@ -7,6 +7,8 @@ use App\FirmType;
 use App\FirmPlan;
 use App\Asset;
 use App\AssetType;
+use App\SocialNetwork;
+
 use App\Image as Img;
 use Illuminate\Http\Request;
 use App\Http\Requests\FirmRequest;
@@ -172,4 +174,30 @@ class FirmController extends Controller
     }
 
 
+
+    public function update_fb_page(Request $request)
+    {
+      // TODO:
+      $user = Auth::user();
+      //check if user ownes social_network
+      $sn = SocialNetwork::where('user_id', $user->id)
+                   ->where('id', $request->social_network_id)->count();
+      if($sn == 0) {
+        // user dont have access
+        flash('You cant post to selected Social network.');
+        return redirect()->back();
+      }
+     // remove old page reference for firm
+      SocialNetwork::where('user_id', $user->id)
+                   ->where('firm_id', $request->firm_id)
+                   ->update(['firm_id' => 0]);
+
+      // update new
+      SocialNetwork::where('user_id', $user->id)
+                   ->where('id', $request->social_network_id)
+                   ->update(['firm_id' => $request->firm_id]);
+
+      flash('Social network connected to selected Business.');
+      return redirect()->back();
+    }
 }

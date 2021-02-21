@@ -6,7 +6,7 @@ use Facebook\Facebook;
 use Illuminate\Http\Request;
 use Laravel\Socialite\Facades\Socialite;
 
-// use App\Http\Controllers\SocialMedia\GraphController;
+use App\Http\Controllers\SocialMedia\GraphController;
 
 use Auth;
 use App\User;
@@ -15,7 +15,7 @@ use App\SocialNetwork;
 class SocialNetworkController extends Controller
 {
     public $api;
-    
+
     /**
      * Create a new controller instance.
      *
@@ -24,13 +24,6 @@ class SocialNetworkController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-
-        $this->middleware(function ($request, $next) use ($fb) {
-            $fb->setDefaultAccessToken(Auth::user()->facebook_token());
-            $this->api = $fb;
-            return $next($request);
-        });
-
     }
     /**
      * Display a listing of the resource.
@@ -93,9 +86,9 @@ class SocialNetworkController extends Controller
 
 
         if( session()->pull('action') == 'connect_pages' ) {
-          // $gc = (new GraphController( app(Facebook::class) ) )->update_pages();
-          // $gc = (new GraphController( app()->make(Facebook::class) ) )->update_pages();
-          \App::call('App\Http\Controllers\SocialMedia\GraphController@update_pages');
+          
+          $gc = new GraphController;
+          $gc->update_pages();
 
           flash("Pages are updated.", 'success');
           session()->forget('action');
