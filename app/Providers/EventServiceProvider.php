@@ -8,7 +8,10 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 
 use App\Events\TestEvent;
+use App\Events\NewOrder;
 use App\Listeners\SendTestEmailListener;
+use App\Listeners\NewOrderListener;
+use App\Listeners\NewOrderCommissionAllocation;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -23,6 +26,11 @@ class EventServiceProvider extends ServiceProvider
         ],
         TestEvent::class => [
             SendTestEmailListener::class,
+        ],
+
+        NewOrder::class => [
+            NewOrderListener::class,
+            NewOrderCommissionAllocation::class,
         ],
     ];
 

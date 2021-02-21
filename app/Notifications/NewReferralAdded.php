@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notification;
 use App\Channels\SmsInit;
 use App\Channels\SmsChannel;
 
-class NewReferralAdded extends Notification
+class NewReferralAdded extends Notification implements ShouldQueue
 {
     use Queueable;
 

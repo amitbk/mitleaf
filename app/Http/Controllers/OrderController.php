@@ -13,6 +13,8 @@ use App\Event;
 use Carbon\Carbon;
 use DB;
 
+use App\Events\NewOrder;
+
 class OrderController extends Controller
 {
     /**
@@ -229,6 +231,9 @@ class OrderController extends Controller
             */
             // TODO: Create a FirmPlan for order
             // $order->createPostsOfPlans();
+
+            event(new NewOrder($order));
+
             DB::commit();
             return redirect('myplans');
         } catch (\Exception $e) {
