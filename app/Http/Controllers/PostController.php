@@ -165,8 +165,8 @@ class PostController extends Controller
 
       $firm_plan = FirmPlan::where('firm_id', $request->firm_id)
                             ->where('plan_id', $request->plan_id)
-                            ->where('date_start_from', '<=', Carbon::now())
-                            ->where('date_expiry', '>=', Carbon::now())->first();
+                            ->where('date_start_from', '<=', $request->schedule_on )
+                            ->where('date_expiry', '>=', $request->schedule_on )->first();
       if(!$firm_plan)
         abort(403, 'Hmm! No plan found for firm.', );
 

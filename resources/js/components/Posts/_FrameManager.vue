@@ -16,7 +16,7 @@
       <div class="p-1">
         <select v-model="$root.post.plan_id" class="form-control form-control-sm" style="width: auto" >
           <option value="0">Select Plan</option>
-          <option :value="plan.id" v-for="plan in $root.mitleaf.plans">{{plan.name}}</option>
+          <option :value="plan.id" v-for="plan in $root.mitleaf.plans.filter(el => el.id!= 1)">{{plan.name}}</option>
         </select>
       </div>
 

@@ -73,9 +73,11 @@ class FirmController extends Controller
     {
         // show all firm's posts
         // check with big data set
+        $user = Auth::user();
+
         $firm_types = FirmType::where('is_active',1)->get();
         $posts = $firm->posts()->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
-        return view('firms.show', compact('firm'))->withPosts($posts)->with('firm_types',$firm_types);
+        return view('firms.show', compact('firm'))->withPosts($posts)->with('firm_types',$firm_types)->with('user',$user);
     }
 
     /**
@@ -168,12 +170,18 @@ class FirmController extends Controller
         flash("File Uploaded Successfully", 'success');
 
         if($firm->plans->count() == 0)
-          return redirect()->route('plans.index', ['firm_id' => $firm->id]);
+          return redirect()->route('firms.add_fb_page', ['firm_id' => $firm->id]);
         else
           return redirect()->route('firms.show', $id);
     }
 
-
+    public function add_fb_page($firm_id)
+    {
+      // page to show the option to select fb pages for firm
+      $user = Auth::user();
+      $firm = $user->firms->where('id', $firm_id)->first();
+      return view('firms.add_fb_page', compact('firm') )->with('user', $user);
+    }
 
     public function update_fb_page(Request $request)
     {
@@ -198,6 +206,10 @@ class FirmController extends Controller
                    ->update(['firm_id' => $request->firm_id]);
 
       flash('Social network connected to selected Business.');
+
+      if($request->redirect == 'plans')
+        return redirect()->route('plans.index', ['firm_id' => $request->firm_id]);
+
       return redirect()->back();
     }
 }

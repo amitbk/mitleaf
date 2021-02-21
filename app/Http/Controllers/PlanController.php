@@ -36,7 +36,7 @@ class PlanController extends Controller
 
         return view('plans.index', compact('plans'), compact('firm_types', 'user') )
                     ->withFirms($firms)->with('firmId', $request->firm_id ?? '0')
-                    ->with('yearDiscount', config('amit.yearDiscount'))->with('future_plans', $firm->future_plans() );
+                    ->with('yearDiscount', config('amit.yearDiscount'))->with('firm', $firm );
     }
 
     public function myplans()

@@ -88,7 +88,7 @@ export default {
     },
     initLocalPlans() {
       this.localPlans = this.localPlans.filter(el => {
-                          let index = this.futurePlans.findIndex(fp => fp.plan_id == el.id)
+                          let index = !!this.futurePlans ? this.futurePlans.findIndex(fp => fp.plan_id == el.id) : -1;
                           el.is_selected = index >= 0 ? true : false ;
                           el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
                           if(el.id == 4) el.firm_type_id = 1;

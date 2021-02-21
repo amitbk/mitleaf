@@ -86,13 +86,15 @@ class SocialNetworkController extends Controller
 
 
         if( session()->pull('action') == 'connect_pages' ) {
-          
+
           $gc = new GraphController;
           $gc->update_pages();
 
           flash("Pages are updated.", 'success');
           session()->forget('action');
-          return redirect()->to('/social_networks'); //
+
+          $redirect = session()->pull('redirect') ?? '/social_networks';
+          return redirect()->to($redirect); //
         }
 
         return redirect()->to('/'); // Redirect to a secure page
@@ -104,9 +106,13 @@ class SocialNetworkController extends Controller
         var_dump($facebook);
     }
 
-    public function connect_pages()
+    public function connect_pages(Request $request)
     {
       session(['action' =>  'connect_pages']);
+
+      if($request->redirect)
+        session(['redirect' =>  $request->redirect ]);
+
       return redirect()->route('redirect', ['facebook']);
     }
     /**

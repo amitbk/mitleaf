@@ -38,6 +38,7 @@ Route::get('/posts', 'PostController@index')->name('posts');
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::resource('/templates', 'TemplateController');
 
+Route::get('firms/{firm_id}/add_fb_page', 'FirmController@add_fb_page')->name('firms.add_fb_page');
 Route::post('firms/update_fb_page', 'FirmController@update_fb_page')->name('firms.update_fb_page');
 Route::resource('/firms', 'FirmController');
 Route::get('/myfirms', 'FirmController@myfirms')->name('firms.myfirms');
