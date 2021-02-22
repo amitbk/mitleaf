@@ -125,7 +125,21 @@ class GraphController extends Controller
       }
   }
 
-  public function publish_to_page(Request $request)
+  public function publish_to_page($page, $data)
+  {
+    $this->api = $this->getFb();
+    // ini_set('max_execution_time', 300); //300 seconds = 5 minutes
+    $user = Auth::user();
+    try {
+        $post = $this->api->post('/' . $page->social_profile_id . '/photos', $data,  $page->token );
+        $post = $post->getGraphNode()->asArray();
+        return $post;
+    } catch (FacebookSDKException $e) {
+        dd($e); // handle exception
+    }
+  }
+
+  public function publish_to_page1(Request $request)
   {
     ini_set('max_execution_time', 300); //300 seconds = 5 minutes
     $user = Auth::user();
