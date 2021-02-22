@@ -16,6 +16,7 @@
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
+        "razorpay/razorpay": "2.*",
         "softon/sms": "^2.0",
         "webpatser/laravel-uuid": "^3.0"
     },

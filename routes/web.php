@@ -44,6 +44,9 @@ Route::resource('/firms', 'FirmController');
 Route::get('/myfirms', 'FirmController@myfirms')->name('firms.myfirms');
 Route::get('/firms/{id}/plans', 'FirmController@plans')->name('firms.plans');
 
+Route::post('/payment_callback', 'OrderController@payment_callback');
+
+
 Route::get('/firms/{id}/edit_assets/{asset_type_id}', 'FirmController@edit_assets')->name('firms.edit_assets');
 Route::post('/firms/{id}/update_assets', 'FirmController@update_details')->name('firms.update_assets');
 // Route::get('/firms/{id}/edit_details2', 'FirmController@edit_details2')->name('firms.edit_details2');

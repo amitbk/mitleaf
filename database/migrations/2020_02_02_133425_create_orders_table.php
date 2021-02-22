@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use Illuminate\Database\Query\Expression;
+
 class CreateOrdersTable extends Migration
 {
     /**
@@ -31,7 +33,10 @@ class CreateOrdersTable extends Migration
             $table->timestamp('date_expiry')->nullable()->default(null);
             // $table->timestamp('date_scheduled_upto')->nullable()->default(null);
 
-            $table->integer('status')->default(0); // is active or not
+            $table->integer('status')->default(0); // payment success=1, failed=0
+
+            $table->json('payments_meta')->default(new Expression('(JSON_ARRAY())'));
+
             $table->timestamps();
         });
     }

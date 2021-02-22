@@ -141,6 +141,12 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Steps:
+        // 1. Save order data with order_plan
+        // 2. initiate payment
+        // 3. Send to payment page
+
         try {
             DB::beginTransaction();
             // TEMP
@@ -168,52 +174,18 @@ class OrderController extends Controller
 
             $total = 0;
             foreach (json_decode($request->plans) as $plan) {
-
                 $order_plan = new OrderPlan;
                 $order_plan->order_id = $order->id;
                 $order_plan->plan_id = $plan->id;
                 $order_plan->rate = $plan->finalRate;
-                // $order_plan->rate = $discount > 0 ? $plan->rate - ($plan->rate*$discount/100) : $plan->rate ;
                 $order_plan->qty = $plan->slab_selected;
-                // $order_plan->is_trial = $is_trial;
                 $order_plan->save();
-
-                // $total += $plan->finalRate*$order_plan->qty;
                 $total += $plan->finalRate;
 
-                // TEMP: Create active plan
-                $firm_plan = new FirmPlan;
-                $firm_plan->firm_id = $firm->id;
-                $firm_plan->plan_id = $plan->id;
-                $firm_plan->order_plan_id = $order_plan->id;
-                $firm_plan->is_post_plan = $plan->is_post_plan;
-                $firm_plan->qty_per_month = 30*$order_plan->qty;
-                $firm_plan->is_trial = $is_trial;
-
-                if(property_exists($plan, 'firm_type_id'))
-                    $firm_plan->firm_type_id = $plan->firm_type_id;
-
-                // when to start plan
-                // check current plan expiry if any to start the plan
-                $fp_current_date_expiry = FirmPlan::where('firm_id', $firm->id)->where('plan_id', $plan->id)->max('date_expiry');
-                if( $fp_current_date_expiry )
-                  $firm_plan->date_start_from = $fp_current_date_expiry;
-                else
-                  $firm_plan->date_start_from = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 1 days"));
-
-                $expiry_string = $is_trial ? " + $trial_days days" : " + $request->duration_selected month";
-                $firm_plan->date_expiry = date('Y-m-d 00:00:00', strtotime( $firm_plan->date_start_from. $expiry_string ));
-
-                // $date_expiry = $is_trial ? Carbon::now()->addDays($trial_days) : Carbon::now()->addMonths($request->duration_selected)->addDays(1);
-                // $firm_plan->date_expiry = $date_expiry;
-                $firm_plan->save();
-
-                $order->date_start_from = $firm_plan->date_start_from;
-                $order->date_expiry = $firm_plan->date_expiry;
-                $order->duration_selected = $request->duration_selected;
             }
             $order->amount = $total;
             $order->is_trial = $is_trial;
+            $order->status = 0;
 
             $order->save();
 
@@ -224,24 +196,84 @@ class OrderController extends Controller
 
             // ======================================================
             /* Here we have selected plans data
-            - save selected plans data in session
-            - save plans data in orders and order_plans table
+            - save plans data in orders and order_plans table - done
             - create a data to send to payments gateway
             - send request to payments gateway
             */
-            // TODO: Create a FirmPlan for order
-            // $order->createPostsOfPlans();
 
-            event(new NewOrder($order));
 
+            // pay online
+            $razorpay_order = PaymentController::create_order(['receipt_id'=> $order->id, 'amount' => $order->amount]);
+            $order->payments_meta = ['razorpay_order_id' => $razorpay_order->id];
+            $order->save();
             DB::commit();
+
+            $user_data = array('name' => $user->name, 'email' => $user->email, 'contact' => $user->mobile);
+            return view('order.payment_capture')
+                  ->with('user', $user_data)
+                  ->with('firm', getFirm())
+                  ->with('razorpay_order_id', $razorpay_order->id)
+                  ->with('amount',$razorpay_order->amount)
+                  ->with('order_id',$order->id)
+                  ->with('key',PaymentController::getKey());
+
+
             return redirect('myplans');
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
         }
 
     }
 
+    public function payment_callback(Request $request)
+    {
+      PaymentController::verify_signature($request);
+      $order = Order::where('payments_meta->razorpay_order_id', $request->razorpay_order_id)
+                ->first();
+      $firm = $order->firm;
+      $is_trial = $order->is_trial;
+      foreach ($order->plans as $order_plan) {
+
+          $plan = $order_plan->plan;
+
+          // TODO: Create active plan
+          $firm_plan = new FirmPlan;
+          $firm_plan->firm_id = $firm->id;
+          $firm_plan->plan_id = $plan->id;
+          $firm_plan->order_plan_id = $order_plan->id;
+          $firm_plan->is_post_plan = $plan->is_post_plan;
+          $firm_plan->qty_per_month = 30*$order_plan->qty;
+          $firm_plan->is_trial = $is_trial;
+
+          if(property_exists($plan, 'firm_type_id'))
+              $firm_plan->firm_type_id = $plan->firm_type_id;
+
+          // when to start plan
+          // check current plan expiry if any to start the plan
+          $fp_current_date_expiry = FirmPlan::where('firm_id', $firm->id)->where('plan_id', $plan->id)->max('date_expiry');
+          if( $fp_current_date_expiry )
+            $firm_plan->date_start_from = $fp_current_date_expiry;
+          else
+            $firm_plan->date_start_from = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 1 days"));
+
+          $expiry_string = $is_trial ? " + $trial_days days" : " + $request->duration_selected month";
+          $firm_plan->date_expiry = date('Y-m-d 00:00:00', strtotime( $firm_plan->date_start_from. $expiry_string ));
+
+          $firm_plan->save();
+
+          $order->date_start_from = $firm_plan->date_start_from;
+          $order->date_expiry = $firm_plan->date_expiry;
+          $order->duration_selected = $request->duration_selected;
+      }
+      $order->status = 1;
+      $order->save();
+
+      // event(new NewOrder($order));
+
+
+      return ['payment_success' => true, 'order' => $order];
+    }
     /**
      * Display the specified resource.
      *

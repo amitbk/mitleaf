@@ -33,6 +33,7 @@ Vue.use(VueSweetalert2);
 Vue.component('admin', require('./components/Admin.vue').default);
 Vue.component('plans-list', require('./components/Plans/PlansList.vue').default);
 Vue.component('create-template', require('./components/Templates/CreateTemplate.vue').default);
+Vue.component('payment-capture', require('./components/PaymentCapture.vue').default);
 
 // Home
 Vue.component('posts', require('./components/Home/Posts.vue').default);
