@@ -41,4 +41,9 @@ class CronController extends Controller
 
         return "<hr>Post images created = ".$count;
     }
+
+    public function post_to_social_media()
+    {
+
+    }
 }
