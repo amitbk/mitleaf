@@ -9,6 +9,8 @@ use App\Template;
 use App\Firm;
 use Image;
 
+use App\Http\Controllers\SocialMedia\GraphController;
+
 class CronController extends Controller
 {
     public function generate_post_images()
@@ -58,25 +60,21 @@ class CronController extends Controller
                     ->whereIn('firm_id', $firms_having_social_media_posting_plan->get()->toArray() )
                     ->limit(30)->get();
 
-      // TODO
-      // For loop to publish posts
+      if(count($posts_to_publish) == 0)
+        return 'No posts to publish.';
+
       $gc = new GraphController;
+      // For loop to publish posts
       foreach ($posts_to_publish as $key => $post) {
         $social_network = $post->firm->social_networks->first();
         $data = [
           'message' => $post->content,
           'url' => $post->image->url
         ];
-        $gc->update_pages($social_network, $data);
+        $response = $gc->update_pages($social_network, $data);
+        // update post if published
       }
-      // $data = [
-      //   'message' => 'Hello 1236',
-      //   'url' => 'image url'
-      // ];
-      // $page = 'facebook page object';
-      // call posting function
-      // postToPage($page, $data);
-      // update post if published
+
 
       return $posts_to_publish;
 
