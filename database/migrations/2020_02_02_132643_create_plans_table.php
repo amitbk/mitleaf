@@ -29,7 +29,7 @@ class CreatePlansTable extends Migration
         DB::table('plans')->insert(['id'=>2,'name' => 'Daily Thoughts', 'desc'=> 'We will create Inspirational images, Daily thougths images for you with your business name', 'rate' => '640']);
         DB::table('plans')->insert(['id'=>3,'name' => 'Indian Events', 'is_slab_in_months'=> 0, 'desc'=> 'We will create special images for you on each event or festival of India.
                                                         Like Republican day, Diwali, Independence day, Workers Day or birthday of some well known person.', 'rate' => '220']);
-        DB::table('plans')->insert(['id'=>4,'name' => 'Business Specific', 'desc'=> 'If are running a busines, we will create speciafic images for your business.
+        DB::table('plans')->insert(['id'=>4,'name' => 'Smart Business Kit', 'desc'=> 'If are running a busines, we will create speciafic images for your business.
                                                     Eg. For Hospitals, we will create health related images,
                                                     <br> For Hotels, we will create eating habbits related images']);
         // DB::table('plans')->insert(['id'=>1,'name' => 'Daily Thoughts', 'desc'=> '', 'rate' => '640']);

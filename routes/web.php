@@ -64,9 +64,11 @@ Route::get('/create_posts', 'CronController@create_posts')->name('create_posts')
 Route::post('/recreate_post', 'PostController@recreate')->name('post.recreate');
 Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
+// CRON JOBS::
 // this will create empty posts by given order_id
-Route::get('/create_frames/{id}', 'OrderController@create_posts')->name('create_posts');
+Route::get('/create_post_schedules', 'OrderController@create_post_schedules')->name('create_post_schedules');
 Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
+Route::get('/post_to_social_media', 'CronController@post_to_social_media')->name('post_to_social_media');
 
 
 Route::get('/social_networks', 'SocialNetworkController@index')->name('social_networks');

@@ -15,7 +15,7 @@ class CreateFirmPlansTable extends Migration
     {
         Schema::create('firm_plans', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
+
             $table->integer('firm_id')->unsigned()->index();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
 
@@ -30,6 +30,7 @@ class CreateFirmPlansTable extends Migration
             $table->integer('firm_type_id')->nullable();
             $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
 
+            $table->timestamp('date_post_created_upto')->nullable()->default(null);
             $table->timestamp('date_start_from')->nullable()->default(null);
             $table->timestamp('date_scheduled_upto')->nullable()->default(null);
             $table->timestamp('date_expiry')->nullable();

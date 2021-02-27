@@ -9,6 +9,8 @@ use App\Template;
 use App\Firm;
 use Image;
 
+use App\Http\Controllers\SocialMedia\GraphController;
+
 class CronController extends Controller
 {
     public function generate_post_images()
@@ -40,5 +42,41 @@ class CronController extends Controller
 
 
         return "<hr>Post images created = ".$count;
+    }
+
+    public function post_to_social_media()
+    {
+
+      $date = date('Y-m-d H:i:s');
+
+      $firms_having_social_media_posting_plan = FirmPlan::where('plan_id', 1)
+                    ->whereDate('date_start_from', '<=', $date )
+                    ->whereDate('date_expiry', '>=', $date )
+                    ->select('firm_id');
+
+      $posts_to_publish = Post::whereNotNull('image_id')
+                    ->whereNull('is_posted_on_social_media')
+                    ->whereDate('schedule_on', '<=', $date )
+                    ->whereIn('firm_id', $firms_having_social_media_posting_plan->get()->toArray() )
+                    ->limit(30)->get();
+
+      if(count($posts_to_publish) == 0)
+        return 'No posts to publish.';
+
+      $gc = new GraphController;
+      // For loop to publish posts
+      foreach ($posts_to_publish as $key => $post) {
+        $social_network = $post->firm->social_networks->first();
+        $data = [
+          'message' => $post->content,
+          'url' => $post->image->url
+        ];
+        $response = $gc->update_pages($social_network, $data);
+        // update post if published
+      }
+
+
+      return $posts_to_publish;
+
     }
 }

@@ -24,7 +24,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-      $orders = Order::latest()->paginate(10);
+      $user = Auth::user();
+      // $orders = Order::latest()->paginate(10);
+      $orders = $user->orders()->latest()->paginate(10);
       return view('admin.orders.index', compact('orders') );
     }
 
@@ -39,28 +41,55 @@ class OrderController extends Controller
       return view('admin.orders.index', compact('orders') );
     }
 
-    public function create_posts($id)
+    public function create_post_schedules()
     {
         try {
             DB::beginTransaction();
 
-            $order = Order::find($id);
+            // $order = Order::find($id);
+            // $firm_plans = $order->firm_plans;
 
-            $firm_plans = $order->firm_plans;
+            $days = 30; // for how many days upfront, posts should be scheduled
+            $date_schedule_upto = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + $days days"));
+
+            $firm_plans = FirmPlan::where(function ($q) use($date_schedule_upto) {
+                                       $q->whereDate('date_post_created_upto', '<=', $date_schedule_upto)
+                                         ->orWhereNull('date_post_created_upto');
+                                   })
+                                   ->where(function ($q) {
+                                        $q->whereDate('date_expiry', '>', date('Y-m-d H:i:s') )
+                                          ->orWhereNull('date_expiry');
+                                    })
+                                  ->limit(30)->get();
+            // return $firm_plans;
+
             foreach ($firm_plans as $firm_plan) {
                 if($firm_plan->plan_id == 3) // indian event
                 {
                     // var_dump("<br>1-", $firm_plan->plan_id, !in_array ( $firm_plan->plan_id, [1,3]  ) );
                     // get all future events for current year
-                    $events = Event::orderBy('date', 'asc')->where('date', '>=', now())->get();
+                    $firm_id = $firm_plan->firm->id;
+
+                    $events_for_which_post_is_created_already = Post::whereHas('firm_plan', function($q) use ($firm_id)
+                            {
+                                $q->where('firm_id', $firm_id);
+                            })->where('firm_id', $firm_id)
+                              ->whereNotNull('event_id')->select('event_id');
+
+
+                    $events_in_future = Event::orderBy('date', 'asc')->where('date', '>=', now())
+                                  ->whereNotIn('id', $events_for_which_post_is_created_already->get()->toArray() )
+                                  ->get();
+
+                    // return $events_in_future;
+
                     // create posts for each event
-                    foreach ($events as $event) {
+                    foreach ($events_in_future as $event) {
 
 
                         // we should not create duplicate post for 1 event
                         // so-> find if post is already created or not for this event and firm combination
                         // nested query in laravel
-                        $firm_id = $firm_plan->firm->id;
                         $post = Post::whereHas('firm_plan', function($q) use ($firm_id)
                                 {
                                     $q->where('firm_id', $firm_id);
@@ -77,7 +106,11 @@ class OrderController extends Controller
                             $post->save();
                             $firm_plan->date_scheduled_upto = $post->schedule_on;
                         }
+
+                        // die();
                     }
+
+                    $firm_plan->date_post_created_upto = date('Y-m-d H:i:s');
                 }
                 else
                 if( !in_array ( $firm_plan->plan_id, [1,3] ) )
@@ -99,9 +132,9 @@ class OrderController extends Controller
                             $next_day = $firm_plan->date_scheduled_upto;
                             $next_day->addDays($days_interval);
                         }
-
-                        // create post if $next_day < $firm_plan->date_expiry
-                        while($next_day <= $firm_plan->date_expiry)
+                        // dd($next_day);
+                        // create post if $next_day <= $firm_plan->date_expiry
+                        while($next_day <= $date_schedule_upto)
                         {
                             $post = new Post;
                             $post->schedule_on = $next_day;
@@ -112,6 +145,9 @@ class OrderController extends Controller
                             $next_day->addDays($days_interval);
                         }
                     }// if
+
+                    $firm_plan->date_post_created_upto = $date_schedule_upto;
+
                 }
                 $firm_plan->save();
             }
@@ -186,6 +222,7 @@ class OrderController extends Controller
             $order->amount = $total;
             $order->is_trial = $is_trial;
             $order->status = 0;
+            $order->duration_selected = $request->duration_selected;
 
             $order->save();
 
@@ -231,6 +268,7 @@ class OrderController extends Controller
       PaymentController::verify_signature($request);
       $order = Order::where('payments_meta->razorpay_order_id', $request->razorpay_order_id)
                 ->first();
+      // $order = Order::find(1);
       $firm = $order->firm;
       $is_trial = $order->is_trial;
       foreach ($order->plans as $order_plan) {
@@ -252,19 +290,21 @@ class OrderController extends Controller
           // when to start plan
           // check current plan expiry if any to start the plan
           $fp_current_date_expiry = FirmPlan::where('firm_id', $firm->id)->where('plan_id', $plan->id)->max('date_expiry');
-          if( $fp_current_date_expiry )
+          // expiry shoul be greater than today
+          $is_expiry_greater_than_today = !!$fp_current_date_expiry && $fp_current_date_expiry > date('Y-m-d 00:00:00');
+          if( $is_expiry_greater_than_today )
             $firm_plan->date_start_from = $fp_current_date_expiry;
           else
             $firm_plan->date_start_from = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 1 days"));
 
-          $expiry_string = $is_trial ? " + $trial_days days" : " + $request->duration_selected month";
-          $firm_plan->date_expiry = date('Y-m-d 00:00:00', strtotime( $firm_plan->date_start_from. $expiry_string ));
+          $expiry_string = $is_trial ? " + $trial_days days" : " + $order->duration_selected month";
+          $date_expiry = date('Y-m-d 00:00:00', strtotime( $firm_plan->date_start_from. $expiry_string ));
 
+          $firm_plan->date_expiry = $date_expiry;
           $firm_plan->save();
 
           $order->date_start_from = $firm_plan->date_start_from;
           $order->date_expiry = $firm_plan->date_expiry;
-          $order->duration_selected = $request->duration_selected;
       }
       $order->status = 1;
       $order->save();

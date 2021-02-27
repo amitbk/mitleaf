@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use Illuminate\Database\Query\Expression;
+
 class CreatePostsTable extends Migration
 {
     /**
@@ -41,6 +43,8 @@ class CreatePostsTable extends Migration
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
             $table->integer('error_count')->default(0);
             $table->text('error')->nullable()->default(null);
+
+            $table->json('post_link')->default(new Expression('(JSON_ARRAY())'));
 
 
             $table->timestamps();

@@ -19,6 +19,7 @@ class CreateTemplatesTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->boolean('is_verified')->default(0);
             $table->string('name')->nullable();
             $table->text('desc')->nullable();
 
