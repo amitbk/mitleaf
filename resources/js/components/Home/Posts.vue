@@ -2,6 +2,9 @@
   <div class="posts__wrapper">
 
     <div class="row d-flex border-bottom">
+      <div class="col-sm-7">
+        <h3><i class="fas fa-images"></i> Scheduled posts</h3>
+      </div>
       <div class="col-sm-3">
         <div class="form-group">
           <select v-model="firm_id" @change="getPostsAndAttachToDate" class="form-control" id="firms">

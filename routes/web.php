@@ -37,6 +37,7 @@ Route::get('/start', 'TrialController@start')->name('start');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/posts', 'PostController@index')->name('posts');
 Route::get('/profile', 'UserController@profile')->name('profile');
+Route::get('/refer', 'UserController@refer')->name('refer');
 Route::resource('/templates', 'TemplateController');
 
 Route::get('firms/{firm_id}/add_fb_page', 'FirmController@add_fb_page')->name('firms.add_fb_page');

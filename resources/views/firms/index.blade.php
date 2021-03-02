@@ -1,14 +1,16 @@
 @extends('layouts.admin2')
 
 @section('content')
-<div class="container py-4">
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h2>{{ $pageTitle ?? 'Firms' }}
-                <a href="{{ route('firms.create')}}" class="btn btn-success btn-sm">Add New</a>
-            </h2>
-            @include('helpers._flash')
+<div class="container-fluid py-4">
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center d-flex border-bottom mb-3">
+            <h3><i class="fas fa-briefcase"></i> {{ $pageTitle ?? 'Firms' }}           </h3>
+            <div class="ml-auto">
+              <a href="{{ route('firms.create')}}" class="btn btn-success btn-sm">Add New Business</a>
+            </div>
         </div>
+        @include('helpers._flash')
     </div>
     <div class="row justify-content-center">
         @foreach($firms as $firm)

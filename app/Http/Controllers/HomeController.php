@@ -24,13 +24,6 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        // $this->middleware(function ($request, $next) use ($fb) {
-        //     $fb->setDefaultAccessToken(Auth::user()->facebook_token());
-        //     $this->api = $fb;
-        //     return $next($request);
-        // });
-
-        // dd($this);
     }
 
     /**
@@ -40,9 +33,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $plans = Plan::where('is_active',1)->where('is_post_plan',1)->get();
         $firm_types = FirmType::where('is_active',1)->get();
-        return view('home', compact('plans') )->with('firm_types', $firm_types);
+        return view('home', compact('plans') )->with('firm_types', $firm_types)->with('user', $user);
     }
 
     public function sessions()

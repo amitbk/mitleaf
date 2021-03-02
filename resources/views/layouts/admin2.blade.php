@@ -15,7 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;800&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;800&display=swap" rel="stylesheet"> -->
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -40,7 +40,7 @@
             <div class="sidebar-header">
                 <span class="f-30 font-weight-bold">MitLeaf</span>
                 <span class="float-right sidebar-toggle-btn">
-                  <button type="button" id="sidebarCollapse" class="btn btn-info" @click="toggleSidebar">
+                  <button type="button" id="sidebarCollapse" class="btn bg-theme text-white" @click="toggleSidebar">
                       <i class="fas fa-chevron-left"></i>
                   </button>
                 </span>
@@ -63,7 +63,7 @@
                     Posts</a>
                 </li>
                 <li>
-                    <a href="{{url('myfirms')}}"><i class="fas fa-ice-cream"></i>
+                    <a href="{{url('myfirms')}}"> <i class="fas fa-briefcase"></i>
                       My Businesses</a>
                 </li>
                 <li>
@@ -78,19 +78,19 @@
                             <a href="{{route('profile')}}"> <i class="far fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="{{route('myplans')}}"><i class="fas fa-dollar-sign"></i> Active Plans</a>
+                            <a href="{{route('myplans')}}"><i class="fas fa-rupee-sign"></i> Active Plans</a>
                         </li>
                         <li>
                             <a href="#"><i class="fas fa-donate"></i> Wallet</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#"><i class="fas fa-cog"></i> Settings</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </li>
                 @endguest
                 <li>
-                    <a href="#"><i class="fas fa-piggy-bank"></i> Refer & Earn</a>
+                    <a href="{{route('refer')}}"><i class="fas fa-piggy-bank"></i> Refer & Earn</a>
                 </li>
             </ul>
 
@@ -109,7 +109,7 @@
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom sticky-top">
 
-              <button type="button" id="sidebarCollapse" class="btn btn-info" @click="toggleSidebar">
+              <button type="button" id="sidebarCollapse" class="btn bg-theme text-white" @click="toggleSidebar">
                   <i class="fas fa-align-left"></i>
                   <span>Menus</span>
               </button>

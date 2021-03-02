@@ -35,6 +35,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function refer(Request $request)
+    {
+      $user = Auth::user();
+      return view('refer.index', compact('user'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function designers()
     {
       $users = User::latest()->has('templates', '>=', 1)->paginate(10);
