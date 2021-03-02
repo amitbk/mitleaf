@@ -3,6 +3,20 @@
 */
 
 /* @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"; */
+
+/*
+ADMIN Colors:
+
+800 / #007D96
+700 / #0099B8
+600 / #0BB2D4
+500 / #28C0DE
+400 / #54CBE3
+300 / #77D9ED
+200 / #9DE6F5
+100 / #C2F5FF
+*/
+
 body {
     font-family: 'Mukta', sans-serif;
     background: #fafafa;
@@ -60,7 +74,7 @@ a:focus {
     top: 0;
     left: 0;
     height: 100vh;
-    background: #0f5458;
+    background: #007D96;
     color: #fff;
     transition: all 0.3s;
     z-index: 1030;
@@ -72,7 +86,7 @@ a:focus {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #168566;
+    background: #0099B8;
 }
 
 #sidebar ul.components {
@@ -83,7 +97,7 @@ a:focus {
 #sidebar ul p {
     color: #fff;
     padding: 10px;
-    background: #40a286;
+    background: #236e84;
 }
 
 #sidebar ul li a {
@@ -94,13 +108,13 @@ a:focus {
 
 #sidebar ul li a:hover, #sidebar ul li a.active {
   color: #8be1c9;
-  background: #0d393c;
+  background: #077085;
 }
 
 #sidebar ul li.active>a,
 #sidebar a[aria-expanded="true"] {
     color: #fff;
-    background: #6d7fcc;
+    background: #077085;
 }
 
 #sidebar a[data-toggle="collapse"] {
@@ -118,7 +132,7 @@ a:focus {
 #sidebar ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #0d8a91;
+    background: #007d96;
 }
 
 #sidebar ul.CTAs {

@@ -55,37 +55,42 @@
                 <p>Welcome {{Auth()->user()->name}}</p>
 
                 <li>
-                  <a href="{{url('dashboard')}}">Dashboard</a>
+                  <a href="{{url('dashboard')}}"><i class="fas fa-tachometer-alt"></i>
+                    Dashboard</a>
                 </li>
                 <li>
-                  <a href="{{url('posts')}}">Posts</a>
+                  <a href="{{url('posts')}}"><i class="fas fa-calendar-alt"></i>
+                    Posts</a>
                 </li>
                 <li>
-                    <a href="{{url('myfirms')}}">My Businesses</a>
+                    <a href="{{url('myfirms')}}"><i class="fas fa-ice-cream"></i>
+                      My Businesses</a>
                 </li>
                 <li>
-                    <a href="{{url('social_networks')}}">Social Media</a>
+                    <a href="{{url('social_networks')}}"> <i class="fab fa-facebook-square"></i>
+                      Social Media</a>
                 </li>
                 <li>
-                    <a href="#sub_menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">My Account</a>
+                    <a href="#sub_menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="far fa-user"></i>
+                      My Account</a>
                     <ul class="collapse list-unstyled" id="sub_menus">
                         <li>
-                            <a href="{{route('profile')}}">Profile</a>
+                            <a href="{{route('profile')}}"> <i class="far fa-user"></i> Profile</a>
                         </li>
                         <li>
-                            <a href="{{route('myplans')}}">Active Plans</a>
+                            <a href="{{route('myplans')}}"><i class="fas fa-dollar-sign"></i> Active Plans</a>
                         </li>
                         <li>
-                            <a href="#">Wallet</a>
+                            <a href="#"><i class="fas fa-donate"></i> Wallet</a>
                         </li>
                         <li>
-                            <a href="#">Settings</a>
+                            <a href="#"><i class="fas fa-cog"></i> Settings</a>
                         </li>
                     </ul>
                 </li>
                 @endguest
                 <li>
-                    <a href="#">Refer & Earn</a>
+                    <a href="#"><i class="fas fa-piggy-bank"></i> Refer & Earn</a>
                 </li>
             </ul>
 
