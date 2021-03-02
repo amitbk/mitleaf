@@ -32,7 +32,7 @@ class TemplateManager
     {
         $firm_plan = $post->firm_plan;
 
-        $query = Template::latest()->where('plan_id', $firm_plan->plan_id);
+        $query = Template::where('plan_id', $firm_plan->plan_id);
         $query = TemplateManager::filter_query_if_plan_for_events(clone $query, $post, $firm_plan);
         $query = TemplateManager::filter_query_if_plan_for_business(clone $query, $firm_plan);
 
@@ -41,7 +41,9 @@ class TemplateManager
         $query = TemplateManager::apply_settings_on_query(clone $query, $firm_plan);
 
         // template must not be used earlier
-        $query->whereNotIn('templates.id', Post::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray() );
+        $used_templated = Post::where('firm_plan_id', $firm_plan->id)->whereNotNull('template_id')->pluck('template_id')->toArray();
+        if(!!$used_templated)
+          $query->whereNotIn('templates.id', $used_templated );
 
         // if $firm_plan needs only strip, fetch templates which support strip only
         // if count = 0, then templates who not support strip will also be returned
@@ -56,10 +58,11 @@ class TemplateManager
 
         // skip templates, that are tested or checked
         $offset = TemplateManager::apply_offset(clone $query, $post);
-        $template = $query->offset($offset)->first();
+        $template = $query->offset($offset)->inRandomOrder()->first();
+        // dd($template);
 
 
-        $template = $query->first();
+        // $template = $query->first();
         return $template;
     }
     public static function apply_filter_for_strips($query, $firm_plan)
@@ -94,7 +97,7 @@ class TemplateManager
     {
         if($firm_plan->plan_id == 4) { // firm type
             //find templates of $firm_type_id
-            $firm_type_id = $firm_plan->firm_type_id;
+            $firm_type_id = $firm_plan->firm->firm_type_id;
             $query = $query->whereHas('firm_types', function($q) use ($firm_type_id)
                                     {
                                         $q->where('firm_types.id', $firm_type_id);
