@@ -1,6 +1,6 @@
 <template>
   <div class="post__wrapper">
-    <div class="card mb-3">
+    <div class="card mb-3 shadow">
       <div class="card-body p-1">
           <div class="row">
             <div class="col-12 col-sm-3 mb-2 mb-sm-0 text-center">
@@ -41,7 +41,7 @@
           <div class="col-12 col-sm-6 text-right">
               <button type="button" class="btn btn-sm btn-outline-info" @click="onRecreatePostClick">Recreate</button>
               <button type="button" class="btn btn-sm btn-outline-danger" @click="$emit('delete-post', {id: localPost.id, dateIndex: dateIndex, index: index })">Delete</button>
-              <button type="button" class="btn btn-sm btn-outline-primary">Edit</button>
+              <!-- <button type="button" class="btn btn-sm btn-outline-primary">Edit</button> -->
               <button v-if="!!localPost.image" type="button" class="btn btn-sm btn-primary">Share Now</button>
           </div>
         </div>

@@ -51,6 +51,8 @@ class HomeController extends Controller
     }
     public function test()
     {
+
+      return \App\Post::where('firm_plan_id', 1)->whereNotNull('template_id')->pluck('template_id')->toArray();
       // $img = \App\Image::find(1);
       // return $img->create_thumbnail($img->url);
       $aa = app(GraphController::class, [Facebook::class] );

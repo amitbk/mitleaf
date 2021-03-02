@@ -7,7 +7,7 @@
 
           <div class="row">
             <div class="col-sm-12">
-              <posts/>
+              <posts :firms="{{ json_encode( $user->firms ) }}"/>
             </div>
           </div>
 

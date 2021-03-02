@@ -1,9 +1,23 @@
 <template>
   <div class="posts__wrapper">
 
-    <button type="button" class="btn btn-primary" @click="$bvModal.show('modalNewPost')">
-      New Post
-    </button>
+    <div class="row d-flex border-bottom">
+      <div class="col-sm-3">
+        <div class="form-group">
+          <select v-model="firm_id" @change="getPostsAndAttachToDate" class="form-control" id="firms">
+            <option :value="firm.id" v-for="(firm, index) in firms">{{firm.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ml-auto">
+        <button type="button" class="btn btn-primary" @click="$bvModal.show('modalNewPost')">
+          New Post
+        </button>
+      </div>
+
+    </div>
+
     <post-create @post-added="getPostsAndAttachToDate"/>
 
     <div v-for="(date, i) in dates">
@@ -37,6 +51,7 @@ import postServices from "../../services/posts"
 import timeData from "../../data/time"
 
 export default {
+  props: ['firms'],
   data () {
     return {
       firm_id: null,
@@ -64,6 +79,7 @@ export default {
     },
 
     getPostsAndAttachToDate() {
+      this.$root.post.firm_id = this.firm_id;
       let data = {firm_id: this.firm_id};
       postServices.getPosts(data).then(res => {
         this.posts = postServices.groupByDate(res.data);
@@ -88,6 +104,7 @@ export default {
 
   },
   mounted() {
+    this.firm_id = this.firms[0].id;
     this.createDateObject();
     this.getPostsAndAttachToDate();
   }

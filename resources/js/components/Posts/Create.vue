@@ -1,7 +1,7 @@
 <template>
   <div class="new_post__wrapper">
     <!-- The Modal -->
-    <b-modal id="modalNewPost" hide-footer title="Create a new post" size="lg" @shown="getTemplates">
+    <b-modal id="modalNewPost" hide-footer title="Create a new post" size="lg" @shown="onLoad">
       <template :class="'p-2 px-3'" #modal-header="{ close }">
         <h4>Create a new post</h4>
         <b-button size="sm" variant="outline-danger" @click="close()">
@@ -41,9 +41,13 @@ export default {
   },
 
   methods: {
+    onLoad: function() {
+      this.step=1;
+      this.getTemplates();
+    },
     getTemplates: function (data = {filters: {}} ) {
       if(!!data.filters == false) data.filters = {};
-      data.filters.firm_id = this.$root.selectedFirmId;
+      data.filters.firm_id = this.$root.post.firm_id;
       templateServices.getTemplates(data).then(r => {
         this.$root.templates = r.data;
       })

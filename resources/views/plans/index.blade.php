@@ -2,7 +2,7 @@
 
 @section('content')
 <plans-list :plans="{{ $plans }}" :firm_types="{{$firm_types}}" :firms="{{$firms}}" :firm-id="{{ $firmId }}"
-            :future-plans="{{ json_encode($firm->future_plans() ?? null) }}" :year-discount="{{$yearDiscount}}" inline-template>
+            :future-plans="{{ json_encode(!!$firm ? $firm->future_plans() : null ) }}" :year-discount="{{$yearDiscount}}" inline-template>
 
     <div class="container py-4">
 

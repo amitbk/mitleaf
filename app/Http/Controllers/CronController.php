@@ -15,7 +15,7 @@ class CronController extends Controller
 {
     public function generate_post_images()
     {
-        $days = 5; // for how many days upfront, posts will be created
+        $days = 10; // for how many days upfront, posts will be created
         $date = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + $days days"));
 
         $posts = Post::whereNull('image_id')

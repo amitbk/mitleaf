@@ -16,6 +16,16 @@ use Carbon\Carbon;
 
 class PostController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -46,7 +56,7 @@ class PostController extends Controller
         else {
           $plans = Plan::where('is_active',1)->where('is_post_plan',1)->get();
           $firm_types = FirmType::where('is_active',1)->get();
-          return view('home', compact('plans') )->with('firm_types', $firm_types);
+          return view('home', compact('plans') )->with('firm_types', $firm_types)->with('user', $user);
         }
     }
 

@@ -83,7 +83,8 @@ export default {
   methods: {
     addLogo() {
       let self = this;
-      fabric.Image.fromURL(this.$root.mitleaf.firms[0].logo, function(oImg) {
+      let firm = this.$root.mitleaf.firms.find(el => el.id == this.$root.post.firm_id);
+      fabric.Image.fromURL(firm.logo, function(oImg) {
         self.canvas.add(oImg);
       });
     },
