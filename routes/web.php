@@ -20,14 +20,16 @@ Route::get('/test', 'HomeController@test')->name('test');
 
 Auth::routes();
 
-// admin
-Route::get('/fly', 'AdminController@dashboard')->name('admin');
-Route::resource('fly/users', 'UserController');
-Route::get('fly/users/{id}/revoke', 'UserController@revoke');
-Route::get('fly/templates', 'TemplateController@admin')->name('admin.templates');
-Route::get('fly/orders', 'OrderController@admin')->name('admin.orders');
-Route::get('fly/designers', 'UserController@designers')->name('admin.designers');
-Route::get('fly/needs', 'AdminController@needs')->name('admin.needs');
+Route::middleware('admin')->group(function () {
+  // admin
+  Route::get('/fly', 'AdminController@dashboard')->name('admin');
+  Route::resource('fly/users', 'UserController');
+  Route::get('fly/users/{id}/revoke', 'UserController@revoke');
+  Route::get('fly/templates', 'TemplateController@admin')->name('admin.templates');
+  Route::get('fly/orders', 'OrderController@admin')->name('admin.orders');
+  Route::get('fly/designers', 'UserController@designers')->name('admin.designers');
+  Route::get('fly/needs', 'AdminController@needs')->name('admin.needs');
+});
 
 
 // user start trial process
@@ -67,7 +69,7 @@ Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
 
 // CRON JOBS::
 // this will create empty posts by given order_id
-Route::get('/create_post_schedules', 'OrderController@create_post_schedules')->name('create_post_schedules');
+Route::get('/create_post_schedules', 'CronController@create_post_schedules')->name('create_post_schedules');
 Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
 Route::get('/post_to_social_media', 'CronController@post_to_social_media')->name('post_to_social_media');
 

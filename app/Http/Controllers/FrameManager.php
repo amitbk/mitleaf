@@ -34,6 +34,8 @@ class FrameManager
         $post->content = $template->desc;
         $post->firm_plan_id = $firm_plan->id;
         $post->firm_id = $firm_plan->firm_id;
+        $post->error = '';
+        $post->error_count = 0;
         $post->save();
 
         $postData = Post::where('id',$post->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();
@@ -42,14 +44,16 @@ class FrameManager
 
     public static function get_generated_post(Template $template, FirmPlan $firm_plan)
     {
+        $domain = url('/').'/';
         $firm = Firm::find($firm_plan->firm_id);
-        $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
 
+        $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
         // main template image
-        $template_img = Image::make($template->image->url);
+        $template_img = Image::make($domain.$template->image->url);
+
           foreach($images as $image)
           {
-            $firm_asset_img = Image::make($image['url']);
+            $firm_asset_img = Image::make($domain.$image['url']);
 
             $needed_width = ($template_img->width()*$image['ratio'])/100;
             $needed_height = ( $needed_width*$firm_asset_img->height() )/ $firm_asset_img->width();
@@ -65,13 +69,23 @@ class FrameManager
           }
 
           $path = "images/posts/".$firm->id;
-          if(!is_dir($path))
-              mkdir($path, 0755, true);
+
+          $public = public_path().'/';
+          if(!is_dir($public.$path))
+              mkdir($public.$path, 0755, true);
+          // if (!file_exists($public.$path))
+             // mkdir($public.$path, 666, true);
 
           // save image in desired format
           $mypost= $path."/1_".uniqid().".jpg";
           // $mypost="images/1_new.jpg";
-          $template_img->save($mypost);
+          try {
+            $template_img->save($public.$mypost);
+          } catch (\Exception $e) {
+
+            var_dump($e, '###111111'); die();
+          }
+
 
           // return $post;
           return $mypost;

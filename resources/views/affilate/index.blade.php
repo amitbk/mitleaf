@@ -14,8 +14,8 @@
                     <i class="fas fa-rupee-sign fa-5x"></i>
                     <h2 class="font-weight-bold my-2">Refer & Earn</h2>
 
-                    <div>Use this code to refer friends</div>
-                    <span class="fl_tag f-30">{{$user->id}}</span>
+                    <div>Share this link with your friends</div>
+                    <span class="fl_tag f-30">{{url('/')}}?ref={{$user->id}}</span>
                   </div>
                   <hr>
                   <div class="">

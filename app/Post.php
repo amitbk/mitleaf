@@ -8,6 +8,8 @@ class Post extends Model
 {
     // protected $dateFormat = 'd';
     protected $dates = ['schedule_on'];
+    protected $appends  = [ 'image_url' ];
+
     public function image()
     {
         return $this->belongsTo(Image::class);
@@ -24,7 +26,13 @@ class Post extends Model
     {
         return $this->belongsTo(Event::class);
     }
-
+    public function getImageUrlAttribute()
+    {
+      // return public_path();
+      // return $this->image ? url('/').'/'.\Storage::url($this->image->url) : null ;
+      //
+      // return $this->image ? asset($this->image->url) : null;
+    }
     // public function getScheduleOnDateAttribute()
     // {
     //     return date("Y-m-d", strtotime($this->schedule_on) );
