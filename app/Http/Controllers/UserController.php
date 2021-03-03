@@ -35,10 +35,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function refer(Request $request)
+    public function affilate(Request $request)
     {
       $user = Auth::user();
-      return view('refer.index', compact('user'));
+      return view('affilate.index', compact('user'));
     }
 
     /**
