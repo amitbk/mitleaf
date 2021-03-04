@@ -12,15 +12,14 @@
             <ul class="nav nav-tabs">
               @foreach($firms as $key => $firm)
                 <li class="nav-item">
-                  <a class="nav-link font-weight-bold <?php echo $key == 0 ? 'active' : ''; ?>" data-toggle="tab" href="#home{{$firm->id}}">{{$firm->name}}</a>
+                  <a class="nav-link font-weight-bold <?php echo ($key == 0 && !$firm_id) || $firm_id == $firm->id ? 'active' : ''; ?>" data-toggle="tab" href="#home{{$firm->id}}">{{$firm->name}}</a>
                 </li>
               @endforeach
             </ul>
-
             <!-- Tab panes -->
             <div class="tab-content mt-3">
               @foreach($firms as $key => $firm)
-                <div class="tab-pane container <?php echo $key == 0 ? 'active' : ''; ?>" id="home{{$firm->id}}">
+                <div class="tab-pane container <?php echo ($key == 0 && !$firm_id) || $firm_id == $firm->id ? 'active' : ''; ?>" id="home{{$firm->id}}">
                   @if($firm->future_plans()->count() == 0)
                       <div class="text-center p-5 justify-content-center">
                         <i class="fas fa-plane-slash fa-5x p-4"></i> <br>

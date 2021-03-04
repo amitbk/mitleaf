@@ -4,5 +4,5 @@
 </div>
 
 <li>
-    <a href="{{route('affilate')}}"><i class="fas fa-piggy-bank"></i>Affilate Program</a>
+    <a href="{{route('affilate')}}"><i class="fas fa-piggy-bank"></i> Affilate Program</a>
 </li>

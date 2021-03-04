@@ -13,11 +13,11 @@
 </li>
 <li>
   <a href="{{route('admin.designers')}}">
-    <i class="fas fa-bars"></i> Designers</a>
+    <i class="fas fa-paint-brush"></i> Designers</a>
 </li>
 <li>
   <a href="{{route('users.index')}}">
-    <i class="fas fa-bars"></i> Users</a>
+    <i class="fas fa-users"></i> Users</a>
 </li>
 <li>
   <a href="{{route('firms.index')}}">

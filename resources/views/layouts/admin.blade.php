@@ -46,7 +46,7 @@
                 </span>
             </div>
 
-            <ul class="list-unstyled components">
+            <ul class="list-unstyled components admin-menus">
                 @guest
 
 

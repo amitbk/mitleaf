@@ -23,7 +23,7 @@
                   <span v-if="post.firm_plan.firm_type_id" class="fl_tag">{{post.firm_plan.firm_type.name}}</span>
                   <span v-if="!!post.event" class="fl_tag">{{post.event.name}}</span>
 
-                  <button v-if="!!localPost.image" type="button" class="btn btn-sm btn-outline-primary">Download</button>
+                  <a v-if="!!localPost.image" :href="'/download_post/'+localPost.id" type="button" class="btn btn-sm btn-outline-primary">Download</a>
                 </div>
               </div>
 

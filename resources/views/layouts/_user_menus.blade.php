@@ -15,6 +15,21 @@
       <a href="{{url('social_networks')}}"> <i class="fab fa-facebook-square"></i>
         Social Media</a>
   </li>
+
+  <li>
+      <a href="{{route('profile')}}"> <i class="far fa-user"></i> Profile</a>
+  </li>
+  <li>
+      <a href="{{route('myplans')}}"><i class="fas fa-rupee-sign"></i> Active Plans</a>
+  </li>
+  <li>
+      <a href="{{route('orders.index')}}"><i class="fas fa-luggage-cart"></i> My Orders</a>
+  </li>
+  <li>
+      <a href="#"><i class="fas fa-donate"></i> Wallet</a>
+  </li>
+
+  @if(0)
   <li>
       <a href="#sub_menus" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="far fa-user"></i>
         My Account</a>
@@ -33,3 +48,4 @@
           </li> -->
       </ul>
   </li>
+  @endif

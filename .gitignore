@@ -7,6 +7,7 @@
 /public/images
 /public/ngrok.exe
 /storage/*.key
+/storage/
 /vendor
 .env
 .env.backup
