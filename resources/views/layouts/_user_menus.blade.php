@@ -8,12 +8,12 @@
       Posts</a>
   </li>
   <li>
-      <a href="{{url('myfirms')}}"> <i class="fas fa-briefcase"></i>
-        My Businesses</a>
-  </li>
-  <li>
       <a href="{{url('social_networks')}}"> <i class="fab fa-facebook-square"></i>
         Social Media</a>
+  </li>
+  <li>
+      <a href="{{url('myfirms')}}"> <i class="fas fa-briefcase"></i>
+        My Businesses</a>
   </li>
 
   <li>

@@ -194,7 +194,7 @@ class OrderController extends Controller
       $order->status = 1;
       $order->save();
 
-      // event(new NewOrder($order));
+      event(new NewOrder($order));
 
 
       return ['payment_success' => true, 'order' => $order];

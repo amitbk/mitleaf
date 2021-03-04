@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
                 // 1=Amit
                 // 2=Other admins
                 // 3=can upload templates
+            $table->integer('account_type_id')->nullable()->default(1);
 
             $table->boolean('is_trial_used')->default(false);
             $table->unsignedBigInteger('referrer_id')->nullable();
@@ -45,7 +46,14 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('users')->insert(['id'=>1,'name' => 'Amit Kadam', 'mobile' => '9552015542', 'role_id' => 1, 'email'=> 'amit.bk03@gmail.com', 'password' => bcrypt('9552015542')]);
+        // DB::table('users')->insert(['id'=>1, 'name' => config('app.name'), 'email'=> 'account1@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>1, 'name' => 'Sale Account', 'email'=> 'account1@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>2, 'name' => 'Purchase Account', 'email'=> 'account2@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>3, 'name' => 'Service', 'email'=> 'account3@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>4, 'name' => 'Commission Account', 'email'=> 'account4@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>5, 'name' => 'Bank Account', 'email'=> 'account5@flymit.com', 'account_type_id' => 2 ]);
+
+        DB::table('users')->insert(['id'=>11, 'name' => 'Amit Kadam', 'mobile' => '9552015542', 'role_id' => 1, 'email'=> 'amit.bk03@gmail.com', 'password' => bcrypt('9552015542')]);
 
     }
 
