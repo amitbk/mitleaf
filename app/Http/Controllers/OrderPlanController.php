@@ -18,7 +18,7 @@ class OrderPlanController extends Controller
      */
     public function index()
     {
-        //
+        return redirect('/home');
     }
 
     /**
@@ -39,7 +39,7 @@ class OrderPlanController extends Controller
      */
     public function store(Request $request)
     {
-        
+
     }
 
     /**

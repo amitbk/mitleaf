@@ -8,6 +8,12 @@ use Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('admin')->only( ['index', 'designers', 'revoke'] );
+        $this->middleware('auth');//->except('payment_callback');
+    }
+
     /**
      * Display a listing of the resource.
      *

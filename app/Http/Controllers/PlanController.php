@@ -39,7 +39,7 @@ class PlanController extends Controller
                     ->with('yearDiscount', config('amit.yearDiscount'))->with('firm', $firm );
     }
 
-    public function myplans()
+    public function myplans(Request $request)
     {
         $user = Auth::user();
         $firms = $user->firms;
@@ -48,7 +48,7 @@ class PlanController extends Controller
             flash("You don't have firm added yet, please add a firm.", 'danger');
             return redirect()->route('firms.index');
         }
-        return view('plans.myplans', compact('firms') );
+        return view('plans.myplans', compact('firms') )->with('firm_id', $request->firm);
     }
 
     /**

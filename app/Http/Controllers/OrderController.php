@@ -17,6 +17,7 @@ class OrderController extends Controller
       public function __construct()
       {
           $this->middleware('auth');//->except('payment_callback');
+          $this->middleware('admin')->only(['admin']);
       }
 
     /**

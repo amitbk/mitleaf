@@ -13,6 +13,7 @@ use Image;
 use Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Response;
 
 class PostController extends Controller
 {
@@ -198,5 +199,9 @@ class PostController extends Controller
       return $postData;
     }
 
-
+    public function download($post_id)
+    {
+      $post = Post::find($post_id);
+      return Response::download($post->image->url);
+    }
 }

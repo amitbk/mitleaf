@@ -23,12 +23,20 @@ Auth::routes();
 Route::middleware('admin')->group(function () {
   // admin
   Route::get('/fly', 'AdminController@dashboard')->name('admin');
+  Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
+  
   Route::resource('fly/users', 'UserController');
   Route::get('fly/users/{id}/revoke', 'UserController@revoke');
   Route::get('fly/templates', 'TemplateController@admin')->name('admin.templates');
   Route::get('fly/orders', 'OrderController@admin')->name('admin.orders');
   Route::get('fly/designers', 'UserController@designers')->name('admin.designers');
   Route::get('fly/needs', 'AdminController@needs')->name('admin.needs');
+
+  // CRON JOBS::
+  // this will create empty posts by given order_id
+  Route::get('/create_post_schedules', 'CronController@create_post_schedules')->name('create_post_schedules');
+  Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
+  Route::get('/post_to_social_media', 'CronController@post_to_social_media')->name('post_to_social_media');
 });
 
 
@@ -63,16 +71,8 @@ Route::get('/myplans', 'PlanController@myplans')->name('myplans');
 
 Route::resource('/tags', 'TagController');
 
-Route::get('/create_posts', 'CronController@create_posts')->name('create_posts');
 Route::post('/recreate_post', 'PostController@recreate')->name('post.recreate');
-Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
-
-// CRON JOBS::
-// this will create empty posts by given order_id
-Route::get('/create_post_schedules', 'CronController@create_post_schedules')->name('create_post_schedules');
-Route::get('/generate_post_images', 'CronController@generate_post_images')->name('generate_post_images');
-Route::get('/post_to_social_media', 'CronController@post_to_social_media')->name('post_to_social_media');
-
+Route::get('/download_post/{post_id}', 'PostController@download')->name('post.download');
 
 Route::get('/social_networks', 'SocialNetworkController@index')->name('social_networks');
 
