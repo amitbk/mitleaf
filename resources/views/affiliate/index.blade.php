@@ -12,7 +12,7 @@
                 <div class="card-body shadow">
                   <div class="text-center">
                     <i class="fas fa-comments-dollar fa-4x"></i>
-                    <h3 class="font-weight-bold my-2">Best 3 tier affiliate progarm - Start refering & Earn</h3>
+                    <h3 class="font-weight-bold my-2">Best 3 tier affiliate progarm - Refer & earn massive money</h3>
 
                     <div>Share this link to reffer a new user</div>
                         @include('affiliate._affiliate_link', ['user' => $user]);

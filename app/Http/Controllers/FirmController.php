@@ -76,6 +76,7 @@ class FirmController extends Controller
         // check with big data set
         $user = Auth::user();
 
+        //$user->firms->where('id', $firm->id);
         $firm_types = FirmType::where('is_active',1)->get();
         $posts = $firm->posts()->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
         return view('firms.show', compact('firm'))->withPosts($posts)->with('firm_types',$firm_types)->with('user',$user);
