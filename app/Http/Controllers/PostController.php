@@ -149,8 +149,9 @@ class PostController extends Controller
 
     public function recreate(Request $request)
     {
+        $user = Auth::user();
         $post = Post::find($request->id);
-        if( $user->cannot('update', $post) ) return abort(403, 'You can not edit this post.', );
+        if( $user->cannot('update', $post) ) return abort(403, 'You can not edit this post1.');
 
         $firm_plan = FirmPlan::find($request->firm_plan['id']);
         $postData = FrameManager::generate_and_store_post_image($post, $firm_plan);

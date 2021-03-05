@@ -70,7 +70,10 @@ class FirmPolicy
      */
     public function update(User $user, Firm $firm)
     {
-        //
+      // check if user ownes Business
+      $user_owns_firm = $user->firms->where('id', $firm->id)->count();
+      // or if user is admin
+      return $user->role_id == 1 || $user_owns_firm;
     }
 
     /**
@@ -82,7 +85,10 @@ class FirmPolicy
      */
     public function delete(User $user, Firm $firm)
     {
-        //
+      // check if user ownes Business
+      $user_owns_firm = $user->firms->where('id', $firm->id)->count();
+      // or if user is admin
+      return $user->role_id == 1 || $user_owns_firm;
     }
 
     /**
