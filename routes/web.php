@@ -24,7 +24,7 @@ Route::middleware('admin')->group(function () {
   // admin
   Route::get('/fly', 'AdminController@dashboard')->name('admin');
   Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
-  
+
   Route::resource('fly/users', 'UserController');
   Route::get('fly/users/{id}/revoke', 'UserController@revoke');
   Route::get('fly/templates', 'TemplateController@admin')->name('admin.templates');
@@ -47,8 +47,11 @@ Route::get('/start', 'TrialController@start')->name('start');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/posts', 'PostController@index')->name('posts');
 Route::get('/profile', 'UserController@profile')->name('profile');
-Route::get('/affilate', 'UserController@affilate')->name('affilate');
 Route::resource('/templates', 'TemplateController');
+
+// Affilate
+Route::get('/affiliates', 'AffiliateController@index')->name('affiliates');
+Route::get('/earnings', 'AffiliateController@earnings')->name('earnings');
 
 Route::get('firms/{firm_id}/add_fb_page', 'FirmController@add_fb_page')->name('firms.add_fb_page');
 Route::post('firms/update_fb_page', 'FirmController@update_fb_page')->name('firms.update_fb_page');

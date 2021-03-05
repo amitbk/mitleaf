@@ -19,7 +19,7 @@
     </div>
 
     <div class="row justify-content-center">
-        @foreach($firms as $firm)
+        @forelse($firms as $firm)
         <div class="col-md-4 justify-content-center mb-4">
 
             <div class="card shadow">
@@ -42,7 +42,9 @@
             </div>
 
         </div>
-        @endforeach
+        @empty
+          <h3>No businesses added.</h3>
+        @endforelse
     </div>
 </div>
 @endsection

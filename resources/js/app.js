@@ -53,6 +53,7 @@ Vue.component('image-preview', require('./components/widgets/ImagePreview.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import alertServices from "./services/alert";
 import planServices from "./services/plans";
 import postObj from "./obj/post";
 
@@ -88,6 +89,16 @@ const app = new Vue({
         // currentLink[0].closest(".nav-treeview").style.display="block";
         // currentLink[0].closest(".has-treeview").classList.add("active");
       },
+
+      copy(str) {
+        const el = document.createElement('textarea');
+        el.value = str;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        alertServices.msg('Link copied!');
+      }
     },
 
     mounted() {

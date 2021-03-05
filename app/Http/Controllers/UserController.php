@@ -41,17 +41,6 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function affilate(Request $request)
-    {
-      $user = Auth::user();
-      return view('affilate.index', compact('user'));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function designers()
     {
       $users = User::latest()->has('templates', '>=', 1)->paginate(10);

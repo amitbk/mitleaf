@@ -87,6 +87,19 @@ class User extends Authenticatable
         return $this->hasMany(User::class, 'referrer_id', 'id');
     }
 
+    public function bills()
+    {
+      return $this->hasMany(Bill::class, 'creditor_id')
+                  ->orWhere('debtor_id', '=', $this->id);
+    }
+
+    public function wallet()
+    {
+      $credited = Bill::where('debtor_id', $this->id)->sum('amount');
+      $debited = Bill::where('creditor_id', $this->id)->sum('amount');
+      return round($credited-$debited,2);
+    }
+
     public function facebook_token($value='')
     {
       // return $this->social_networks;

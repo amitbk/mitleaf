@@ -59,7 +59,7 @@
                 @endif
 
                 @include('layouts._user_menus')
-                @include('layouts._affilate_menus')
+                @include('layouts._affiliate_menus')
 
                 @endguest
 

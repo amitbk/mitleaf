@@ -41,6 +41,8 @@ class CreateBillsTable extends Migration
             $table->double('amount');
             $table->string('naration')->nullable();
 
+            $table->integer('level_id')->unsigned();
+
             $table->timestamps();
         });
     }
