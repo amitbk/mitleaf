@@ -19,6 +19,14 @@ export default {
       'success'
     )
   },
+  deleteError: function(label = 'Record') {
+      window.Vue.swal(
+      'Failed!',
+      label+' is not deleted.',
+      'error'
+    )
+  },
+
   deleteConfirm: function() {
     return new Promise(function(resolve, reject) {
 

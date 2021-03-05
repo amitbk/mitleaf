@@ -59,7 +59,7 @@ class PlanController extends Controller
     public function create()
     {
         // test
-        return redirect()->route('firms.index');
+        return redirect('/home');
     }
 
     /**
@@ -70,9 +70,7 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
+      
     }
 
     /**

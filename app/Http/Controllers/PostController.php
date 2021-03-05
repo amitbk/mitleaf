@@ -47,7 +47,7 @@ class PostController extends Controller
             $posts->whereIn('firm_id', $user->firms->where('id', $request->firm_id )->pluck('id') );
           }
           else {
-            // return post of all firms
+            // return post of all firms of user
             $posts->whereIn('firm_id', $user->firms->pluck('id') );
           }
 
@@ -68,7 +68,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        // $user = Auth::user();
+        // $post = new Post();
+        // if( $user->cannot('create', $post) ) return abort(404);
         //
+        // return "as";
     }
 
     /**
@@ -124,13 +128,16 @@ class PostController extends Controller
      */
     public function destroy(Request $request, Post $post)
     {
+        $user = Auth::user();
+        if( $user->cannot('delete', $post) ) return abort(403, 'You can not delete this post.', );
+
         $post->delete();
 
         if($request->wantsJson())
-          return "User deleted successfully.";
+          return "Post deleted successfully.";
         else
         {
-
+          return back();
         }
     }
 
@@ -143,8 +150,9 @@ class PostController extends Controller
     public function recreate(Request $request)
     {
         $post = Post::find($request->id);
-        $firm_plan = FirmPlan::find($request->firm_plan['id']);
+        if( $user->cannot('update', $post) ) return abort(403, 'You can not edit this post.', );
 
+        $firm_plan = FirmPlan::find($request->firm_plan['id']);
         $postData = FrameManager::generate_and_store_post_image($post, $firm_plan);
         return $postData;
     }
@@ -153,6 +161,8 @@ class PostController extends Controller
     {
 
       $post = Post::findOrNew($request->id);
+      if( $user->cannot('update', $post) ) return abort(403, 'You can not edit this post.', );
+
       $post->schedule_on = date('Y-m-d H:i:s', strtotime($request->schedule_on) );
 
       $template = Template::findOrNew($request->template_id);
@@ -172,6 +182,8 @@ class PostController extends Controller
     {
       $user = Auth::user();
       $post = Post::findOrNew($request->id);
+      if( $user->cannot('update', $post) ) return abort(403, 'You can not edit this post.', );
+
       $firm = Firm::findOrNew($request->firm_id);
 
       $firm_plan = FirmPlan::where('firm_id', $request->firm_id)
@@ -202,6 +214,7 @@ class PostController extends Controller
     public function download($post_id)
     {
       $post = Post::find($post_id);
+      if( $user->cannot('view', $post) ) return abort(403, 'You can not edit this post.', );
       return Response::download($post->image->url);
     }
 }

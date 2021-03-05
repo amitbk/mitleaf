@@ -31,7 +31,8 @@ export default {
               resolve(response);
             })
             .catch(e => {
-              console.error("Error: ", e);
+              // console.error("Error: ", e);
+              alert.deleteError('Post');
               reject(e.response.data.message);
             });
         }
@@ -47,7 +48,7 @@ export default {
     let groupByDate = [];
     posts.filter(el => {
       if(!!el.schedule_on == false) return false;
-      
+
       let post_date = el.schedule_on.split(' ')[0]
       if(!groupByDate[post_date])
         groupByDate[post_date] = [];

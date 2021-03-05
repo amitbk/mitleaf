@@ -48,7 +48,10 @@ class FirmController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
         $firm = new Firm();
+        if( $user->cannot('create', $firm) ) return abort(404);
+
         $firm_types = FirmType::where('is_active',1)->get();
         return view('firms.create', compact('firm','firm_types'));
     }
@@ -76,7 +79,8 @@ class FirmController extends Controller
         // check with big data set
         $user = Auth::user();
 
-        //$user->firms->where('id', $firm->id);
+        if( $user->cannot('view', $firm) ) return abort(404);
+
         $firm_types = FirmType::where('is_active',1)->get();
         $posts = $firm->posts()->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->orderBy('schedule_on', 'asc')->paginate(10);
         return view('firms.show', compact('firm'))->withPosts($posts)->with('firm_types',$firm_types)->with('user',$user);
@@ -90,6 +94,8 @@ class FirmController extends Controller
      */
     public function edit(Firm $firm)
     {
+        $user = Auth::user();
+        if( $user->cannot('edit', $firm) ) return abort(404);
         $firm_types = FirmType::where('is_active',1)->get();
         return view('firms.edit', compact('firm','firm_types'));
     }
@@ -106,6 +112,9 @@ class FirmController extends Controller
         $user = Auth::user();
         // $firm = $user->firms()->create($request->except('_token'));
         $editing = ($firm && !!$firm->id) ? true : false;
+
+        if( $editing && $user->cannot('update', $firm) ) return abort(404);
+
         if($firm == null)
             $firm = new Firm;
 
@@ -139,21 +148,28 @@ class FirmController extends Controller
      */
     public function destroy(Firm $firm)
     {
-        //
+        $user = Auth::user();
+        if( $user->cannot('delete', $firm) ) return abort(404);
+
     }
 
     public function edit_assets($firm_id, $asset_type_id)
     {
+        $firm = Firm::find($firm_id);
+        $user = Auth::user();
+        if( $user->cannot('update', $firm) ) return abort(404);
+
         if( !in_array($asset_type_id, [1,3]) )
           return redirect()->route("firms.show", $firm_id);
 
-        $firm = Firm::find($firm_id);
         $asset_type = AssetType::find($asset_type_id);
         return view('firms.edit_asset', compact('firm'))->with('asset_type_name', $asset_type->name_display)->with('asset_type_id', $asset_type_id);
     }
     public function update_details(Request $request, $id)
     {
         $firm = Firm::find($id);
+        $user = Auth::user();
+        if( $user->cannot('update', $firm) ) return abort(404);
         // save assets
 
         $asset = Asset::firstOrNew(
@@ -182,6 +198,8 @@ class FirmController extends Controller
       // page to show the option to select fb pages for firm
       $user = Auth::user();
       $firm = $user->firms->where('id', $firm_id)->first();
+      if( $user->cannot('update', $firm) ) return abort(404);
+
       return view('firms.add_fb_page', compact('firm') )->with('user', $user);
     }
 
@@ -189,6 +207,9 @@ class FirmController extends Controller
     {
       // TODO:
       $user = Auth::user();
+      $firm = Firm::find($request->firm_id);
+      if( $user->cannot('update', $firm) ) return abort(404);
+
       //check if user ownes social_network
       $sn = SocialNetwork::where('user_id', $user->id)
                    ->where('id', $request->social_network_id)->count();

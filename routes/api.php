@@ -25,10 +25,10 @@ Route::get('/amit', function (Request $request) {
 Route::get('sessions1', 'HomeController@sessions');
 
 
-Route::middleware('auth')->resource('posts', 'PostController');
-Route::middleware('auth')->get('templates', 'TemplateController@index');
-Route::middleware('auth')->get('plans', 'PlanController@index');
+Route::resource('posts', 'PostController');
+Route::get('templates', 'TemplateController@index');
+Route::get('plans', 'PlanController@index');
 
 // create post from ui for user
-Route::middleware('auth')->post('create_frame_by_template', 'PostController@create_frame_by_template');
-Route::middleware('auth')->post('create_frame_by_userimage', 'PostController@create_frame_by_userimage');
+Route::post('create_frame_by_template', 'PostController@create_frame_by_template');
+Route::post('create_frame_by_userimage', 'PostController@create_frame_by_userimage');

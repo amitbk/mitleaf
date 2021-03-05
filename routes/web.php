@@ -45,7 +45,7 @@ Route::get('/start', 'TrialController@start')->name('start');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/posts', 'PostController@index')->name('posts');
+Route::resource('posts', 'PostController');
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::resource('/templates', 'TemplateController');
 
