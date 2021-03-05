@@ -153,6 +153,27 @@ class FirmController extends Controller
 
     }
 
+    public function generateTextLogoForFirmIfNoLogo($firm)
+    {
+      $asset = Asset::where(
+              ['firm_id' => $firm->id, 'asset_type_id' => 1]
+          )->count();
+      if($asset) return true;
+
+      $user = Auth::user();
+      $img = new Img;
+      $img->createAndSaveLogo($firm);
+      $img->save();
+
+      $asset = new Asset;
+      $asset->firm_id = $firm->id;
+      $asset->asset_type_id = 1;
+
+      $asset->image_id = $img->id;
+      $asset->save();
+
+      return $img;
+    }
     public function edit_assets($firm_id, $asset_type_id)
     {
         $firm = Firm::find($firm_id);
@@ -180,7 +201,7 @@ class FirmController extends Controller
 
         // upload image
         $image = new Img;
-        $image->create_from_base64($request->image, "images/assets/", $asset->image_id);
+        $image->create_from_base64($request->image, "images/assets/".$id."/", $asset->image_id);
 
         $asset->image_id = $image->id;
         $asset->save();
@@ -199,6 +220,9 @@ class FirmController extends Controller
       $user = Auth::user();
       $firm = $user->firms->where('id', $firm_id)->first();
       if( $user->cannot('update', $firm) ) return abort(404);
+
+      // check if firm has lo
+      $image = $this->generateTextLogoForFirmIfNoLogo($firm);
 
       return view('firms.add_fb_page', compact('firm') )->with('user', $user);
     }

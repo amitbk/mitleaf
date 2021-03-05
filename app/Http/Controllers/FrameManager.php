@@ -27,6 +27,7 @@ class FrameManager
 
         $post->template_id = $template->id;
         $post->recreated++;
+        $old_image = $post->image;
         $post->image_id = $img->id;
         !!$template->desc ? $post->content = $template->desc:true;
 
@@ -38,6 +39,10 @@ class FrameManager
         $post->error_count = 0;
         $post->save();
 
+        // delete old post image
+        if($old_image)
+          $old_image->delete();
+
         $postData = Post::where('id',$post->id)->with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')->first();
         return $postData;
     }
@@ -45,15 +50,16 @@ class FrameManager
     public static function get_generated_post(Template $template, FirmPlan $firm_plan)
     {
         $domain = url('/').'/';
+        $public = public_path('/');
         $firm = Firm::find($firm_plan->firm_id);
 
         $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
         // main template image
-        $template_img = Image::make($domain.$template->image->url);
-
+        $template_img = Image::make($public.$template->image->url);
+        // dd($template_img);
           foreach($images as $image)
           {
-            $firm_asset_img = Image::make($domain.$image['url']);
+            $firm_asset_img = Image::make($public.$image['url']);
 
             $needed_width = ($template_img->width()*$image['ratio'])/100;
             $needed_height = ( $needed_width*$firm_asset_img->height() )/ $firm_asset_img->width();
@@ -70,7 +76,6 @@ class FrameManager
 
           $path = "images/posts/".$firm->id;
 
-          $public = public_path().'/';
           if(!is_dir($public.$path))
               mkdir($public.$path, 0755, true);
           // if (!file_exists($public.$path))

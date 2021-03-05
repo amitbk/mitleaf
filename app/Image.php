@@ -35,17 +35,68 @@ class Image extends Model
         $this->save();
 
         // old image will be deleted
-        if($old_image_id)
-        {
-            $old_image = Image::find($old_image_id);
-            if($old_image)
-            {
-                if(file_exists($old_image->url))
-                    unlink($old_image->url);
-                $old_image->delete();
-            }
-        }
+        $old_image = Image::find($old_image_id);
+        if($old_image)
+          $old_image->delete();
 
         return true;
+    }
+
+    /**
+     * Delete image file and database entry
+     *
+     * @return Boolean
+     */
+    public function delete()
+    {
+        // delete file first
+        if(file_exists($this->url))
+            unlink($this->url);
+        return parent::delete();
+    }
+
+    public function createAndSaveLogo($firm)
+    {
+      $image = static::generateTextLogo($firm->name);
+      // $image->save("images/assets/");
+      $public = public_path('/');
+      $path = "images/assets/".$firm->id;
+      if(!is_dir($public.$path))
+          mkdir($public.$path, 0755, true);
+      $fullpath= $path."/".Auth::id()."_".uniqid().".jpg";
+      $image->save($public.$fullpath);
+      $this->url = $fullpath;
+      return $this->url;
+    }
+    public static function generateTextLogo($text = "FLYMIT")
+    {
+      header('Content-type: text/plain; charset=utf-8');
+      $width       = 300;
+      $height      = 100;
+      $center_x    = $width / 2;
+      $center_y    = $height / 2;
+      $max_len     = 36;
+      $font_size   = 30;
+      $font_height = 20;
+
+      // $text = "FLYMIT Infotech /Sangamner";
+      $lines = explode("/", wordwrap($text, $max_len));
+      $y     = $center_y - ((count($lines) - 1) * $font_height);
+      $img   = \Image::canvas($width, $height, '#fff');
+
+      foreach ($lines as $line)
+      {
+          $img->text(trim($line), $center_x, $y, function($font) use ($font_size){
+              $font->file(public_path('fonts/poppins.ttf'));
+              $font->size($font_size);
+              $font->color('#000');
+              $font->align('center');
+              $font->valign('center');
+          });
+
+          $y += $font_height * 2;
+      }
+
+      return $img;
     }
 }

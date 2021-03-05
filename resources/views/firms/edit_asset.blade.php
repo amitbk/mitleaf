@@ -45,7 +45,13 @@
                             </div>
                             <hr>
                             <button type="submit" class="btn btn-success">Upload</button>
-                            <a href="{{route('firms.edit_assets', [$firm->id, 3] )}}" class="btn btn-secondary">I don't have the logo.</a>
+                            <a
+                              @if($asset_type_id == 3)
+                                href="{{route('firms.add_fb_page', $firm->id )}}"
+                              @else
+                                href="{{route('firms.edit_assets', [$firm->id, 3] )}}"
+                              @endif
+                              class="btn btn-secondary">I don't have the {{$asset_type_name}}.</a>
                        </form>
                     </div>
                 </div>

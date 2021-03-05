@@ -42,7 +42,7 @@ class NewOrderCommissionAllocation
 
         $bill = new \App\Bill;
         $bill->user_id = $user->id;
-        $bill->amount = round($commissions[$key], 2)
+        $bill->amount = round($commissions[$key], 2);
         $bill->order_id = $event->order->id;
         $bill->creditor_id = 4;
         $bill->debtor_id = $user->id;
