@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Query\Expression;
+// use Illuminate\Database\Query\Expression;
 
 class CreateOrdersTable extends Migration
 {
@@ -19,11 +19,11 @@ class CreateOrdersTable extends Migration
             $table->bigIncrements('id');
 
             // by user
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // for firm
-            $table->integer('firm_id')->unsigned();
+            $table->unsignedBigInteger('firm_id')->unsigned();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
             $table->double('amount');
             $table->boolean('is_trial')->default(false);
@@ -35,7 +35,9 @@ class CreateOrdersTable extends Migration
 
             $table->integer('status')->default(0); // payment success=1, failed=0
 
-            $table->json('payments_meta')->default(new Expression('(JSON_ARRAY())'));
+            // $table->json('payments_meta')->default(new Expression('(JSON_ARRAY())'));
+
+            $table->string('razorpay_order_id')->nullable();
 
             $table->timestamps();
         });

@@ -15,9 +15,9 @@ class CreateTagTemplatePivotTable extends Migration
         Schema::create('tag_template', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('tag_id')->unsigned()->index();
+            $table->unsignedBigInteger('tag_id')->unsigned()->index();
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-            $table->integer('template_id')->unsigned()->index();
+            $table->unsignedBigInteger('template_id')->unsigned()->index();
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
             // $table->primary(['tag_id', 'template_id']);
             $table->string('value')->nullable();

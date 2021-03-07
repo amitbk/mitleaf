@@ -17,11 +17,11 @@ class CreateOrderPlansTable extends Migration
             $table->bigIncrements('id');
 
             // order
-            $table->integer('order_id')->unsigned();
+            $table->unsignedBigInteger('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
             // plan
-            $table->integer('plan_id')->unsigned();
+            $table->unsignedBigInteger('plan_id')->unsigned();
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
             // qty in months

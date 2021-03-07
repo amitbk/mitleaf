@@ -27,10 +27,10 @@ class CreateFirmsTable extends Migration
             $table->string('state')->nullable();
             $table->string('pin')->nullable();
             $table->string('gstin')->nullable();
-            $table->integer('logo_id')->nullable();
+            $table->unsignedBigInteger('logo_id')->nullable();
             $table->foreign('logo_id')->references('id')->on('images')->onDelete('set null');
 
-            $table->integer('firm_type_id')->nullable();
+            $table->unsignedBigInteger('firm_type_id')->nullable();
             $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
 
             $table->timestamps();

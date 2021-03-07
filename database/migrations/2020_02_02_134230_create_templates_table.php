@@ -16,20 +16,20 @@ class CreateTemplatesTable extends Migration
         Schema::create('templates', function (Blueprint $table) {
             $table->bigIncrements('id');
             // template created by
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->boolean('is_verified')->default(0);
             $table->string('name')->nullable();
             $table->text('desc')->nullable();
 
-            $table->integer('image_id')->nullable();
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('set null');
 
-            $table->integer('plan_id');
+            $table->unsignedBigInteger('plan_id')->nullable();
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('set null');
 
-            $table->integer('event_id')->nullable();
+            $table->unsignedBigInteger('event_id')->nullable();
             $table->foreign('event_id')->references('id')->on('events')->onDelete('set null');
 
             $table->bigInteger('used_count')->default(0);

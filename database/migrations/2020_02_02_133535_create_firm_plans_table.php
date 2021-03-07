@@ -16,18 +16,18 @@ class CreateFirmPlansTable extends Migration
         Schema::create('firm_plans', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('firm_id')->unsigned()->index();
+            $table->unsignedBigInteger('firm_id')->unsigned()->index();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
 
-            $table->integer('plan_id')->unsigned()->index();
+            $table->unsignedBigInteger('plan_id')->unsigned()->index();
             $table->foreign('plan_id')->references('id')->on('plans')->onDelete('cascade');
 
-            $table->integer('order_plan_id')->unsigned()->index();
+            $table->unsignedBigInteger('order_plan_id')->unsigned()->index();
             $table->foreign('order_plan_id')->references('id')->on('order_plans')->onDelete('cascade');
 
             $table->integer('qty_per_month')->default(0);
 
-            $table->integer('firm_type_id')->nullable();
+            $table->unsignedBigInteger('firm_type_id')->nullable();
             $table->foreign('firm_type_id')->references('id')->on('firm_types')->onDelete('set null');
 
             $table->timestamp('date_post_created_upto')->nullable()->default(null);

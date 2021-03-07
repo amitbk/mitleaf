@@ -14,9 +14,9 @@ class CreateFirmUserPivotTable extends Migration
     {
         Schema::create('firm_user', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('firm_id')->unsigned()->index();
+            $table->unsignedBigInteger('firm_id')->unsigned()->index();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
-            $table->integer('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             // $table->primary(['firm_id', 'user_id']);
             $table->integer('role')->nullable()->default(1);

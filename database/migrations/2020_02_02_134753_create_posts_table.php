@@ -18,10 +18,10 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->integer('firm_id');
+            $table->unsignedBigInteger('firm_id');
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
 
-            $table->integer('firm_plan_id');
+            $table->unsignedBigInteger('firm_plan_id')->nullable();
             $table->foreign('firm_plan_id')->references('id')->on('firm_plans')->onDelete('set null');
 
             $table->timestamp('schedule_on')->nullable();
@@ -33,13 +33,13 @@ class CreatePostsTable extends Migration
             $table->text('title')->nullable()->default(null);
             $table->text('content')->nullable()->default(null);
 
-            $table->integer('event_id')->nullable()->default(null);
+            $table->unsignedBigInteger('event_id')->nullable()->default(null);
             $table->foreign('event_id')->references('id')->on('events')->onDelete('cascade');
 
-            $table->integer('image_id')->nullable()->default(null);
+            $table->unsignedBigInteger('image_id')->nullable()->default(null);
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
 
-            $table->integer('template_id')->nullable()->default(null);
+            $table->unsignedBigInteger('template_id')->nullable()->default(null);
             $table->foreign('template_id')->references('id')->on('templates')->onDelete('set null');
             $table->integer('error_count')->default(0);
             $table->text('error')->nullable()->default(null);

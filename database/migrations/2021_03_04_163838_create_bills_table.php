@@ -17,25 +17,25 @@ class CreateBillsTable extends Migration
             $table->bigIncrements('id');
 
             // user
-            $table->integer('transaction_type_id')->unsigned();
+            $table->unsignedBigInteger('transaction_type_id')->unsigned();
             $table->foreign('transaction_type_id')->references('id')->on('transaction_types')->onDelete('cascade');
 
             // user
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // firm
-            $table->integer('firm_id')->unsigned();
+            $table->unsignedBigInteger('firm_id')->unsigned();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
 
             // order
-            $table->integer('order_id')->unsigned();
+            $table->unsignedBigInteger('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
-            $table->integer('creditor_id')->unsigned();
+            $table->unsignedBigInteger('creditor_id')->unsigned();
             $table->foreign('creditor_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->integer('debtor_id')->unsigned();
+            $table->unsignedBigInteger('debtor_id')->unsigned();
             $table->foreign('debtor_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->double('amount');

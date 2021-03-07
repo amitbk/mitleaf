@@ -17,15 +17,15 @@ class CreateWalletsTable extends Migration
             $table->bigIncrements('id');
 
             // user
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             // firm
-            $table->integer('firm_id')->unsigned();
+            $table->unsignedBigInteger('firm_id')->unsigned();
             $table->foreign('firm_id')->references('id')->on('firms')->onDelete('cascade');
 
             // order
-            $table->integer('order_id')->unsigned();
+            $table->unsignedBigInteger('order_id')->unsigned();
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
             $table->double('amount');

@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('mobile')->nullable();
             $table->string('email')->unique();
-            $table->integer('avatar_id')->nullable();
+            $table->unsignedBigInteger('avatar_id')->nullable();
 
             $table->string('address')->nullable();
             $table->string('city')->nullable();
