@@ -49,7 +49,10 @@ class HomeController extends Controller
     public function test()
     {
 
-      
+
+      $post = \App\Post::find(1);
+
+      dd( json_decode($post->post_link)->id );
 
       $img = Image::make('images\assets\bg.png');
       // use callback to define details

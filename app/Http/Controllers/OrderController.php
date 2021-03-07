@@ -126,7 +126,8 @@ class OrderController extends Controller
 
             // pay online
             $razorpay_order = PaymentController::create_order(['receipt_id'=> $order->id, 'amount' => $order->amount]);
-            $order->payments_meta = ['razorpay_order_id' => $razorpay_order->id];
+            // $order->payments_meta = ['razorpay_order_id' => $razorpay_order->id];
+            $order->razorpay_order_id = $razorpay_order->id;
             $order->save();
             DB::commit();
 
@@ -151,9 +152,11 @@ class OrderController extends Controller
     public function payment_callback(Request $request)
     {
       PaymentController::verify_signature($request);
-      $order = Order::where('payments_meta->razorpay_order_id', $request->razorpay_order_id)
+      $order = Order::where('razorpay_order_id', $request->razorpay_order_id)
                 ->first();
       // $order = Order::find(1);
+      if(!$order) return abort(403, 'Unable to complete order.');
+
       $firm = $order->firm;
       $is_trial = $order->is_trial;
       foreach ($order->plans as $order_plan) {

@@ -26,6 +26,10 @@ class Post extends Model
     {
         return $this->belongsTo(Event::class);
     }
+    public function firm()
+    {
+      return $this->belongsTo(Firm::class);
+    }
     public function getImageUrlAttribute()
     {
       // return public_path();

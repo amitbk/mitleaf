@@ -25,7 +25,7 @@ class CronController extends Controller
 
             $days = 30; // for how many days upfront, posts should be scheduled
             $date_schedule_upto = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + $days days"));
-
+            $count=0;
             $firm_plans = FirmPlan::where(function ($q) use($date_schedule_upto) {
                                        $q->whereDate('date_post_created_upto', '<=', $date_schedule_upto)
                                          ->orWhereNull('date_post_created_upto');
@@ -78,6 +78,7 @@ class CronController extends Controller
                             $post->content = $event->desc;
                             $post->firm_id = $firm_plan->firm_id;
                             $post->save();
+                            $count++;
                             $firm_plan->date_scheduled_upto = $post->schedule_on;
                         }
 
@@ -115,6 +116,8 @@ class CronController extends Controller
                             $post->firm_plan_id = $firm_plan->id;
                             $post->firm_id = $firm_plan->firm_id;
                             $post->save();
+                            $count++;
+
                             $firm_plan->date_scheduled_upto = $next_day;
                             $next_day->addDays($days_interval);
                         }
@@ -126,7 +129,9 @@ class CronController extends Controller
                 $firm_plan->save();
             }
             DB::commit();
-            return "Done!";
+            $msg = "CRON1: ".$count." posts scheduled.";
+            slack($msg, '#mitleaf');
+            return $msg;
         } catch (\Exception $e) {
             DB::rollback();
             return $e;
@@ -172,8 +177,10 @@ class CronController extends Controller
               }
           }
           DB::commit();
-          return "<hr>Post images created = ".$count;
-          return "Done!";
+          $msg = "CRON2: $count Post images created.";
+          slack($msg, '#mitleaf');
+
+          return "Done! $msg";
         } catch (\Exception $e) {
           DB::rollback();
           return $e;
@@ -202,27 +209,32 @@ class CronController extends Controller
       if(count($posts_to_publish) == 0)
         return 'No posts to publish.';
 
-      // return $posts_to_publish;
       $gc = new GraphController;
       // For loop to publish posts
       $res = [];
+      $count = 0;
       foreach ($posts_to_publish as $key => $post) {
-        $social_network = $post->firm->social_networks->first();
-        $data = [
-          'message' => $post->content,
-          'url' => realpath($post->image->url)
-        ];
-        // dd($post);
-        $response = $gc->publish_to_page($social_network, $data);
-        // update post if published
-        // break;
-        $post->post_link = $response;
-        $post->save();
+        try {
+          $social_network = $post->firm->social_networks->first();
+          $data = [
+            'message' => $post->content,
+            'url' => realpath($post->image->url)
+          ];
+          $response = $gc->publish_to_page($social_network, $data);
+          // update post if published
+          $post->post_link = $response;
+          $post->is_posted_on_social_media = 1;
+          $post->save();
+          $count++;
+        } catch (\Exception $e) {
+          $msg = "CRON3-Error: ".$e->getMessage();
+          slack($msg, '#mitleaf');
+
+        }
         array_push( $res ,$post->post_link);
       }
-
-      // return 'as';
+      $msg = "CRON3: ".$count." posts posted to Facebook.";
+      slack($msg, '#mitleaf');
       return $res;
-
     }
 }

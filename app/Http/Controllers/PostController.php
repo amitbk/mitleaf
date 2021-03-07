@@ -39,7 +39,10 @@ class PostController extends Controller
         if($request->wantsJson())
         {
           $posts = Post::with('image')->with('event')->with('firm_plan')->with('firm_plan.plan')->with('firm_plan.firm')->with('firm_plan.firm_type')
-                        ->where('error_count', 0 );
+                        ->where(function ($q) {
+                             $q->where('error_count', 0 )
+                               ->orWhereRaw("error_count < 4 AND error LIKE ?", ["Template not found"]);
+                         });
 
           // Firm filter
           if( $request->has('firm_id') ) {

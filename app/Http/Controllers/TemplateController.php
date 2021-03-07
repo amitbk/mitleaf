@@ -171,7 +171,13 @@ class TemplateController extends Controller
      */
     public function destroy(Template $template)
     {
-
-        // $template->delete();
+        if($template->posts->count()) {
+          flash('Template can not be deleted.', 'danger');
+          return back();
+        }
+        $template->image->delete();
+        $template->delete();
+        flash('Template deleted successfully.');
+        return back();
     }
 }
