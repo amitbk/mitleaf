@@ -142,14 +142,21 @@ class CronController extends Controller
 
           $days = 10; // for how many days upfront, posts will be created
           $date = date('Y-m-d 23:59:59', strtotime( date('Y-m-d'). " + $days days"));
-
+          // return $hour1 = date('Y-m-d H:i:s', strtotime(' -2 hour'));
           $posts = Post::whereNull('image_id')
-                        ->where('error_count', '<=', 3)
+                        // ->where('error_count', '<=', 3)
+                        ->where(function ($q) {
+                             $ignore_post_with_error_in_last_hour = 2;
+                             $hours = date('Y-m-d H:i:s', strtotime(" -$ignore_post_with_error_in_last_hour hour"));
+                             $q->where('error_count', 0 )
+                               ->orWhereRaw("error_count < 4 AND updated_at < ?", [$hours]);
+                         })
                         ->whereDate('schedule_on', '<=', $date )
                         ->limit(30)->get();
 
           $count = 0;
           echo "Generating post images::<br>";
+          // return $posts;
 
           foreach ($posts as $post) {
               try {
@@ -179,6 +186,7 @@ class CronController extends Controller
     {
 
       $date = date('Y-m-d H:i:s');
+      $date = date('Y-m-d H:i:s', strtotime($date." +1 day") );
 
       $firms_having_social_media_posting_plan = FirmPlan::where('plan_id', 1)
                     ->whereDate('date_start_from', '<=', $date )
@@ -194,20 +202,27 @@ class CronController extends Controller
       if(count($posts_to_publish) == 0)
         return 'No posts to publish.';
 
+      // return $posts_to_publish;
       $gc = new GraphController;
       // For loop to publish posts
+      $res = [];
       foreach ($posts_to_publish as $key => $post) {
         $social_network = $post->firm->social_networks->first();
         $data = [
           'message' => $post->content,
-          'url' => $post->image->url
+          'url' => realpath($post->image->url)
         ];
-        $response = $gc->update_pages($social_network, $data);
+        // dd($post);
+        $response = $gc->publish_to_page($social_network, $data);
         // update post if published
+        // break;
+        $post->post_link = $response;
+        $post->save();
+        array_push( $res ,$post->post_link);
       }
 
-
-      return $posts_to_publish;
+      // return 'as';
+      return $res;
 
     }
 }

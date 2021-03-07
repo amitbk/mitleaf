@@ -131,6 +131,24 @@ class GraphController extends Controller
     // ini_set('max_execution_time', 300); //300 seconds = 5 minutes
     $user = Auth::user();
     try {
+        $img = 'https://kidshelpphone.ca/wp-content/uploads/dontletanyonedullyoursparkle.png';
+        // $img = $data['url'];
+        // $data = [
+        //           'message' => 'Hello',
+        //           'url' => $img
+        //           // 'source'    =>  $this->api->fileToUpload($img)
+        //         ];
+        // return $img;
+        $data = [
+          'message' => 'Hello 1110',
+          // 'url1' => $img,
+          // 'url' => $data['url'],
+          "source" => $this->api->fileToUpload($data['url']),
+          // 'source' => $this->api->fileToUpload($img),
+          // 'published' => false,
+        ];
+        // dd($data);
+
         $post = $this->api->post('/' . $page->social_profile_id . '/photos', $data,  $page->token );
         $post = $post->getGraphNode()->asArray();
         return $post;
