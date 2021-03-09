@@ -47,4 +47,9 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect'      => env('GOOGLE_URL'),
     ],
+
+    'slack' => [
+        'token'     => env('SLACK_TOKEN'),
+        'username'     => env('SLACK_USERNAME'),
+    ],
 ];
