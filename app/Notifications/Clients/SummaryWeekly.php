@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Clients;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -10,19 +10,19 @@ use Illuminate\Notifications\Notification;
 use App\Channels\SmsInit;
 use App\Channels\SmsChannel;
 
-class NewReferralAdded extends Notification implements ShouldQueue
+class SummaryWeekly extends Notification
 {
     use Queueable;
+    public $firm;
 
-    public $user;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($firm)
     {
-        $this->user = $user;
+      $this->firm = $firm;
     }
 
     /**
@@ -45,14 +45,21 @@ class NewReferralAdded extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-      return (new MailMessage)->from('amitkadam@gmail.com')
-                              ->markdown('emails.new_referral_added', ['self' => $notifiable, 'user' => $this->user]
-      );
+        return (new MailMessage)
+            ->markdown('emails.clients.summary_weekly',
+                      ['self' => $notifiable, 'firm' => $this->firm]
+                    );
+    }
 
-        // return (new MailMessage)
-        //             ->line('Congrats, One new user registered from your referral link.')
-        //             ->action('Check User', url('/'))
-        //             ->line('Thank you for using our application!');
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return App\Channels\SmsInit
+     */
+    public function toSms($notifiable)
+    {
+      return (new SmsInit())->withView('sms.clients.summary_weekly', ['self' => $notifiable, 'firm' => $this->firm]);
     }
 
     /**
@@ -66,16 +73,5 @@ class NewReferralAdded extends Notification implements ShouldQueue
         return [
             //
         ];
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return App\Channels\SmsInit
-     */
-    public function toSms($notifiable)
-    {
-      return (new SmsInit())->withView('sms.new_referral_added', ['self' => $notifiable, 'user' => $this->user]);
     }
 }

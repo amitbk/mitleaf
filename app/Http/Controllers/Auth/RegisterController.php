@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\User;
 use App\Firm;
 use App\Notifications\NewReferralAdded;
+use App\Notifications\Clients\NewRegistration;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -76,6 +77,7 @@ class RegisterController extends Controller
             'referrer_id' => $referrer ? $referrer->id : null,
         ]);
 
+        $user->notify( new NewRegistration() );
         if($referrer)
           $referrer->notify( new NewReferralAdded($user) );
         return $user;

@@ -9,6 +9,8 @@ use App\Asset;
 use App\AssetType;
 use App\SocialNetwork;
 
+use App\Notifications\Clients\NewFirmCreated;
+
 use App\Image as Img;
 use Illuminate\Http\Request;
 use App\Http\Requests\FirmRequest;
@@ -135,8 +137,10 @@ class FirmController extends Controller
 
         if($editing)
           return redirect()->route('firms.myfirms');
-        else
+        else {
+          $user->notify( new NewFirmCreated($firm) );
           return redirect()->route('firms.edit_assets', [$firm->id, 1]); // logo
+        }
 
     }
 

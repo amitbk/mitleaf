@@ -5,6 +5,7 @@ return [
     'logo_assets' => [1,2],
     'strip_assets' => [3,4,5],
     'plans' =>[
+                'social_media_sharing' => 1,
                 'quotes'=> '2',
                 'events'=> '3',
                 'business'=> '4',
