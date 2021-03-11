@@ -217,6 +217,7 @@ class PostController extends Controller
 
     public function download($post_id)
     {
+      $user = auth()->user();
       $post = Post::find($post_id);
       if( $user->cannot('view', $post) ) return abort(403, 'You can not edit this post.', );
       return Response::download($post->image->url);
