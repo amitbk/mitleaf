@@ -32,6 +32,8 @@ Route::middleware('admin')->group(function () {
   Route::get('fly/designers', 'UserController@designers')->name('admin.designers');
   Route::get('fly/needs', 'AdminController@needs')->name('admin.needs');
 
+  Route::resource('fly/events', 'EventController');
+
   // CRON JOBS::
   // this will create empty posts by given order_id
   Route::get('/create_post_schedules', 'CronController@create_post_schedules')->name('create_post_schedules');

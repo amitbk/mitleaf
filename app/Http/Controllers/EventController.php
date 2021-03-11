@@ -14,7 +14,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+      $events = Event::orderBy('date')->paginate(50);
+      return view('admin.events.index', compact('events') );
     }
 
     /**
@@ -24,7 +25,8 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+      $event = new Event;
+      return view('admin.events.create', compact('event') );
     }
 
     /**
@@ -35,7 +37,8 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $event = new Event;
+      return $this->update($request, $event);
     }
 
     /**
@@ -46,7 +49,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+      return redirect('fly/events');
     }
 
     /**
@@ -57,7 +60,8 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+      return redirect('fly/events');
+      // return view('admin.events.edit', compact('event'));
     }
 
     /**
@@ -69,7 +73,12 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+      $event->title = $request->title;
+      $event->desc = $request->desc;
+      $event->date = $request->date;
+      $event->save();
+      flash("Event saved.", 'success');
+      return redirect('fly/events');
     }
 
     /**
@@ -80,6 +89,13 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+      if($event && $event->templates->count() == 0) {
+        $event->delete();
+        flash("Event deleted successfully.", 'success');
+      }
+      else
+        flash("Unable to delete Event.", 'danger');
+
+      return back();
     }
 }

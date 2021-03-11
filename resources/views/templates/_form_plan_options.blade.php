@@ -6,7 +6,7 @@
       <select name="event_id" value="{{ old('event_id', $template->event_id) }}" class="form-control {{ $errors->has('event_id') ? 'is-invalid' : '' }}" id="event">
           <option value="">Not Selected</option>
          @foreach($events as $event)
-            <option value="{{$event->id}}">{{$event->name}}</option>
+            <option value="{{$event->id}}">{{$event->title}}</option>
          @endforeach
       </select>
       @if ($errors->has('event_id'))

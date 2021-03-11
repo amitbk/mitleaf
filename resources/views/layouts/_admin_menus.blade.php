@@ -12,6 +12,10 @@
     <i class="fas fa-sms"></i> Templates</a>
 </li>
 <li>
+    <a href="{{url('fly/events')}}">
+    <i class="fas fa-calendar-check"></i> Events</a>
+</li>
+<li>
   <a href="{{route('admin.designers')}}">
     <i class="fas fa-paint-brush"></i> Designers</a>
 </li>
