@@ -13,7 +13,7 @@ export default {
     return {
       formStep: 1,
       selectedTags: [],
-      slab_selected: [],
+      qty_selected: [],
       is_trial_selected: 1,
       duration_selected: 3,
       firm_id: !!this.firmId ? this.firmId : (!!this.firms ? this.firms[0].id : ''),
@@ -44,9 +44,9 @@ export default {
         }
         let discount = (this.duration_selected == 12 && this.yearDiscount > 0) ? (rate*this.yearDiscount/100): 0;
 
-        el.mrp = rate*el.slab_selected;
-        el.finalRate = (rate - discount)*el.slab_selected;
-        el.discount = discount*el.slab_selected;
+        el.mrp = rate*el.qty_selected;
+        el.finalRate = (rate - discount)*el.qty_selected;
+        el.discount = discount*el.qty_selected;
         return el;
       })
     },
@@ -74,7 +74,7 @@ export default {
 
     changeSlab(event, plan) {
         this.localPlans = this.localPlans.filter(el => {
-          if(el.id == plan.id) el.slab_selected = parseFloat(event.target.value);
+          if(el.id == plan.id) el.qty_selected = parseFloat(event.target.value);
           return el;
         });
         this.calculatePlanRates();
@@ -90,7 +90,7 @@ export default {
       this.localPlans = this.localPlans.filter(el => {
                           let index = !!this.futurePlans ? this.futurePlans.findIndex(fp => fp.plan_id == el.id) : -1;
                           el.is_selected = index >= 0 ? true : false ;
-                          el.slab_selected = el.is_slab_in_months ? 0.5 : 1;
+                          el.qty_selected = el.is_slab_in_months ? 10 : 1;
                           if(el.id == 4) el.firm_type_id = 1;
                             return el;
                         })

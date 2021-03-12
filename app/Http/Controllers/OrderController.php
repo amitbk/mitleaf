@@ -99,7 +99,7 @@ class OrderController extends Controller
                 $order_plan->order_id = $order->id;
                 $order_plan->plan_id = $plan->id;
                 $order_plan->rate = $plan->finalRate;
-                $order_plan->qty = $plan->slab_selected;
+                $order_plan->qty = $plan->qty_selected;
                 $order_plan->save();
                 $total += $plan->finalRate;
 
@@ -169,7 +169,7 @@ class OrderController extends Controller
           $firm_plan->plan_id = $plan->id;
           $firm_plan->order_plan_id = $order_plan->id;
           $firm_plan->is_post_plan = $plan->is_post_plan;
-          $firm_plan->qty_per_month = 30*$order_plan->qty;
+          $firm_plan->qty_per_month = $order_plan->qty;
           $firm_plan->is_trial = $is_trial;
 
           if(property_exists($plan, 'firm_type_id'))
