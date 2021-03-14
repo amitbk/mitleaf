@@ -94,3 +94,4 @@ Route::get('/facebook/update_pages', 'SocialMedia\GraphController@update_pages')
 Route::get('/test_mail', 'TestController@mail');
 Route::get('/test_event', 'TestController@event');
 Route::get('/test_sms', 'TestController@sms');
+Route::get('/test_subscription', 'TestController@subscription');

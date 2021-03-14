@@ -45,4 +45,9 @@ class TestController extends Controller
     {
       return Sms::send(['7020227842'],'sms.test',['user'=>'Amit', 'token' => 'TASAS'])->response();;
     }
+
+    public function subscription()
+    {
+      return PaymentController::create_subscription();
+    }
 }

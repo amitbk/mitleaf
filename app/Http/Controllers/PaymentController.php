@@ -34,6 +34,37 @@ class PaymentController extends Controller
       return $razorpayOrder;
     }
 
+    /** == create order
+    * @return RazorpayOrder
+    */
+    public static function create_subscription()
+    {
+
+      // init api for razorpay
+      $api = static::create_api();
+      //
+      // We create an razorpay order using orders api
+      // Docs: https://docs.razorpay.com/docs/orders
+      //
+      // $orderData = [
+      //     'receipt'         => 1,
+      //     'amount'          => $data['amount'] * 100, // 2000 rupees in paise
+      //     'currency'        => 'INR',
+      //     'payment_capture' => 1 // auto capture
+      // ];
+      $start = strtotime(date("Y-m-d 00:00:00") . " + 1day");
+      $subscription  = $api->subscription->create(
+          array('plan_id' => 'plan_Gla3rjwMeEi9Zz', "quantity" => 28, 'customer_notify' => 1, 'total_count' => 12,
+          // 'start_at' => $start 
+          ));
+      dd($subscription);
+      $razorpayOrder = $api->order->create($orderData);
+
+      $razorpayOrderId = $razorpayOrder['id'];
+      session(['razorpay_order_id' => $razorpayOrderId]);
+      dd($razorpayOrder);
+    }
+
     /** Init razorpay api
     * @return Razorpay/Api
     */
