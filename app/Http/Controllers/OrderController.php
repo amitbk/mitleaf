@@ -98,13 +98,14 @@ class OrderController extends Controller
                 $order_plan = new OrderPlan;
                 $order_plan->order_id = $order->id;
                 $order_plan->plan_id = $plan->id;
-                $order_plan->rate = $plan->finalRate;
+                $finalRate = $plan->rate - ($plan->rate*$discount/100);
+                $order_plan->rate = $finalRate*$plan->qty_selected;
                 $order_plan->qty = $plan->qty_selected;
                 $order_plan->save();
-                $total += $plan->finalRate;
+                $total += $order_plan->rate;
 
             }
-            $order->amount = $total;
+            $order->amount = $total*$request->duration_selected;
             $order->is_trial = $is_trial;
             $order->status = 0;
             $order->duration_selected = $request->duration_selected;

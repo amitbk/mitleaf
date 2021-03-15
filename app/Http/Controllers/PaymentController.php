@@ -55,7 +55,7 @@ class PaymentController extends Controller
       $start = strtotime(date("Y-m-d 00:00:00") . " + 1day");
       $subscription  = $api->subscription->create(
           array('plan_id' => 'plan_Gla3rjwMeEi9Zz', "quantity" => 28, 'customer_notify' => 1, 'total_count' => 12,
-          // 'start_at' => $start 
+          // 'start_at' => $start
           ));
       dd($subscription);
       $razorpayOrder = $api->order->create($orderData);
@@ -93,6 +93,35 @@ class PaymentController extends Controller
 
           $api = static::create_api();
           $api->utility->verifyPaymentSignature($attributes);
+          $is_verified = true;
+      }
+      catch(SignatureVerificationError $e)
+      {
+          $error = 'Razorpay Error : ' . $e->getMessage();
+      }
+      return $is_verified;
+    }
+
+    /** Verify Razorpay WebHook signature
+    * @param Request
+    * @return bool
+    */
+    public static function verify_webhook_signature(Request $request)
+    {
+      $is_verified = false;
+      try
+      {
+          // $attributes = array(
+          //     'razorpay_order_id' => session('razorpay_order_id'),
+          //     'razorpay_payment_id' => $request->razorpay_payment_id,
+          //     'razorpay_signature' => $request->razorpay_signature
+          // );
+          // $webhookBody, $webhookSignature, $webhookSecret
+
+          $api = static::create_api();
+          $api->utility->verifyPaymentSignature($attributes);
+          $api->utility->verifyWebhookSignature($webhookBody, $webhookSignature, $webhookSecret);
+
           $is_verified = true;
       }
       catch(SignatureVerificationError $e)

@@ -28,14 +28,14 @@ class NewOrderListener
     {
         // $event->order
 
-        // Sale entry
+        // Purchase entry
         $bill = new \App\Bill;
         $bill->user_id = $event->order->user->id;
         $bill->amount = $event->order->amount;
         $bill->order_id = $event->order->id;
         $bill->creditor_id = $event->order->user->id;
         $bill->debtor_id = 1;
-        $bill->transaction_type_id = 1;
+        $bill->transaction_type_id = 2;
         $bill->firm_id = $event->order->firm->id;
         $bill->save();
 

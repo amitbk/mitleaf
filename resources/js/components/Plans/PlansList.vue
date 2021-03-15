@@ -15,7 +15,8 @@ export default {
       selectedTags: [],
       qty_selected: [],
       is_trial_selected: 1,
-      duration_selected: 3,
+      duration_selected: -1,
+      paymentOption: 'subscription',
       firm_id: !!this.firmId ? this.firmId : (!!this.firms ? this.firms[0].id : ''),
       localPlans: this.plans
         // services: this.plans.filter(el => !!el.is_post_plan == false)
@@ -23,12 +24,17 @@ export default {
     };
   },
   computed: {
-      totalPlanAmount: function() {
+      monthlyPlanAmount: function() {
           let total = 0;
           this.localPlans.filter(el => {
-              if(el.is_selected == true && this.duration_selected > 0) total += el.finalRate;
+              if(el.is_selected == true) total += el.mrp;
           });
-          return total.toFixed(2);
+          return total.toFixed(0);
+      },
+
+      yearlyPlanAmount: function() {
+        let discount = (!!this.yearDiscount && this.yearDiscount > 0) ? this.yearDiscount : 0;
+        return (this.monthlyPlanAmount - this.monthlyPlanAmount*discount/100)*12 ;
       }
   },
   methods: {

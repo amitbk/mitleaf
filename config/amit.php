@@ -1,6 +1,6 @@
 <?php
 return [
-    'yearDiscount' => 20,
+    'yearDiscount' => 10,
 
     'logo_assets' => [1,2],
     'strip_assets' => [3,4,5],

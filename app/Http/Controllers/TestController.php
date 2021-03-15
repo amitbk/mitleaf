@@ -50,4 +50,15 @@ class TestController extends Controller
     {
       return PaymentController::create_subscription();
     }
+
+    public function webhook(Request $request)
+    {
+      slack('YES', '#general');
+      $tag = new \App\Tag;
+      $tag->name = $request->event ?? 'FAILED';
+      $tag->desc = $request->payload ?? 'FAILED';
+
+      $tag->save();
+      return 'done';
+    }
 }
