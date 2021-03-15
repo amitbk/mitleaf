@@ -8,7 +8,7 @@ class TemplateStyle extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'template_id', 'style_id',
+        'template_id', 'style_id', 'ratio', 'x_axis', 'y_axis', 'data'
     ];
     public function template()
     {

@@ -44,6 +44,9 @@
 
             </div>
         </div>
+
+        @include('templates._form_logo_support2')
+
     </div>
 
     <div class="col-md-4">
@@ -150,7 +153,6 @@
                 </div>
                 <hr>
 
-                @include('templates._form_logo_support')
                 @include('templates._form_strip_support')
 
 

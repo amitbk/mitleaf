@@ -20,7 +20,7 @@
                   <th>Business</th>
                   <th width="80px">IsTrial</th>
                   <th width="80px">Status</th>
-                  <th width="200px">Date</th>
+                  <th width="300px">Dates</th>
                 </tr>
               </thead>
 
@@ -42,7 +42,12 @@
                    <span class="badge badge-danger">Failed</span>
                    @endif
                  </td>
-                 <td>{{$order->created_at}}</td>
+                 <td>Created: {{date('d M, Y h:i a', strtotime($order->created_at) )}}
+                   @if(!!$order->date_expiry)
+                   <br><small>Start: {{date('d M, Y', strtotime($order->date_start_from) )}}</small>
+                   <br><small>Expiry: {{date('d M, Y', strtotime($order->date_expiry) )}}</small>
+                   @endif
+                 </td>
                </tr>
                @empty
                  No orders yet.

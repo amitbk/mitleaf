@@ -111,7 +111,11 @@ class TemplateController extends Controller
         {
             foreach ($request->style_supports as $style)
             {
-                $comment = $template->styles()->create(['style_id' => $style]);
+                $data = [
+                        'style_id' => $style, 'ratio' => $request->ratio[$style],
+                        'x_axis' => $request->x_axis[$style], 'y_axis' => $request->y_axis[$style],
+                        ];
+                $comment = $template->styles()->create($data);
             }
         }
 

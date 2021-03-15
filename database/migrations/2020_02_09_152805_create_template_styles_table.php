@@ -21,6 +21,10 @@ class CreateTemplateStylesTable extends Migration
             $table->unsignedBigInteger('style_id')->unsigned()->nullable();
             $table->foreign('style_id')->references('id')->on('styles')->onDelete('cascade');
             $table->text('data')->nullable();
+
+            $table->integer('ratio')->default(30);
+            $table->integer('x_axis')->default(10);
+            $table->integer('y_axis')->default(10);
         });
     }
 

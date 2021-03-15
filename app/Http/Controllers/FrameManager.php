@@ -122,12 +122,16 @@ class FrameManager
             // where to add asset on post
             if(in_array($this_asset->asset_type_id, config('amit.logo_assets') )  )
             {   // logo
-                $asset_location = TemplateManager::get_supported_logo_location($template);
-                $ratio = 30;  $x_axis = $y_axis = 10;
+                $asset_style = TemplateManager::get_supported_logo_location($template);
+                $asset_location = $asset_style->style->slug;
+                $ratio = $asset_style->scale;
+                $x_axis = $asset_style->x_axis;
+                $y_axis = $asset_style->y_axis;
             }
             else if(in_array($this_asset->asset_type_id, config('amit.strip_assets') ) )
             {   // strip
-                $asset_location = TemplateManager::get_supported_strip_location($template);
+                $asset_style = TemplateManager::get_supported_strip_location($template);
+                $asset_location = $asset_style->style->slug;
                 $ratio = 100; $x_axis = $y_axis = 0;
             }
             $asset = $this_asset;

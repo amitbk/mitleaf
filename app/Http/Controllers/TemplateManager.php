@@ -21,7 +21,6 @@ class TemplateManager
      */
     public static function get_random_template(Post $post)
     {
-
         $template = TemplateManager::find_template($post);
 
         if(!$template) return abort(403, 'Template not found');
@@ -165,7 +164,7 @@ class TemplateManager
         $styles = $template->styles()
                 ->whereIn('style_id', [11, 12, 13, 14, 15, 16, 17, 18, 19])
                 ->orderByRaw("FIELD(style_id , 11, 12, 13, 14, 15, 16, 17, 18, 19) ASC")->get();
-        return $styles->first() ? $styles->first()->style->slug : null;
+        return $styles->first() ? $styles->first() : null;
     }
 
     public static function get_supported_strip_location(Template $template)
@@ -173,6 +172,6 @@ class TemplateManager
         $styles = $template->styles()
                 ->whereIn('style_id', [21, 22])
                 ->orderByRaw("FIELD(style_id , 21, 22) ASC")->get();
-        return $styles->first() ? $styles->first()->style->slug : null;
+        return $styles->first() ? $styles->first() : null;
     }
 }

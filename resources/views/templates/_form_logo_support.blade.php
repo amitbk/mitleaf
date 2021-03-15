@@ -1,5 +1,7 @@
 <!-- Logo Support -->
 <div class="form-group">
+  <!-- <input type="text" class="form-check-input" id="bottom-left" name="x_axis[12]"> -->
+
   <label for="style_supports-label font-weight-bold">Logo Support:</label>
 
   <div class="bg-light text-center mt-1 p-1">
