@@ -11,7 +11,7 @@
               @include('helpers._flash')
             </div>
             <div class="col-md-9 col-xs-12 text-center text-sm-left">
-                <h3 class="font-weight-bold">Select a best plan for you</h3>
+                <h4 class="font-weight-bold">Select a best plan for you</h4>
             </div>
 
             <div class="col-md-3 col-xs-12 text-center text-sm-right">
@@ -23,7 +23,7 @@
                 </div>
             </div>
 
-            @if(!$user->is_trial_used)
+            @if(!$user->is_trial_used && 0)
             <div class="col-12">
               <div class="alert alert-primary">
                 <strong>Hurrey!</strong> All plans are free for first 7 days!
@@ -35,19 +35,43 @@
         <div class="row mb-3">
 
           <!-- show month, year switch only if purchasing actual plan & not for trial -->
-          <div class="col-12 col-sm-6 mb-2 text-center m-auto">
-            <h4>Billing Cycle</h4>
-            <ul class="nav nav-pills font-weight-bold nav-justified billing-cycle f-20">
-              @if(!$user->is_trial_used)
+          <div v-if="false" class="col-12 col-sm-12 mb-2 text-center m-auto">
+            <div>Select Billing Cycle</div>
+            <ul class="nav nav-pills font-weight-bold nav-justified billing-cycle">
+              @if(!$user->is_trial_used && 0)
               <li class="nav-item p-1" @click="changeDuration(0)">
                 <a class="nav-link py-3 border" :class="{active: duration_selected == 0 }" data-toggle="pill" href="#month">Trial</a>
               </li>
               @endif
+              <li class="nav-item p-1" @click="changeDuration(1)">
+                <a class="nav-link py-2 border" :class="{active: duration_selected == 1 }" data-toggle="pill" href="#month">
+                  <div class="f-20">
+                    1 Month
+                    <div class="f-12">
+                      (0% OFF)
+                    </div>
+                  </div>
+                </a>
+              </li>
               <li class="nav-item p-1" @click="changeDuration(3)">
-                <a class="nav-link py-3 border" :class="{active: duration_selected == 3 }" data-toggle="pill" href="#month">3 Months</a>
+                <a class="nav-link py-2 border" :class="{active: duration_selected == 3 }" data-toggle="pill" href="#month">
+                  <div class="f-20">
+                    3 Months
+                    <div class="f-12">
+                      (0% OFF)
+                    </div>
+                  </div>
+                </a>
               </li>
               <li class="nav-item p-1" @click="changeDuration(12)">
-                <a class="nav-link py-3 border" :class="{active: duration_selected == 12 }" data-toggle="pill" href="#year">1 Year (@{{yearDiscount}}% OFF)</a>
+                <a class="nav-link py-2 border" :class="{active: duration_selected == 12 }" data-toggle="pill" href="#year">
+                  <div class="f-20">
+                    1 Year
+                  </div>
+                  <div class="f-12">
+                    (@{{yearDiscount}}% OFF)
+                  </div>
+                </a>
               </li>
             </ul>
             <hr>
@@ -55,7 +79,7 @@
 
           <div class="col-12">
             <!-- Create | Publish -->
-            <ul class="nav nav-tabs mb-2 justify-content-center font-weight-bold">
+            <ul v-if="formStep != 3" class="nav nav-tabs mb-2 justify-content-center font-weight-bold">
               <li class="nav-item" @click="formStep = 1">
                 <a class="nav-link" :class="{ active: formStep == 1 }" data-toggle="tab" href="#home">Create</a>
               </li>
@@ -71,25 +95,36 @@
             <div v-if="formStep == 2" class="plans2_container">
               @include('plans._plans2_list')
             </div>
+            <div v-if="formStep == 3" class="plans2_container">
+              @include('plans._plans_option')
+            </div>
           </div>
         </div>
 
-        <div class="row fixed-bottom bg-primary p-1 text-white text-center">
-            <div class="col final_amount">
-                Total <span class="font-weight-bold">₹@{{totalPlanAmount}}/month</span>
-                @if(!$user->is_trial_used)
+        <div v-if="formStep<3" class="row fixed-bottom bg_cyan1 p-1 text-white text-center p-2">
+            <div class="col d-flex justify-content-end final_amount">
+                <div class="px-2 d-flex align-items-center">Total</div>
+                <div class="font-weight-bold f-20">₹ @{{monthlyPlanAmount}}/month</div>
+
+                @if(!$user->is_trial_used && 0)
                 After 7 days
                 @endif
             </div>
-            <div class="col next_plan_changer ">
-                <button v-if="formStep<2" @click="formStep++" type="button" class="btn btn-default bg-light btn-sm">Continue</button>
-                <span v-if="formStep == 2">
+            <div class="col d-flex next_plan_changer ">
+                <div class="mx-1">
+                  <button v-if="formStep == 2 || formStep == 3" @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
+                </div>
+                <div class="mx-1">
+                  <button v-if="formStep<3" @click="formStep++" type="button" class="btn btn-default bg-light btn-sm">Continue</button>
+                </div>
+
+
+                <span v-if="formStep == 3">
                     <form class="" action="{{url('orders')}}" method="post">
                         {{csrf_field()}}
                         <input type="hidden" name="plans" :value="JSON.stringify(localPlans.filter(el => el.is_selected))">
                         <input type="hidden" name="duration_selected" :value="duration_selected">
                         <input type="hidden" name="firm_id" :value="firm_id">
-                        <button @click="formStep--" type="button" class="btn btn-default bg-light btn-sm">Back</button>
                         <button @click="submitForm()" type="submit" class="btn btn-default bg-light btn-sm">Done</button>
                     </form>
                 </span>

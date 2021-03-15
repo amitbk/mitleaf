@@ -27,4 +27,22 @@
     background: linear-gradient(to bottom, #95ebbc,#e9ddf8);
 }
 
+.bg_yl {
+    color: #000;
+    border: 0px;
+    background: #e2f8db;
+    background: -webkit-linear-gradient(bottom, #fff,#e2f8db);
+    background: -o-linear-gradient(bottom, #fff,#e2f8db);
+    background: -moz-linear-gradient(bottom, #fff,#e2f8db);
+    background: linear-gradient(to bottom, #fff,#e2f8db);
+}
+
+
 .bg_sky1 {background-color: #defee3}
+
+.bg_0 {background-color: #caedf7; }
+.bg_1 {  background-color: #d6fff2; }
+.bg_2 {  background-color: #efdcf3; }
+.bg_3 {  background-color: #ffecd8; }
+
+.bg_cyan1 {background-color: #0099B8; color: #fff }
