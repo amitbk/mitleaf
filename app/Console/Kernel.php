@@ -29,6 +29,9 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('posts:generate')
                  ->hourly();
+
+        $schedule->command('posts:publish')
+                 ->hourly();
     }
 
     /**
