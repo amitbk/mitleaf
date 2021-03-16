@@ -12,7 +12,7 @@ You have endless opportunities here with MitLeaf.
 
 We have simple formula of earnings, Promote more and Earn more!
 
-If you have any queries regarding earnings, Kindly contact with {{ $referrar->name }} on {{ $referrar->mobile }}
+If you have any queries regarding earnings, Kindly contact with {{ $self->referrar->name }} on {{ $self->referrar->mobile }}
 Or you can also contact with us on {{ config('app.contact') }}.
 
 @endcomponent
@@ -24,4 +24,6 @@ Check your earnings on MitLeaf
 
 Thanks,<br>
 {{ config('app.name') }}
+
+<small> If you don't want to receive this mails, Click <a href="{{url('/unsubscribe')}}">here</a> to Unsubscribe.</small>
 @endcomponent

@@ -16,7 +16,7 @@ class SmsInit
      *
      * @var array
      */
-    protected array $params = [];
+    protected $params = [];
 
     /**
      * Create a new post instance.

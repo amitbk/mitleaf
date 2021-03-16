@@ -1,23 +1,23 @@
 @component('mail::message')
-# 🖐 Greetings {{ $self->name }},
+# Greetings {{ $self->name }},
 
 We are so excited to welcome you to the MitLeaf family!
 
 Every single one of us is here for you to help you reach new heights with your social media management.
 
-## 💡 If you don't have clear idea about how MitLeaf can help your business, then let't understand it first,
+## If you don't have clear idea about how MitLeaf can help your business, then let't understand it first,
 
 @component('mail::panel')
-  ### 🎨 Mitleaf will help you,
+  ### Mitleaf will help you,
   - To create meaningful & automated graphics for your business pages on Facebook
   - All graphics will be with your own branding & On a strict schedule
 
-  ### ⚡ Mitleaf has following categories available,
+  ### Mitleaf has following categories available,
   - All possible Indian events
   - Daily Page boosters with Quotes and Inspirational graphics
   - Smart Business Kit
 
-  ### ✈ How it works?
+  ### How it works?
   - Register your business (You have done that)
   - Select type of your business
   - Select your schedule and plan
@@ -35,4 +35,6 @@ Login to MitLeaf
 
 Thanks,<br>
 {{ config('app.name') }}
+
+<small> If you don't want to receive this mails, Click <a href="{{url('/unsubscribe')}}">here</a> to Unsubscribe.</small>
 @endcomponent

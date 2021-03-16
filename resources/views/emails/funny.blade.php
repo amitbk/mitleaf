@@ -14,4 +14,6 @@ View My Profile
 
 Always Laughing,<br>
 Dino Cajic
+
+<small> If you don't want to receive this mails, Click <a href="{{url('/unsubscribe')}}">here</a> to Unsubscribe.</small>
 @endcomponent

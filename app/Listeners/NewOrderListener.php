@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\NewOrder;
+use App\Notifications\Clients\NewOrder as NewOrderNf;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -26,8 +27,8 @@ class NewOrderListener
      */
     public function handle(NewOrder $event)
     {
-        // $event->order
 
+      // $event->order
         // Purchase entry
         $bill = new \App\Bill;
         $bill->user_id = $event->order->user->id;
@@ -38,6 +39,9 @@ class NewOrderListener
         $bill->transaction_type_id = 2;
         $bill->firm_id = $event->order->firm->id;
         $bill->save();
+        
+        // notification for order owner
+        $event->order->user->notify( new NewOrderNf($event->order, $bill) );
 
         // Service entry
         $bill = new \App\Bill;

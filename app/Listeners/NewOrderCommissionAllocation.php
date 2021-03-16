@@ -6,6 +6,8 @@ use App\Events\NewOrder;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
+use App\Notifications\Marketers\NewReferralOrder;
+
 class NewOrderCommissionAllocation
 {
     /**
@@ -50,6 +52,9 @@ class NewOrderCommissionAllocation
         $bill->firm_id = $event->order->firm->id;
         $bill->level_id = $key+1;
         $bill->save();
+
+        // send notification to user, that he got new order from refferal
+        $user->notify( new NewReferralOrder($bill) );
 
       }
     }

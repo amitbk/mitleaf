@@ -13,4 +13,6 @@ Renew Now
 
 Thanks,<br>
 {{ config('app.name') }}
+
+<small> If you don't want to receive this mails, Click <a href="{{url('/unsubscribe')}}">here</a> to Unsubscribe.</small>
 @endcomponent

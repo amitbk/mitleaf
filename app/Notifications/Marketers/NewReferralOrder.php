@@ -14,17 +14,15 @@ class NewReferralOrder extends Notification
 {
     use Queueable;
     public $bill;
-    public $referrar;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($bill, $referrar)
+    public function __construct($bill)
     {
       $this->bill = $bill;
-      $this->referrar = $referrar;
     }
 
     /**
@@ -49,7 +47,7 @@ class NewReferralOrder extends Notification
     {
         return (new MailMessage)
             ->markdown('emails.marketers.new_referral_order',
-                      ['self' => $notifiable, 'bill' => $this->bill, 'referrar' => $this->referrar]
+                      ['self' => $notifiable, 'bill' => $this->bill, 'referrar' => $notifiable->referrar]
                     );
     }
 
@@ -61,7 +59,7 @@ class NewReferralOrder extends Notification
      */
     public function toSms($notifiable)
     {
-      return (new SmsInit())->withView('sms.marketers.new_referral_order', ['self' => $notifiable, 'bill' => $this->bill, 'referrar' => $this->referrar]);
+      return (new SmsInit())->withView('sms.marketers.new_referral_order', ['self' => $notifiable, 'bill' => $this->bill, 'referrar' => $notifiable->referrar]);
     }
 
     /**

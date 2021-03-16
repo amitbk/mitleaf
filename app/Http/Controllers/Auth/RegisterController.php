@@ -8,6 +8,8 @@ use App\User;
 use App\Firm;
 use App\Notifications\NewReferralAdded;
 use App\Notifications\Clients\NewRegistration;
+use App\Notifications\Marketers\NewReferralRegistration;
+
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -79,7 +81,7 @@ class RegisterController extends Controller
 
         $user->notify( new NewRegistration() );
         if($referrer)
-          $referrer->notify( new NewReferralAdded($user) );
+          $referrer->notify( new NewReferralRegistration($user) );
         return $user;
     }
 

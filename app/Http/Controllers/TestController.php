@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mail\RandomEmail;
+use App\Mail\FunnyEmail;
 use App\Notifications\Marketers\YouArePartnerNow;
 use Mail;
 
@@ -18,13 +18,14 @@ class TestController extends Controller
 
     public function mail(Request $request)
     {
+      return env('MAIL_USERNAME');
       // return config('mail.username');
       // var_dump(openssl_get_cert_locations());die();
       // return new FunnyEmail();
       $name = "Dino Cajic";
       $to = "731067022b-35793a@inbox.mailtrap.io";
       // dd('/');
-      return new YouArePartnerNow($name);
+      return new FunnyEmail($name);
       Mail::to($to)->send(new FunnyEmail($name));
     }
 
