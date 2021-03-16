@@ -171,6 +171,11 @@ class TemplateController extends Controller
     public function update_styles(Request $request, $id, $new = 0)
     {
       $template = Template::find($id);
+      if(auth()->user()->role_id == 1) {
+        $template->is_active = !!$request->is_active;
+        $template->is_verified = !!$request->is_verified;
+        $template->save();
+      }
 
       if($request->style_supports)
       {
