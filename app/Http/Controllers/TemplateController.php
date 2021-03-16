@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Template;
 use App\TemplateStyle;
+use App\FirmPlan;
 use App\FirmType;
 use App\Event;
 use App\Plan;
@@ -107,17 +108,7 @@ class TemplateController extends Controller
         $template->save();
 
         // save template styles
-        if($request->style_supports)
-        {
-            foreach ($request->style_supports as $style)
-            {
-                $data = [
-                        'style_id' => $style, 'ratio' => $request->ratio[$style],
-                        'x_axis' => $request->x_axis[$style], 'y_axis' => $request->y_axis[$style],
-                        ];
-                $comment = $template->styles()->create($data);
-            }
-        }
+        $this->update_styles($request, $template->id, 1);
 
         // save template firm_types if any
         if($request->firm_types)
@@ -129,8 +120,17 @@ class TemplateController extends Controller
                 ]);
             }
         }
+        flash('New template created successfully.', 'success');
 
         return redirect('templates');
+    }
+
+    public function test_template(Request $request, $id, $firm_plan_id)
+    {
+      $template = Template::find($id);
+      $firm_plan = FirmPlan::find($firm_plan_id);
+
+      return $post_image = FrameManager::get_generated_post($template, $firm_plan, $save = 0);
     }
 
     /**
@@ -141,7 +141,8 @@ class TemplateController extends Controller
      */
     public function show(Template $template)
     {
-        //
+        // return $template->styles->pluck('style_id');
+        return view('templates.show', compact('template') );
     }
 
     /**
@@ -167,6 +168,37 @@ class TemplateController extends Controller
         //
     }
 
+    public function update_styles(Request $request, $id, $new = 0)
+    {
+      $template = Template::find($id);
+
+      if($request->style_supports)
+      {
+          $template->styles()->delete();
+          foreach ($request->style_supports as $style)
+          {
+              if(in_array($style, [21,22]) ) {
+                // strip: save default values
+                $template->styles()->create(['style_id' => $style]);
+              }
+              else {
+                // logo: accept values from UI
+                $data = [
+                        'style_id' => $style, 'ratio' => $request->ratio[$style],
+                        'x_axis' => $request->x_axis[$style], 'y_axis' => $request->y_axis[$style],
+                        ];
+                $template->styles()->create($data);
+              }
+          }
+      }
+
+      if(!$new) {
+        flash('Template styles updated.', 'success');
+        return back();
+      }
+      else
+        return $template;
+    }
     /**
      * Remove the specified resource from storage.
      *

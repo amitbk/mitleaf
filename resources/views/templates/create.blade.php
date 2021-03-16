@@ -1,8 +1,8 @@
-@extends('layouts.app8')
+@extends('layouts.admin')
 
 @section('content')
 <create-template inline-template>
-    <div class="container py-4">
+    <div class="container-fluid py-4">
         <div class="row row-eq-height justify-content-center">
             @if (session('status'))
             <div class="alert alert-success" role="alert">

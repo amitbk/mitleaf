@@ -6,13 +6,13 @@
       <!-- 1 -->
       <div class="form-check-inline ">
         <label class="form-check-label" for="bottom">
-          <input v-model="stripSupport.bottomTouched" type="checkbox" class="form-check-input" id="bottom" name="style_supports[]" value="21">Bottom Touched
+          <input type="checkbox" class="form-check-input" id="bottom" name="style_supports[]" value="21" {{ in_array(21, $template->styles->pluck('style_id')->toArray() ) ? 'checked' : '' }} >Bottom Touched
         </label>
       </div>
 
       <div class="form-check-inline">
         <label class="form-check-label" for="bottom-padding">
-          <input v-model="stripSupport.bottomWithPadding" type="checkbox" class="form-check-input" id="bottom-padding" name="style_supports[]" value="22">Bottom With Padding
+          <input type="checkbox" class="form-check-input" id="bottom-padding" name="style_supports[]" value="22" {{ in_array(22, $template->styles->pluck('style_id')->toArray() ) ? 'checked' : '' }}>Bottom With Padding
         </label>
       </div>
   </div>

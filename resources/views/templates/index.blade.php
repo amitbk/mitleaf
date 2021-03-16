@@ -1,4 +1,4 @@
-@extends( isset($is_admin) ? 'layouts.admin' : 'layouts.app8')
+@extends( 'layouts.admin' )
 
 @section('content')
 

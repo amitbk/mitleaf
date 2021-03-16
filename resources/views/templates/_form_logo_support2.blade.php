@@ -10,9 +10,10 @@
       @include('templates._form_logo_direction_main_block',
               [
                 'direction' => 'bottom',
-                'styles' => [12,11,13]
+                'styles' => [12,11,13],
+                'template' => $template
               ])
-      @include('templates._form_logo_direction_main_block', ['direction' => 'top', 'styles' => [15,14,16] ])
+      @include('templates._form_logo_direction_main_block', ['direction' => 'top', 'styles' => [15,14,16], 'template' => $template ])
 
 
       @if ($errors->has('style_supports'))

@@ -8,6 +8,8 @@
 import ImageUploader from 'vue-image-upload-resize'
 import axios from 'axios';
 import {image_upload} from "../../mixins/image_upload";
+import templateServices from "../../services/templates";
+
 export default {
   name: "CreateTemplate",
   props: ["plans"],
@@ -41,7 +43,6 @@ export default {
   computed: {
   },
   methods: {
-
   }, // methods
 };
 </script>

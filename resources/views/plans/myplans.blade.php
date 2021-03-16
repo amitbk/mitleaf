@@ -10,11 +10,13 @@
 
           <!-- Nav tabs -->
             <ul class="nav nav-tabs">
-              @foreach($firms as $key => $firm)
+              @forelse($firms as $key => $firm)
                 <li class="nav-item">
                   <a class="nav-link font-weight-bold <?php echo ($key == 0 && !$firm_id) || $firm_id == $firm->id ? 'active' : ''; ?>" data-toggle="tab" href="#home{{$firm->id}}">{{$firm->name}}</a>
                 </li>
-              @endforeach
+              @empty
+                No firms added yet.
+              @endforelse
             </ul>
             <!-- Tab panes -->
             <div class="tab-content mt-3">

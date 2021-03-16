@@ -47,7 +47,7 @@ class FrameManager
         return $postData;
     }
 
-    public static function get_generated_post(Template $template, FirmPlan $firm_plan)
+    public static function get_generated_post(Template $template, FirmPlan $firm_plan, $save = 1)
     {
         $domain = url('/').'/';
         $public = public_path('/');
@@ -56,7 +56,6 @@ class FrameManager
         $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
         // main template image
         $template_img = Image::make($public.$template->image->url);
-        // dd($template_img);
           foreach($images as $image)
           {
             $firm_asset_img = Image::make($public.$image['url']);
@@ -73,6 +72,9 @@ class FrameManager
             // $firm_asset_img->crop(400, 500, 50, 0);
             $template_img->insert($firm_asset_img, $image['location'], $image['x_axis'], $image['y_axis']);
           }
+
+          if(!$save)
+            return $template_img->response('png');
 
           $path = "images/posts/".$firm->id;
 
@@ -99,7 +101,6 @@ class FrameManager
     // check which asset to use and create a array object with settings for that asset
     public static function get_images_from_firm_with_settings(Template $template, FirmPlan $firm_plan)
     {
-
         $asset = null;
         $asset_location = null;
 
@@ -120,11 +121,17 @@ class FrameManager
         // will check if selected template supports location for that asset and apply accordingly
         foreach ($assets as $this_asset) {
             // where to add asset on post
-            if(in_array($this_asset->asset_type_id, config('amit.logo_assets') )  )
+            if( request()->has('test') ) {
+              // test template
+              $asset_location = request()->location;
+              $ratio = request()->ratio;
+              $x_axis = request()->x_axis;
+              $y_axis = request()->y_axis;
+            } else if(in_array($this_asset->asset_type_id, config('amit.logo_assets') )  )
             {   // logo
                 $asset_style = TemplateManager::get_supported_logo_location($template);
                 $asset_location = $asset_style->style->slug;
-                $ratio = $asset_style->scale;
+                $ratio = $asset_style->ratio;
                 $x_axis = $asset_style->x_axis;
                 $y_axis = $asset_style->y_axis;
             }

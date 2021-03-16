@@ -50,6 +50,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('posts', 'PostController');
 Route::get('/profile', 'UserController@profile')->name('profile');
 Route::resource('/templates', 'TemplateController');
+Route::post('/templates/{id}/styles', 'TemplateController@update_styles');
+Route::get('/templates/{id}/test/{firm_plan_id}', 'TemplateController@test_template');
 
 // Affilate
 Route::get('/affiliates', 'AffiliateController@index')->name('affiliates');

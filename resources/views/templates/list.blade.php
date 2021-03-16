@@ -28,6 +28,7 @@
             </div>
             <div class="card_options p-2">
                 <a href="{{ route('templates.edit', $template->id) }}" class="btn btn-default btn-sm border_f"><i class="fas fa-cloud-download-alt"></i> Edit</a>
+                <a href="{{ route('templates.show', $template->id) }}" class="btn btn-default btn-sm border_f"><i class="fas fa-cloud-download-alt"></i> Test</a>
                 <form class="form-delete col p-1" style="display: unset" method="post" action="{{ route('templates.destroy', $template->id) }}">
                     @method('DELETE')
                     @csrf
