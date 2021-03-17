@@ -24,7 +24,7 @@
               @csrf
               <div class="d-flex mb-3">
                 <button type="submit" class="btn btn-success">Update</button>
-                <a href="{{url('templates/'.$template->id.'/test/3?test=1&location=bottom&x_axis=20&y_axis=20&ratio=35')}}" target="_blank" class="btn btn-primary border_f ml-2">Test</a>
+                <a href="{{url('templates/'.$template->id.'/test/3?test=1&location=bottom&ratio=35&x_axis=20&y_axis=20')}}" target="_blank" class="btn btn-primary border_f ml-2">Test</a>
 
                 <a href="{{route('templates.create')}}" class="btn btn-primary ml-auto">Add New</a>
               </div>

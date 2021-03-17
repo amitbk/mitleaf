@@ -46,6 +46,7 @@ class NewReferralRegistration extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("✌ ".$notifiable->name.", ".$this->user->name." registered from your link. Congrats!")
             ->markdown('emails.marketers.new_referral_registration',
                       ['self' => $notifiable, 'user' => $this->user]
                     );

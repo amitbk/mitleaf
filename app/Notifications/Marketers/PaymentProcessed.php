@@ -46,6 +46,7 @@ class PaymentProcessed extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("✌ ".$notifiable->name.", Your payment of ".config('app.currency')." ".$this->bill->amount." is processed!" )
             ->markdown('emails.marketers.payment_processed',
                       ['self' => $notifiable, 'bill' => $this->bill]
                     );

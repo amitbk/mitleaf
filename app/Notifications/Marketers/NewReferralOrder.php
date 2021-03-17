@@ -46,6 +46,7 @@ class NewReferralOrder extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("✌ ".$notifiable->name.", New Referral order of ".config('app.currency')." ".$this->bill->amount.". Congrats!" )
             ->markdown('emails.marketers.new_referral_order',
                       ['self' => $notifiable, 'bill' => $this->bill, 'referrar' => $notifiable->referrar]
                     );

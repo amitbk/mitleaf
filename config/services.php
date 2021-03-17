@@ -34,8 +34,7 @@ return [
         'client_id'     => env('FACEBOOK_CLIENT_ID'),
         'client_secret' => env('FACEBOOK_CLIENT_SECRET'),
         "version" => "v9.0",
-        // 'redirect'      => env('FACEBOOK_URL'),
-        'redirect' => "https://1d1e65698364.ngrok.io/callback/facebook",
+        'redirect'      => env('FACEBOOK_URL'),
     ],
     'twitter' => [
         'client_id'     => env('TWITTER_CLIENT_ID'),

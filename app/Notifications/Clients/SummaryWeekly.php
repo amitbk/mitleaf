@@ -46,6 +46,7 @@ class SummaryWeekly extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("✍ Your Weekly Summary on ".config('app.name')."." )
             ->markdown('emails.clients.summary_weekly',
                       ['self' => $notifiable, 'firm' => $this->firm]
                     );

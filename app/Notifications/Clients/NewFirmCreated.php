@@ -46,9 +46,10 @@ class NewFirmCreated extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->markdown('emails.clients.new_firm_created',
-                      ['self' => $notifiable, 'firm' => $this->firm]
-                    );
+              ->subject("⚡ ".$this->firm->name.": Your new business is ready on ".config('app.name')."." )
+              ->markdown('emails.clients.new_firm_created',
+                        ['self' => $notifiable, 'firm' => $this->firm]
+                      );
     }
 
     /**

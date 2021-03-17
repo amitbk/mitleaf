@@ -50,6 +50,7 @@ class NewOrder extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("💡 New Order of  ".config('app.currency')." ".$this->order->amount." completed successfully on ".config('app.name')." 🖐")
             ->markdown('emails.clients.new_order',
                       ['self' => $notifiable, 'firm' => $this->firm, 'order' => $this->order, 'bill' => $this->bill]
                     );

@@ -45,6 +45,7 @@ class NewRegistration extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("🖐 Welcome on ".config('app.name').", ".$notifiable->name."!" )
             ->markdown('emails.clients.new_registration',
                       ['self' => $notifiable]
                     );

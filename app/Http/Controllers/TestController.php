@@ -18,7 +18,7 @@ class TestController extends Controller
 
     public function mail(Request $request)
     {
-      return env('MAIL_USERNAME');
+      // return env('MAIL_USERNAME');
       // return config('mail.username');
       // var_dump(openssl_get_cert_locations());die();
       // return new FunnyEmail();

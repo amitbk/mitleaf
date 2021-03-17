@@ -48,6 +48,7 @@ class OrderEnded extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("🖐 ".$notifiable->name.", Your order is ended, Check it out!")
             ->markdown('emails.clients.order_ended',
                       ['self' => $notifiable, 'firm' => $this->firm ,'order' => $this->order]
                     );

@@ -129,7 +129,13 @@ class TemplateController extends Controller
     {
       $template = Template::find($id);
       $firm_plan = FirmPlan::find($firm_plan_id);
-
+      if(!$firm_plan) {
+        $firm = Firm::find(1);
+        $firm_plan = $firm->firm_plans->first();
+      }
+      if(!$firm_plan)
+        return abort(403, 'Firm plan required for master firm as well to test.');
+        
       return $post_image = FrameManager::get_generated_post($template, $firm_plan, $save = 0);
     }
 

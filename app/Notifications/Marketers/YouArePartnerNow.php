@@ -45,6 +45,7 @@ class YouArePartnerNow extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("🙏 ".$notifiable->name.", Your are partner now!" )
             ->markdown('emails.marketers.you_are_partner_now',
                       ['self' => $notifiable]
                     );

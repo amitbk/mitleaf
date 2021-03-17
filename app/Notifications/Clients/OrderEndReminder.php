@@ -48,6 +48,7 @@ class OrderEndReminder extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+            ->subject("🖐 ".$notifiable->name.", Your order is about to expire, Check it out!")
             ->markdown('emails.clients.order_end_reminder',
                       ['self' => $notifiable, 'firm' => $this->firm, 'order' => $this->order]
                     );

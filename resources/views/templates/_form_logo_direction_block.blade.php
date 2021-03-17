@@ -6,16 +6,16 @@
 
   <div class="form-group">
     <label for="inputsm">Ratio%</label>
-    <input name="ratio[{{$style_id}}]" class="form-control input-sm" type="text" value='{{$template_style_params->ratio ?? '30' }}'>
+    <input name="ratio[{{$style_id}}]" class="form-control input-sm" type="text" value='{{$template_style_params->ratio ?? '35' }}'>
   </div>
 
   <div class="form-group">
     <label for="inputsm">X Axis</label>
-    <input name="x_axis[{{$style_id}}]" class="form-control input-sm" type="text" value='{{$template_style_params->x_axis ?? '10' }}'>
+    <input name="x_axis[{{$style_id}}]" class="form-control input-sm" type="text" value='{{$template_style_params->x_axis ?? '20' }}'>
   </div>
 
   <div class="form-group">
     <label for="inputsm">Y Axis</label>
-    <input name="y_axis[{{$style_id}}]" class="form-control input-sm" type="text" value='{{$template_style_params->y_axis ?? '10' }}'>
+    <input name="y_axis[{{$style_id}}]" class="form-control input-sm" type="text" value='{{$template_style_params->y_axis ?? '20' }}'>
   </div>
 </div>
