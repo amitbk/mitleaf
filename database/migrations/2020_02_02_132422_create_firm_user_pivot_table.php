@@ -23,8 +23,8 @@ class CreateFirmUserPivotTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('firm_user')->insert(['id'=>1,'firm_id' => 1, 'user_id'=> 1, 'role' => 1]);
-
+        DB::table('firm_user')->insert(['id'=>1,'firm_id' => 1, 'user_id'=> 51, 'role' => 1 ]);
+        DB::table('firm_user')->insert(['id'=>2,'firm_id' => 1, 'user_id'=> 52, 'role' => 1 ]);
     }
 
     /**

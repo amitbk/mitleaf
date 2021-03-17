@@ -53,7 +53,12 @@ class CreateUsersTable extends Migration
         DB::table('users')->insert(['id'=>4, 'name' => 'Commission Account', 'email'=> 'account4@flymit.com', 'account_type_id' => 2 ]);
         DB::table('users')->insert(['id'=>5, 'name' => 'Bank Account', 'email'=> 'account5@flymit.com', 'account_type_id' => 2 ]);
 
-        DB::table('users')->insert(['id'=>11, 'name' => 'Amit Kadam', 'mobile' => '9552015542', 'role_id' => 1, 'email'=> 'amit.bk03@gmail.com', 'password' => bcrypt('9552015542')]);
+        DB::table('users')->insert(['id'=>6, 'name' => 'GST', 'email'=> 'gst_account@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>7, 'name' => 'TDS', 'email'=> 'tds_account@flymit.com', 'account_type_id' => 2 ]);
+        DB::table('users')->insert(['id'=>8, 'name' => 'Professional Tax', 'email'=> 'pt_account@flymit.com', 'account_type_id' => 2 ]);
+
+        DB::table('users')->insert(['id'=>51, 'name' => 'Amit Kadam', 'mobile' => '9552015542', 'role_id' => 1, 'email'=> 'amit.bk03@gmail.com', 'password' => bcrypt('9552015542')]);
+        DB::table('users')->insert(['id'=>52, 'name' => 'Prajakta Kadam', 'mobile' => '9021222610', 'role_id' => 1, 'email'=> 'prajaktakadam1308@gmail.com', 'password' => bcrypt('9552015542')]);
 
     }
 
