@@ -31,7 +31,7 @@ class TemplateManager
     {
         $firm_plan = $post->firm_plan;
 
-        $query = Template::where('plan_id', $firm_plan->plan_id);
+        $query = Template::where('plan_id', $firm_plan->plan_id)->where('is_active', 1)->where('is_verified', 1);
         $query = TemplateManager::filter_query_if_plan_for_events(clone $query, $post, $firm_plan);
         $query = TemplateManager::filter_query_if_plan_for_business(clone $query, $firm_plan);
 
