@@ -26,6 +26,14 @@
                 <button type="submit" class="btn btn-success">Update</button>
                 <a href="{{url('templates/'.$template->id.'/test/3?test=1&location=bottom&ratio=35&x_axis=20&y_axis=20')}}" target="_blank" class="btn btn-primary border_f ml-2">Test</a>
 
+                <div class="ml-2">
+                  <form class="form-delete col p-1" style="display: unset" method="post" action="{{ route('templates.destroy', $template->id) }}">
+                      @method('DELETE')
+                      @csrf
+                      <button type="submit" class="btn btn-danger border_f" onclick="return confirm('Are you sure to delete this template?')"><i class="fas fa-trash"></i> Delete</button>
+                  </form>
+                </div>
+
                 <a href="{{route('templates.create')}}" class="btn btn-primary ml-auto">Add New</a>
               </div>
 

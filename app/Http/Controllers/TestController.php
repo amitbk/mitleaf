@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\FunnyEmail;
 use App\Notifications\Marketers\YouArePartnerNow;
 use Mail;
+use DB;
 
 use App\Events\TestEvent;
 use Softon\Sms\Facades\Sms;
@@ -18,6 +19,11 @@ class TestController extends Controller
 
     public function mail(Request $request)
     {
+      $date_only = date('2021-03-17');
+      // return \App\FirmPlan::where(DB::raw("DATE(date_start_from) = '".$date_only."'"))->get();
+
+      $m = \App\FirmPlan::whereDate('date_start_from', '=', $date_only)->max('date_start_from');
+      return date('Y-m-d H:i:s', strtotime($m . " + 10 seconds") );
       // return env('MAIL_USERNAME');
       // return config('mail.username');
       // var_dump(openssl_get_cert_locations());die();

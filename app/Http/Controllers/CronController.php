@@ -72,7 +72,7 @@ class CronController extends Controller
                         if(!$post)
                         {
                             $post = new Post;
-                            $post->schedule_on = $event->date;
+                            $post->schedule_on = $this->getDateAndTime($event->date);
                             $post->firm_plan_id = $firm_plan->id;
                             $post->event_id = $event->id;
                             $post->content = $event->desc;
@@ -112,7 +112,7 @@ class CronController extends Controller
                         while($next_day <= $date_schedule_upto)
                         {
                             $post = new Post;
-                            $post->schedule_on = $next_day;
+                            $post->schedule_on = $this->getDateAndTime($next_day);
                             $post->firm_plan_id = $firm_plan->id;
                             $post->firm_id = $firm_plan->firm_id;
                             $post->save();
@@ -139,6 +139,20 @@ class CronController extends Controller
 
     }
 
+    public function getDateAndTime($date)
+    {
+      $date_only = date('Y-m-d', strtotime($date) );
+
+      // get max schedules time for a $date
+      $max_schedule = Post::whereDate('schedule_on', '=', $date_only)->max('schedule_on');
+
+      // if not found, set to of that 05:59:50 of $date
+      if(!$max_schedule)
+        $max_schedule = date('Y-m-d 05:59:50', strtotime($date_only) );
+
+      // add 10 seconds & return => 6 Posts/min
+      return date('Y-m-d H:i:s', strtotime($max_schedule . " + 10 seconds") );
+    }
     public function generate_post_images()
     {
         try {

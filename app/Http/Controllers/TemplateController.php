@@ -122,7 +122,7 @@ class TemplateController extends Controller
         }
         flash('New template created successfully.', 'success');
 
-        return redirect('templates');
+        return redirect('templates/'.$template->id);
     }
 
     public function test_template(Request $request, $id, $firm_plan_id)
@@ -135,7 +135,7 @@ class TemplateController extends Controller
       }
       if(!$firm_plan)
         return abort(403, 'Firm plan required for master firm as well to test.');
-        
+
       return $post_image = FrameManager::get_generated_post($template, $firm_plan, $save = 0);
     }
 

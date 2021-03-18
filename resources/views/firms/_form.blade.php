@@ -27,7 +27,7 @@
     </select>
 </div>
 
-<div class="form-group" v-if="firm_type_id == 4">
+<div class="form-group" v-if="firm_type_id == 1">
     <label for="business_type">What is your business type?</label>
     <input name="business_type" type="text" name="business_type" value="{{ old('business_type', $firm->business_type) }}" id="business_type" class="form-control {{ $errors->has('business_type') ? 'is-invalid' : '' }}">
 

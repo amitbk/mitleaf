@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<firm-create :firm_types="{{$firm_types}}" :firm-type-id="{{$firm->firm_type_id ?? '4' }}" inline-template>
+<firm-create :firm_types="{{$firm_types}}" :firm-type-id="{{$firm->firm_type_id ?? '1' }}" inline-template>
     <div class="container py-4">
         <div class="row justify-content-center">
             <div class="col-12 col-sm-9 col-md-7 col-lg-6">

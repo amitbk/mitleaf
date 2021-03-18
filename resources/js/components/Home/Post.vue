@@ -36,7 +36,7 @@
       <div class="card-footer p-1 ">
         <div class="row align-items-center">
           <div class="col-12 col-sm-6 text-secondary f-12">
-            <i class="fas fa-clock"></i> Scheduled on 10:11 PM (GMT+5.30)
+            <i class="fas fa-clock"></i> Scheduled on {{localPost.schedule_on}} (GMT+5.30)
           </div>
           <div class="col-12 col-sm-6 text-right">
               <button type="button" class="btn btn-sm btn-outline-info" @click="onRecreatePostClick">Recreate</button>
