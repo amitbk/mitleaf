@@ -51,7 +51,9 @@ class CronController extends Controller
                               ->whereNotNull('event_id')->select('event_id');
 
 
-                    $events_in_future = Event::orderBy('date', 'asc')->where('date', '>=', now())
+                    $events_in_future = Event::orderBy('date', 'asc')
+                                  ->where('date', '>=', now())
+                                  ->whereDate('date', '<=', $date_schedule_upto)
                                   ->whereNotIn('id', $events_for_which_post_is_created_already->get()->toArray() )
                                   ->get();
 
@@ -207,7 +209,7 @@ class CronController extends Controller
     {
 
       $date = date('Y-m-d H:i:s');
-      $date = date('Y-m-d H:i:s', strtotime($date." +1 day") );
+      $date_next_day = date('Y-m-d H:i:s', strtotime($date." +1 day") );
 
       $firms_having_social_media_posting_plan = FirmPlan::where('plan_id', 1)
                     ->whereDate('date_start_from', '<=', $date )
@@ -220,8 +222,10 @@ class CronController extends Controller
                     ->whereIn('firm_id', $firms_having_social_media_posting_plan->get()->toArray() )
                     ->limit(30)->get();
 
-      if(count($posts_to_publish) == 0)
+      if(count($posts_to_publish) == 0) {
+        slack("CRON3: 0 posts published to Facebook.", '#mitleaf');
         return 'No posts to publish.';
+      }
 
       $gc = new GraphController;
       // For loop to publish posts
@@ -232,8 +236,9 @@ class CronController extends Controller
           $social_network = $post->firm->social_networks->first();
           $data = [
             'message' => $post->content,
-            'url' => realpath($post->image->url)
+            'url' => public_path($post->image->url)
           ];
+          // dd(public_path($post->image->url));
           $response = $gc->publish_to_page($social_network, $data);
           // update post if published
           $post->post_link = $response;
@@ -247,8 +252,8 @@ class CronController extends Controller
         }
         array_push( $res ,$post->post_link);
       }
-      $msg = "CRON3: ".$count." posts posted to Facebook.";
+      $msg = "CRON3: ".$count." posts published to Facebook.";
       slack($msg, '#mitleaf');
-      return $res;
+      return $msg;
     }
 }
