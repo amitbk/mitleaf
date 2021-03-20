@@ -131,7 +131,7 @@ class GraphController extends Controller
     $user = Auth::user();
     try {
         $data = [
-          'message' => 'Hello 1110',
+          'message' => $data['message'],
           "source" => $this->api->fileToUpload($data['url']),
         ];
         $post = $this->api->post('/' . $page->social_profile_id . '/photos', $data,  $page->token );
