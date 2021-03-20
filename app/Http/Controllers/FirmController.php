@@ -97,7 +97,7 @@ class FirmController extends Controller
     public function edit(Firm $firm)
     {
         $user = Auth::user();
-        if( $user->cannot('edit', $firm) ) return abort(404);
+        if( $user->cannot('update', $firm) ) return abort(404);
         $firm_types = FirmType::where('is_active',1)->get();
         return view('firms.edit', compact('firm','firm_types'));
     }
