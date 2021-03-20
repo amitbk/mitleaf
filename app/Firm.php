@@ -15,6 +15,10 @@ class Firm extends Model
     {
       return $this->belongsToMany(User::class)->withTimestamps();
     }
+    public function owner()
+    {
+      return $this->belongsTo(User::class);
+    }
     public function social_networks()
     {
       return $this->hasMany(SocialNetwork::class);

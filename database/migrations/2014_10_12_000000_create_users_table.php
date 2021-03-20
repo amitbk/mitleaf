@@ -38,6 +38,8 @@ class CreateUsersTable extends Migration
             $table->string('city')->nullable();
             $table->string('state')->nullable();
 
+            $table->string('timezone')->nullable();
+
             $table->timestamp('born_at')->nullable();
 
             $table->timestamp('email_verified_at')->nullable();

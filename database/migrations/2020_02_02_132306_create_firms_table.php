@@ -27,6 +27,12 @@ class CreateFirmsTable extends Migration
             $table->string('state')->nullable();
             $table->string('pin')->nullable();
             $table->string('gstin')->nullable();
+
+            $table->boolean('is_master')->default(0);
+
+            $table->unsignedBigInteger('owner_id')->nullable();
+            $table->foreign('owner_id')->references('id')->on('users')->onDelete('set null');
+
             $table->unsignedBigInteger('logo_id')->nullable();
             $table->foreign('logo_id')->references('id')->on('images')->onDelete('set null');
 
