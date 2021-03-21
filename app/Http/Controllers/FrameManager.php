@@ -6,6 +6,7 @@ use App\Firm;
 use App\Post;
 use App\FirmPlan;
 use App\Template;
+use App\Style;
 use App\Image as Img;
 use Image;
 use Illuminate\Http\Request;
@@ -55,6 +56,7 @@ class FrameManager
 
         $images= FrameManager::get_images_from_firm_with_settings($template, $firm_plan);
         // main template image
+        // return $images;
         $template_img = Image::make($public.$template->image->url);
           foreach($images as $image)
           {
@@ -109,17 +111,19 @@ class FrameManager
         // then by default logo will be picked from db
         // and priority will be for default logo
         $assets = $firm_plan->firm->assets()
+                ->where('is_active', 1)
                 ->orderBy('is_default', 'desc')
                 ->orderByRaw( "FIELD(asset_type_id, $firm_plan->st_use_asset_type) DESC" )
                 ->get();
-
         if(!$assets)
-            abort(403, 'No asssets found for firm. (f'.$firm_plan->firm->id.'fp'.$$firm_plan->id.')');
+            abort(403, 'No asssets found for firm. (f'.$firm_plan->firm->id.'fp'.$firm_plan->id.')');
 
 
         // now applying filter, we have multiple assets,
         // will check if selected template supports location for that asset and apply accordingly
+        $images = [];
         foreach ($assets as $this_asset) {
+
             // where to add asset on post
             if( request()->has('test') ) {
               // test template
@@ -130,35 +134,53 @@ class FrameManager
             } else if(in_array($this_asset->asset_type_id, config('amit.logo_assets') )  )
             {   // logo
                 $asset_style = TemplateManager::get_supported_logo_location($template);
-                $asset_location = $asset_style->style->slug;
-                $ratio = $asset_style->ratio;
-                $x_axis = $asset_style->x_axis;
-                $y_axis = $asset_style->y_axis;
+
+                $asset_location = $asset_style->style->slug ?? 'bottom';
+                $ratio = $asset_style->ratio ?? '35';
+                $x_axis = $asset_style->x_axis ?? '20';
+                $y_axis = $asset_style->y_axis ?? '20';
             }
             else if(in_array($this_asset->asset_type_id, config('amit.strip_assets') ) )
             {   // strip
                 $asset_style = TemplateManager::get_supported_strip_location($template);
-                $asset_location = $asset_style->style->slug;
+                $asset_location = $asset_style->style->slug ?? 'bottom';
                 $ratio = 100; $x_axis = $y_axis = 0;
             }
-            $asset = $this_asset;
-            if($asset_location) break;
+
+            $asset = [
+                  'url' => $this_asset->image->url,
+                  'asset_type_id' => $this_asset->asset_type_id,
+                  'opacity' => '100',
+                  'location' => $asset_location, 'ratio' => $ratio,
+                  'border'=>'0','border_color'=>'000000',
+                  'x_axis'=> $x_axis,'y_axis'=>$y_axis,'rotate'=>'0',
+                  'circle_radius'=>'0'
+                ];
+
+            if(!!$asset_location && !!$this_asset->image->url)
+              array_push($images, $asset);
         }
 
         if(!$asset_location)
             abort(403, 'No supported assets for firm.'.$firm_plan->firm->name.' ('.$firm_plan->firm_id.')');
 
+       if($firm_plan->firm->add_logo_watermark)
+        array_push($images, static::watermarkLogoSettings() );
 
-        $images=array(
-                  array(
-                  'url' => $asset->image->url,
-                  'opacity' => '100',
-                  'location' => $asset_location, 'ratio' => $ratio,
-                  'border'=>'0','border_color'=>'000000',
-                  'x_axis'=> $x_axis,'y_axis'=>$y_axis,'rotate'=>'0',
-                  'circle_radius'=>'0'),
-              );
        return $images;
+    }
+
+    public static function watermarkLogoSettings($value='')
+    {
+      return [
+            'url' => 'images/logos/logo2.png',
+            'asset_type_id' => 0,
+            'opacity' => '20',
+            'location' => 'center-left', 'ratio' => '20',
+            'border'=>'0','border_color'=>'000000',
+            'x_axis'=> 30,'y_axis'=>30,'rotate'=>'0',
+            'circle_radius'=>'0'
+          ];
     }
 
     public function create_post_working()
