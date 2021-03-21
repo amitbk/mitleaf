@@ -25,13 +25,28 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('posts:schedule')
-                 ->hourly();
+                  ->hourly()
+                  ->runInBackground();
 
         $schedule->command('posts:generate')
-                 ->hourly();
+                  ->hourly()
+                  ->runInBackground();
 
         $schedule->command('posts:publish')
-                 ->hourly();
+                  ->hourly()
+                  ->runInBackground();
+
+        $schedule->command('send:order_end_reminder 7')
+                  ->hourly()
+                  ->runInBackground();
+
+        $schedule->command('send:order_end_reminder 2')
+                  ->hourly()
+                  ->runInBackground();
+
+        $schedule->command('send:order_end_reminder 0')
+                  ->hourly()
+                  ->runInBackground();
     }
 
     /**

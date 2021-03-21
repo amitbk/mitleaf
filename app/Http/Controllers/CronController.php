@@ -218,7 +218,7 @@ class CronController extends Controller
 
       $posts_to_publish = Post::whereNotNull('image_id')
                     ->whereNull('is_posted_on_social_media')
-                    ->whereDate('schedule_on', '<=', $date )
+                    ->where('schedule_on', '<=', $date )
                     ->whereIn('firm_id', $firms_having_social_media_posting_plan->get()->toArray() )
                     ->limit(30)->get();
 
@@ -242,7 +242,7 @@ class CronController extends Controller
           $response = $gc->publish_to_page($social_network, $data);
           // update post if published
           $post->post_link = $response;
-          $post->is_posted_on_social_media = 1;
+          $post->is_posted_on_social_media = date('Y-m-d H:i:s');
           $post->save();
           $count++;
         } catch (\Exception $e) {

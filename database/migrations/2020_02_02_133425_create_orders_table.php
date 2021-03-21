@@ -39,6 +39,8 @@ class CreateOrdersTable extends Migration
 
             $table->string('razorpay_order_id')->nullable();
 
+            $table->timestamp('date_order_end_reminder_sent')->nullable()->default(null);
+
             $table->timestamps();
         });
     }

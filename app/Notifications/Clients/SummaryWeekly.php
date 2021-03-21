@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notification;
 use App\Channels\SmsInit;
 use App\Channels\SmsChannel;
 
-class SummaryWeekly extends Notification
+class SummaryWeekly extends Notification implements ShouldQueue
 {
     use Queueable;
     public $firm;

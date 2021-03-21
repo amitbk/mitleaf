@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notification;
 use App\Channels\SmsInit;
 use App\Channels\SmsChannel;
 
-class OrderEnded extends Notification
+class OrderEnded extends Notification implements ShouldQueue
 {
     use Queueable;
     public $order;
