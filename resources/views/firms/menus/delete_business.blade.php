@@ -16,6 +16,7 @@
             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
           </div>
           <form action="{{route('firms.destroy', $firm->id)}}" class="form-delete" method="post">
+            @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger border_f" onclick="return confirm('This is second confirmation! Are you sure to delete business?')"><i class="fas fa-trash"></i> Delete</button>
           </form>

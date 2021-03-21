@@ -22,9 +22,9 @@ class CreateTemplateStylesTable extends Migration
             $table->foreign('style_id')->references('id')->on('styles')->onDelete('cascade');
             $table->text('data')->nullable();
 
-            $table->integer('ratio')->default(30);
-            $table->integer('x_axis')->default(10);
-            $table->integer('y_axis')->default(10);
+            $table->integer('ratio')->default(35);
+            $table->integer('x_axis')->default(20);
+            $table->integer('y_axis')->default(20);
         });
     }
 

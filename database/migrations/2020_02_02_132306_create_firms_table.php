@@ -29,6 +29,7 @@ class CreateFirmsTable extends Migration
             $table->string('gstin')->nullable();
 
             $table->boolean('is_master')->default(0);
+            $table->boolean('add_logo_watermark')->default(0);
 
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('set null');

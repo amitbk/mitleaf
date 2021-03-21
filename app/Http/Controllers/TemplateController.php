@@ -190,7 +190,11 @@ class TemplateController extends Controller
           {
               if(in_array($style, [21,22]) ) {
                 // strip: save default values
-                $template->styles()->create(['style_id' => $style]);
+                $data = [
+                        'style_id' => $style, 'ratio' => 100,
+                        'x_axis' => 0, 'y_axis' => 0,
+                        ];
+                $template->styles()->create($data);
               }
               else {
                 // logo: accept values from UI

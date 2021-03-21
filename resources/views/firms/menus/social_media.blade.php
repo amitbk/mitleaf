@@ -8,31 +8,28 @@
           <a href="{{url('social_networks')}}" class="btn btn-outline-primary">All Pages</a>
         </div>
       </div>
-          @if(1 || $firm->social_networks->first())
-          <div class="text-primary">
-            Your post will be posted on this page:
-            <div class="font-weight-bold">
-              {{$firm->social_networks->first()->name ?? 'Not selected'}}
-            </div>
-          </div>
-          <div class="text-secondary">
-            You can change below,
-          </div>
-          @else
-          @endif
+
 
           <form class="" action="{{url('firms/update_fb_page')}}" method="post">
             @csrf
             <input type="hidden" name="firm_id" value="{{$firm->id}}">
-            <div class="form-group">
-              <label for="pages">Select a page to publish scheduled posts:</label>
+            <input type="hidden" name="redirect" value="firm">
+
+            <label for="pages">Select/change a page to publish scheduled posts:</label>
+
+            <div class="input-group mb-3">
+
               <select name="social_network_id" class="form-control" id="pages">
+                <option value="0">Select</option>
                 @foreach($user->social_networks as $social_network)
-                  <option value="{{$social_network->id}}">{{$social_network->name}}</option>
+                  <option value="{{$social_network->id}}" {{$firm->social_networks->first()->id ?? 0 == $social_network->id ? 'selected' : ''}}>{{$social_network->name}}</option>
                 @endforeach
               </select>
+
+              <div class="input-group-append">
+                <button type="submit" name="button" class="btn btn-primary">Update</button>
+              </div>
             </div>
-            <button type="submit" name="button" class="btn btn-primary">Update</button>
 
           </form>
 

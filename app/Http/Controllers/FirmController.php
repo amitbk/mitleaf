@@ -144,6 +144,26 @@ class FirmController extends Controller
 
     }
 
+    public function logo_settings(Request $request, $id)
+    {
+
+      $firm = Firm::find($id);
+      if( auth()->user()->cannot('update', $firm) ) return abort(404);
+
+      // make all assets inactive first
+      Asset::where('firm_id', $firm->id)->update (['is_active' => 0]) ;
+
+      foreach ($request->assets as $key => $value) {
+        Asset::where('id', $key)->update (['is_active' => $value]) ;
+      }
+      $firm->add_logo_watermark = !!$request->has('add_logo_watermark');
+      $firm->save();
+
+      // return $request;
+      flash('Firm settings updated.', 'success');
+
+      return redirect("/firms/$firm->id?tab=logos");
+    }
     /**
      * Remove the specified resource from storage.
      *
@@ -153,8 +173,24 @@ class FirmController extends Controller
     public function destroy(Firm $firm)
     {
         $user = Auth::user();
-        if( $user->cannot('delete', $firm) ) return abort(404);
+        if( $user->cannot('delete', $firm) ) return abort(403, 'Cant delete business.');
 
+        if( $firm->orders->count() )
+        {
+          flash('This business can not be deleted.', 'warning');
+          return back();
+        }
+
+        // delete all assets
+        foreach ($firm->assets as $key => $asset) {
+          $asset->image->delete();
+        }
+        $firm->assets()->delete();
+
+        $firm->delete();
+
+        flash('Business deleted successfully.', 'success');
+        return redirect('myfirms');
     }
 
     public function generateTextLogoForFirmIfNoLogo($firm)
@@ -173,6 +209,10 @@ class FirmController extends Controller
       $asset->firm_id = $firm->id;
       $asset->asset_type_id = 1;
 
+      // if no any asset uploaded yet, first should be active
+      if($firm->assets->where('is_active', 1)->count() == 0)
+        $asset->is_active = 1;
+
       $asset->image_id = $img->id;
       $asset->save();
 
@@ -188,6 +228,7 @@ class FirmController extends Controller
           return redirect()->route("firms.show", $firm_id);
 
         $asset_type = AssetType::find($asset_type_id);
+
         return view('firms.edit_asset', compact('firm'))->with('asset_type_name', $asset_type->name_display)->with('asset_type_id', $asset_type_id);
     }
     public function update_details(Request $request, $id)
@@ -195,13 +236,18 @@ class FirmController extends Controller
         $firm = Firm::find($id);
         $user = Auth::user();
         if( $user->cannot('update', $firm) ) return abort(404);
-        // save assets
 
+        // save assets
         $asset = Asset::firstOrNew(
                 ['firm_id' => $id, 'asset_type_id' => $request->asset_type_id]
             );
         $asset->firm_id = $id;
         $asset->asset_type_id = $request->asset_type_id;
+
+        // if no any asset uploaded yet, first should be active
+        if($firm->assets->where('is_active', 1)->count() == 0)
+          $asset->is_active = 1;
+
 
         // upload image
         $image = new Img;
@@ -256,10 +302,12 @@ class FirmController extends Controller
                    ->where('id', $request->social_network_id)
                    ->update(['firm_id' => $request->firm_id]);
 
-      flash('Social network connected to selected Business.');
+      flash('Social network connected to selected Business.', 'success');
 
       if($request->redirect == 'plans')
         return redirect()->route('plans.index', ['firm_id' => $request->firm_id]);
+      if($request->redirect == 'firm')
+        return redirect("/firms/$firm->id?tab=social-media");
 
       return redirect()->back();
     }

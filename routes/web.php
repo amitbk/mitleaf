@@ -62,6 +62,7 @@ Route::post('firms/update_fb_page', 'FirmController@update_fb_page')->name('firm
 Route::resource('/firms', 'FirmController');
 Route::get('/myfirms', 'FirmController@myfirms')->name('firms.myfirms');
 Route::get('/firms/{id}/plans', 'FirmController@plans')->name('firms.plans');
+Route::post('/firms/{id}/logo_settings', 'FirmController@logo_settings')->name('firms.logo_settings');
 
 Route::post('/payment_callback', 'OrderController@payment_callback');
 

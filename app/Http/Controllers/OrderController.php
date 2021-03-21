@@ -187,6 +187,7 @@ class OrderController extends Controller
             $firm_plan->date_start_from = date('Y-m-d 00:00:00', strtotime( date('Y-m-d'). " + 1 days"));
 
           $expiry_string = $is_trial ? " + $trial_days days" : " + $order->duration_selected month";
+          // $expiry_string = $is_trial ? " + $trial_days days" : " + 10 days";
           $date_expiry = date('Y-m-d 00:00:00', strtotime( $firm_plan->date_start_from. $expiry_string ));
 
           $firm_plan->date_expiry = $date_expiry;

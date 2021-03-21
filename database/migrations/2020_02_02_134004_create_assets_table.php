@@ -24,6 +24,7 @@ class CreateAssetsTable extends Migration
             $table->unsignedBigInteger('image_id')->unsigned()->nullable();
             $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
             $table->string('name')->nullable();
+            $table->boolean('is_active')->default(0);
             $table->boolean('is_default')->nullable()->default(0);
             $table->timestamps();
         });

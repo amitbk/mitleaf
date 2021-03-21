@@ -1,9 +1,7 @@
-<h4 class="mb-4">Overview of {{$firm->name}}</h4>
+<h4 class="mb-4">{{$firm->name}}</h4>
 
 <div class="row">
-  <div class="col-12">
-    @include('helpers._flash')
-  </div>
+
   @if($user->social_networks()->count() == 0)
   <div class="col-12">
     <div class="alert alert-success d-flex">
@@ -26,4 +24,7 @@
     </div>
   @endif
 
+  <div class="col-12">
+    <img src="{{asset('images/pf/people.svg')}}" alt="people" class="w-100 img-fluid">
+  </div>
 </div>
