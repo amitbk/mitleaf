@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import alert from "../../services/alert"
 
 export default {
   props: ['post', 'dateIndex', 'index'],
@@ -62,10 +63,13 @@ export default {
   },
   methods: {
       onRecreatePostClick() {
-
+          this.$root.loading = true;
           axios.post('/recreate_post', this.localPost).then(res => {
               this.localPost = res.data;
-          })
+              this.$root.loading = false;
+          }).catch(e => {
+            alert.msg(e.response.data.message, 'error')
+          });
       }
   }, // methods
 }

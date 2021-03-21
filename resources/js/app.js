@@ -61,6 +61,7 @@ const app = new Vue({
     el: '#app',
     data() {
       return {
+        loading: false,
         mitleaf: {},
         selectedFirmId: 0,
         isToggeled: false,
@@ -73,6 +74,21 @@ const app = new Vue({
     },
     components: {
 
+    },
+    watch: {
+      loading: function(newVal, oldVal) {
+        if(!!newVal == true)
+          window.Vue.swal({
+              title: 'Loading...',
+              allowEscapeKey: false,
+              allowOutsideClick: false,
+              onOpen: () => {
+                window.Vue.swal.showLoading();
+              }
+            })
+        else
+          window.Vue.swal.hideLoading();
+      }
     },
     methods: {
       toggleSidebar() {
