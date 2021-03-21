@@ -11,7 +11,7 @@
 
                       <h4 class="text-center">Add facebook pages to publish your posts</h4>
 
-                      <a href='{{url("/facebook/connect_pages?redirect=/firms/$firm->id/add_fb_page")}}' class="btn btn-primary ml-auto font-weight-bold my-3">Connect New Pages</a>
+                      <a href='{{url("/facebook/connect_pages?redirect=/firms/$firm->id/add_fb_page")}}' class="btn btn-primary ml-auto font-weight-bold my-3" @click="$root.loading = true">Connect New Pages</a>
 
 
                       <hr>
@@ -32,7 +32,7 @@
                               @endforeach
                             </select>
                             <div class="input-group-append">
-                              <button type="submit" name="button" class="btn btn-primary">Update</button>
+                              <button type="submit" name="button" class="btn btn-primary" @click="$root.loading = true">Update</button>
                             </div>
                          </div>
 

@@ -40,5 +40,5 @@
 
 
 <div class="form-group text-center">
-    <button type="submit" class="btn btn-primary btn-lg">{{ $buttonText }}</button>
+    <button type="submit" class="btn btn-primary btn-lg" @click="$root.loading = true">{{ $buttonText }}</button>
 </div>

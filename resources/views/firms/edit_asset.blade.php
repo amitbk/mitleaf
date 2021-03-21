@@ -44,7 +44,7 @@
                               Try to upload a PNG logo. If you dont have PNG, still you can upload JPG/JPEG logo.
                             </div>
                             <hr>
-                            <button type="submit" class="btn btn-success">Upload</button>
+                            <button type="submit" class="btn btn-success" @click="$root.loading = true">Upload</button>
                             <a
                               @if($asset_type_id == 3)
                                 href="{{route('firms.add_fb_page', $firm->id )}}"
