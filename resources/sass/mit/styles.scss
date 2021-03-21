@@ -66,3 +66,28 @@ body {
 
 
 .cursor_pointer {cursor: pointer;}
+
+.floating_button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px;
+
+  background-color: #236e84;
+  color: #fff;
+  border-radius: 50px;
+  padding: 5px 10px;
+
+
+  box-shadow: 0 0 4px rgb(0 0 0 / 14%), 0 4px 8px rgb(0 0 0 / 28%);
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating_button.circle {
+  height: 50px;
+  width: 50px;
+}
